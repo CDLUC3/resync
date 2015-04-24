@@ -2,15 +2,15 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require 'resync_client/version'
+require 'resync/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'resync_client'
+  spec.name          = 'resync'
   spec.version       = ResyncClient::VERSION
   spec.authors       = ['David Moles']
   spec.email         = ['david.moles@ucop.edu']
-  spec.summary       = 'Client library for ResourceSync'
-  spec.description   = 'A Ruby gem implementing a client for the ResourceSync web synchronization framework'
+  spec.summary       = 'Utility library for ResourceSync'
+  spec.description   = 'A Ruby gem for working with the ResourceSync web synchronization framework'
   spec.homepage      = '' # TODO: add homepage
   spec.license       = 'MIT'
 
