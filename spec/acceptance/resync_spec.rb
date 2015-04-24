@@ -1,6 +1,8 @@
 require 'acceptance/acceptance_helper'
 
-describe ResyncClient do
+# TODO: Split 'client' and library functionality
+
+describe Resync do
   describe 'discovery' do
     it 'retrieves a Source Description from a URI'
     it 'gets the "describedby" link URI for the Source Description, if present'

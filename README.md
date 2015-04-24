@@ -1,2 +1,3 @@
-# resync_client
-A Ruby gem implementing a client for the ResourceSync web synchronization framework
+# resync
+
+A Ruby gem for working with the ResourceSync web synchronization framework

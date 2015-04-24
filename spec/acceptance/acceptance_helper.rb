@@ -1,2 +1,2 @@
 require 'rspec'
-require 'resync_client'
+require 'resync'
