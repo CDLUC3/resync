@@ -10,6 +10,7 @@ module Resync
 
       md = urlset.md
       expect(md).not_to be_nil
+      expect(md.capability).to eq('resourcelist')
 
       urls = urlset.url
       expect(urls.size).to eq(2)
@@ -20,8 +21,6 @@ module Resync
       url1 = urls[1]
       expect(url1.loc).to eq(URI('http://example.com/res2'))
     end
-
-    it 'parses resync elements in example 1'
 
   end
 end

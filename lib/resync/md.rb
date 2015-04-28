@@ -1,10 +1,12 @@
 require 'happymapper'
 
 module Resync
-  class Md < NamespacedElement
-    # include HappyMapper
+  class Md
+    include HappyMapper
 
     tag 'md'
+
+    namespace 'rs'
 
     attribute :at, DateTime
     attribute :capability, String
@@ -19,8 +21,5 @@ module Resync
     attribute :type, String
     attribute :until, DateTime
 
-    def self.namespace_uri
-      URI('http://www.openarchives.org/rs/terms/')
-    end
   end
 end
