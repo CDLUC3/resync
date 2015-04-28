@@ -9,5 +9,9 @@ module HappyMapper
     register_type BigDecimal do |value|
       BigDecimal.new(value)
     end
+
+    register_type URI do |value|
+      URI(value)
+    end
   end
 end

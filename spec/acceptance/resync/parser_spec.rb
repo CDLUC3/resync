@@ -12,10 +12,10 @@ module Resync
       expect(urls.size).to eq(2)
 
       url0 = urls[0]
-      expect(url0.loc).to eq('http://example.com/res1')
+      expect(url0.loc).to eq(URI('http://example.com/res1'))
 
       url1 = urls[1]
-      expect(url1.loc).to eq('http://example.com/res2')
+      expect(url1.loc).to eq(URI('http://example.com/res2'))
     end
 
     it 'parses resync elements in example 1'
