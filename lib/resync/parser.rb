@@ -8,19 +8,17 @@ module Resync
 
     def self.parse(xml)
 
-      root = case xml
+      doc = case xml
              when Nokogiri::XML::Document
-               xml.root
-             when Nokogiri::XML::Element
                xml
              when String
-               Nokogiri::XML(xml).root
+               Nokogiri::XML(xml)
              else
-               fail "Unexpected argument type: #{xml.class}"
+               fail "Unexpected argument type; expected XML document, was #{xml.class}"
              end
 
-      parse_class = get_parse_class(root)
-      parse_class.parse(xml, single: true)
+      parse_class = get_parse_class(doc)
+      parse_class.parse(doc, single: true)
     end
 
     # ------------------------------
@@ -28,8 +26,8 @@ module Resync
 
     private
 
-    def self.get_parse_class(root)
-      root_name = root.name
+    def self.get_parse_class(doc)
+      root_name = doc.root.name
       case root_name.downcase
       when 'urlset'
         Urlset
