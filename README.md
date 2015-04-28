@@ -4,7 +4,7 @@ A Ruby gem for working with the [ResourceSync](http://www.openarchives.org/rs/1.
 
 ## Limitations
 
-resync assumes that XML namespaces are given as in the [ResourceSync](http://www.openarchives.org/rs/1.0/resourcesync) specification's [examples](spec/data/examples): elements in the Sitemap namespace `http://www.sitemaps.org/schemas/sitemap/0.9` are assumed to be unqualified, while elements in the ResourceSync namespace `http://www.openarchives.org/rs/terms/` are assumed to be qualified with the prefix `rs`, as in e.g.
+resync assumes that XML namespaces are given as in the [ResourceSync](http://www.openarchives.org/rs/1.0/resourcesync) specification's [examples](spec/data/examples): elements in the Sitemap namespace are assumed to be unqualified, while elements in the ResourceSync namespace are assumed to be qualified with the prefix `rs`, as in e.g.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
