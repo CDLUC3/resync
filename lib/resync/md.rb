@@ -5,7 +5,6 @@ module Resync
     include HappyMapper
 
     tag 'md'
-
     namespace 'rs'
 
     attribute :at, DateTime
@@ -20,6 +19,5 @@ module Resync
     attribute :path, String
     attribute :type, String
     attribute :until, DateTime
-
   end
 end

@@ -5,6 +5,7 @@ module Resync
     include HappyMapper
 
     tag 'ln'
+    namespace 'rs'
 
     attribute :encoding, String
     attribute :hash, String

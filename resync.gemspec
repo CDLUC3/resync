@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'nokogiri-happymapper', '~> 0.5.9'
+  spec.add_dependency 'ruby-enum', '~> 0.4'
 
   spec.add_development_dependency 'rake', '~> 10.4'
   spec.add_development_dependency 'rspec', '~> 3.2'
