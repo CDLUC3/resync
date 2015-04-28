@@ -6,7 +6,7 @@ module Resync
 
     tag 'sitemap'
 
-    element :loc, String
+    element :loc, URI
     element :lastmod, String
     # has_many :any, Any
   end

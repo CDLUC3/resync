@@ -8,7 +8,7 @@ module Resync
 
     attribute :encoding, String
     attribute :hash, String
-    attribute :href, String
+    attribute :href, URI
     attribute :length, Integer
     attribute :modified, DateTime
     attribute :path, String

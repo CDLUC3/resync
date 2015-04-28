@@ -7,7 +7,7 @@ module Resync
 
     tag 'url'
 
-    element :loc, String
+    element :loc, URI
     element :lastmod, String
     element :changefreq, String # TChangeFreq
     element :priority, BigDecimal
