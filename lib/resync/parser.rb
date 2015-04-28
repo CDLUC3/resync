@@ -7,15 +7,14 @@ module Resync
     # Public methods
 
     def self.parse(xml)
-
       doc = case xml
-             when Nokogiri::XML::Document
-               xml
-             when String
-               Nokogiri::XML(xml)
-             else
-               fail "Unexpected argument type; expected XML document, was #{xml.class}"
-             end
+            when Nokogiri::XML::Document
+              xml
+            when String
+              Nokogiri::XML(xml)
+            else
+              fail "Unexpected argument type; expected XML document, was #{xml.class}"
+            end
 
       parse_class = get_parse_class(doc)
       parse_class.parse(doc, single: true)
@@ -23,8 +22,6 @@ module Resync
 
     # ------------------------------
     # Private methods
-
-    private
 
     def self.get_parse_class(doc)
       root_name = doc.root.name
@@ -37,5 +34,7 @@ module Resync
         fail "Unexpected root tag <#{root_name}>"
       end
     end
+    private_class_method :get_parse_class
+
   end
 end

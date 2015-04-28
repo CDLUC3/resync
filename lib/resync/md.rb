@@ -9,7 +9,7 @@ module Resync
 
     attribute :at, DateTime
     attribute :capability, String
-    attribute :change, String # ChangeType
+    attribute :change, Change
     attribute :completed, DateTime
     attribute :encoding, String
     attribute :from, DateTime

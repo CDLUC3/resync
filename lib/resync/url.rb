@@ -8,9 +8,11 @@ module Resync
     tag 'url'
 
     element :loc, URI
-    element :lastmod, String
-    element :changefreq, String # TChangeFreq
+    element :lastmod, DateTime
+    element :changefreq, Changefreq
     element :priority, BigDecimal
-    # has_many :any, Any
+
+    element :md, Md
+    has_many :ln, Ln
   end
 end
