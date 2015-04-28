@@ -8,6 +8,9 @@ module Resync
       urlset = Parser.parse(data)
       expect(urlset).to be_a(Urlset)
 
+      md = urlset.md
+      expect(md).not_to be_nil
+
       urls = urlset.url
       expect(urls.size).to eq(2)
 
