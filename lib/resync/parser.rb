@@ -6,6 +6,7 @@ module Resync
     # ------------------------------
     # Public methods
 
+    # @return [Urlset, Sitemapindex]
     def self.parse(xml)
       doc = case xml
             when Nokogiri::XML::Document

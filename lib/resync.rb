@@ -17,11 +17,11 @@ module HappyMapper
     end
 
     register_type Resync::Change do |value|
-      Change.parse(value)
+      Resync::Change.parse(value)
     end
 
     register_type Resync::Changefreq do |value|
-      Changefreq.parse(value)
+      Resync::Changefreq.parse(value)
     end
   end
 end

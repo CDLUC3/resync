@@ -4,12 +4,12 @@ module Resync
   class Changefreq
     include Ruby::Enum
 
-    define :always, 'always'
-    define :hourly, 'hourly'
-    define :daily, 'daily'
-    define :weekly, 'weekly'
-    define :monthly, 'monthly'
-    define :yearly, 'yearly'
-    define :never, 'never'
+    define :ALWAYS, 'always'
+    define :HOURLY, 'hourly'
+    define :DAILY, 'daily'
+    define :WEEKLY, 'weekly'
+    define :MONTHLY, 'monthly'
+    define :YEARLY, 'yearly'
+    define :NEVER, 'never'
   end
 end

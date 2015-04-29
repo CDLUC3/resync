@@ -4,8 +4,8 @@ module Resync
   class Change
     include Ruby::Enum
 
-    define :created, 'created'
-    define :updated, 'updated'
-    define :deleted, 'deleted'
+    define :CREATED, 'created'
+    define :UPDATED, 'updated'
+    define :DELETED, 'deleted'
   end
 end

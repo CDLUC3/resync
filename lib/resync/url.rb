@@ -1,5 +1,6 @@
-require 'bigdecimal'
 require 'happymapper'
+require 'bigdecimal'
+require 'uri'
 
 module Resync
   class Url

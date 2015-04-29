@@ -1,4 +1,5 @@
 require 'happymapper'
+require 'uri'
 
 module Resync
   class Ln
