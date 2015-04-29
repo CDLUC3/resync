@@ -9,5 +9,6 @@ module Resync
     has_many :url, Url
 
     element :md, Md
+    has_many :ln, Ln
   end
 end
