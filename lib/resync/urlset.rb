@@ -1,14 +1,14 @@
-require 'happymapper'
+require 'xml/mapping'
 
 module Resync
   class Urlset
-    include HappyMapper
+    include XML::Mapping
 
-    tag 'urlset'
+    # tag 'urlset'
 
-    has_many :url, Url
+    array_node :url, 'url', class: Url, :default_value => []
 
-    element :md, Md
-    has_many :ln, Ln
+    object_node :md, 'md', :class => Md, :default_value => nil
+    array_node :ln, 'ln', class: Ln, :default_value => []
   end
 end

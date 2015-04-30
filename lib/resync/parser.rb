@@ -1,4 +1,4 @@
-require 'nokogiri'
+require 'rexml/document'
 
 module Resync
   class Parser
@@ -8,33 +8,36 @@ module Resync
 
     # @return [Urlset, Sitemapindex]
     def self.parse(xml)
-      doc = case xml
-            when Nokogiri::XML::Document
-              xml
-            when String
-              Nokogiri::XML(xml)
-            else
-              fail "Unexpected argument type; expected XML document, was #{xml.class}"
-            end
+      root = case xml
+               when REXML::Element
+                 xml
+               when REXML::Document
+                 xml.root
+               when String
+                 REXML::Document.new(xml).root
+               else
+                 fail "Unexpected argument type; expected XML document, was #{xml.class}"
+             end
 
-      parse_class = get_parse_class(doc)
-      parse_class.parse(doc, single: true)
+      parse_class = get_parse_class(root)
+      parse_class.load_from_xml(root)
     end
 
     # ------------------------------
     # Private methods
 
-    def self.get_parse_class(doc)
-      root_name = doc.root.name
+    def self.get_parse_class(root)
+      root_name = root.name
       case root_name.downcase
-      when 'urlset'
-        Urlset
-      when 'sitemapindex'
-        Sitemapindex
-      else
-        fail "Unexpected root tag <#{root_name}>"
+        when 'urlset'
+          Urlset
+        when 'sitemapindex'
+          Sitemapindex
+        else
+          fail "Unexpected root tag <#{root_name}>"
       end
     end
+
     private_class_method :get_parse_class
 
   end

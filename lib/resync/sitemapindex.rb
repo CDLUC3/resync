@@ -1,12 +1,12 @@
-require 'happymapper'
+require 'xml/mapping'
 
 module Resync
   class Sitemapindex
-    include HappyMapper
+    include XML::Mapping
 
-    tag 'sitemapindex'
+    # tag 'sitemapindex'
 
     # has_many :any, Any
-    has_many :sitemap, Sitemap
+    array_node :sitemap, 'sitemap', class: Sitemap, :default_value => []
   end
 end

@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'nokogiri-happymapper', '~> 0.5.9'
+  spec.add_dependency 'xml-mapping', '~> 0.10'
   spec.add_dependency 'ruby-enum', '~> 0.4'
 
   spec.add_development_dependency 'rake', '~> 10.4'

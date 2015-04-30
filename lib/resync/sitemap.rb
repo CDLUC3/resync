@@ -1,14 +1,12 @@
-require 'happymapper'
+require 'xml/mapping'
 require 'uri'
 
 module Resync
   class Sitemap
-    include HappyMapper
+    include XML::Mapping
 
-    tag 'sitemap'
+    uri_node :loc, 'loc', :default_value => nil
+    text_node :lastmod, 'lastmod', :default_value => nil
 
-    element :loc, URI
-    element :lastmod, String
-    # has_many :any, Any
   end
 end

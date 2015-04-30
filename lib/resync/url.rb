@@ -1,19 +1,19 @@
-require 'happymapper'
+require 'xml/mapping'
 require 'bigdecimal'
 require 'uri'
 
 module Resync
   class Url
-    include HappyMapper
+    include XML::Mapping
 
-    tag 'url'
+    # tag 'url'
 
-    element :loc, URI
-    element :lastmod, DateTime
-    element :changefreq, Changefreq
-    element :priority, BigDecimal
+    uri_node :loc, 'loc', :default_value => nil
+    date_time_node :lastmod, 'lastmod', :default_value => nil
+    changefreq_node :changefreq, 'changefreq', :default_value => nil
+    numeric_node :priority, 'priority', :default_value => nil
 
-    element :md, Md
-    has_many :ln, Ln
+    object_node :md, 'md', :class => Md, :default_value => nil
+    array_node :ln, 'ln', class: Ln, :default_value => []
   end
 end
