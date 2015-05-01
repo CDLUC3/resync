@@ -66,7 +66,6 @@ module Resync
 
     it 'can\'t be used as a hash key' do
       ln = parse('<ln hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"/>')
-      foo = {ln => 'ln'}
       expect {
         foo = {ln => 'ln'}
       }.to raise_error(TypeError)
