@@ -66,9 +66,7 @@ module Resync
 
     it 'can\'t be used as a hash key' do
       ln = parse('<ln hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"/>')
-      expect do
-        { ln => 'ln' }
-      end.to raise_error(TypeError)
+      expect { { ln => 'ln' } }.to raise_error(TypeError)
     end
 
     it 'can round-trip to XML' do

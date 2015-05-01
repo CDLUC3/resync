@@ -1,12 +1,8 @@
 require 'xml/mapping'
-require 'bigdecimal'
-require 'uri'
 
 module Resync
   class Url
     include XML::Mapping
-
-    # tag 'url'
 
     uri_node :loc, 'loc', default_value: nil
     time_node :lastmod, 'lastmod', default_value: nil

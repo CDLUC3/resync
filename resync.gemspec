@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.license = 'MIT'
 
   origin_uri = URI(`git config --get remote.origin.url`.chomp)
-  spec.homepage = URI::HTTP.build({ host: origin_uri.host, path: origin_uri.path.chomp('.git') }).to_s
+  spec.homepage = URI::HTTP.build(host: origin_uri.host, path: origin_uri.path.chomp('.git')).to_s
 
   spec.files = `git ls-files -z`.split("\x0")
   spec.executables = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }

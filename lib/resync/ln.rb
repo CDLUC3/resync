@@ -18,5 +18,6 @@ module Resync
     def hash
       _hash
     end
+
   end
 end
