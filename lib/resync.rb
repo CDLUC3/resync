@@ -11,12 +11,12 @@ module Resync
     end
 
     def extract_attr_value(xml) # :nodoc:
-      value = default_when_xpath_err{ @path.first(xml).text }
+      value = default_when_xpath_err { @path.first(xml).text }
       value ? Time.iso8601(value).utc : nil
     end
 
     def set_attr_value(xml, value) # :nodoc:
-      @path.first(xml,:ensure_created=>true).text = value.to_s
+      @path.first(xml, ensure_created: true).text = value.to_s
     end
   end
 
@@ -30,10 +30,11 @@ module Resync
     end
 
     def extract_attr_value(xml) # :nodoc:
-      URI(default_when_xpath_err{ @path.first(xml).text })
+      URI(default_when_xpath_err { @path.first(xml).text })
     end
+
     def set_attr_value(xml, value) # :nodoc:
-      @path.first(xml,:ensure_created=>true).text = value.to_s
+      @path.first(xml, ensure_created: true).text = value.to_s
     end
   end
 

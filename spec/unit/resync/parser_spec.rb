@@ -228,7 +228,7 @@ module Resync
     end
 
     it 'fails when it gets something other than XML' do
-      data = 12345
+      data = 12_345
       expect { Parser.parse(data) }.to raise_exception
     end
 
