@@ -16,7 +16,7 @@ module Resync
     end
 
     def set_attr_value(xml, value) # :nodoc:
-      @path.first(xml, ensure_created: true).text = value.to_s
+      @path.first(xml, ensure_created: true).text = value.iso8601
     end
   end
 

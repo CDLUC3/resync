@@ -71,6 +71,22 @@ module Resync
       end.to raise_error(TypeError)
     end
 
+    it 'can round-trip to XML' do
+      xml = '<ln
+                encoding="utf-8"
+                hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"
+                href="http://example.org/"
+                length="12345"
+                modified="2013-01-03T09:00:00Z"
+                path="/foo/"
+                pri="3.14159"
+                rel="bar"
+                type="baz"
+            />'
+      ln = parse(xml)
+      expect(ln.save_to_xml).to be_xml(xml)
+    end
+
   end
 
 end
