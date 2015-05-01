@@ -9,12 +9,12 @@ module Resync
     # @return [Urlset, Sitemapindex]
     def self.parse(xml)
       root = case xml
-               when REXML::Element
-                 xml
-               when REXML::Document
-                 xml.root
                when String
                  REXML::Document.new(xml).root
+               when REXML::Document
+                 xml.root
+               when REXML::Element
+                 xml
                else
                  fail "Unexpected argument type; expected XML document, was #{xml.class}"
              end

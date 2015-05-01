@@ -3,13 +3,6 @@ require 'spec_helper'
 module Resync
   describe Parser do
 
-    describe '#parse' do
-      it 'parses an XML document'
-      it 'parses an XML element'
-      it 'parses a String'
-      it 'fails when it gets something it can\'t parse'
-    end
-
     it 'parses example 1' do
       data = File.read('spec/data/examples/example-1.xml')
       urlset = Parser.parse(data)
@@ -187,6 +180,58 @@ module Resync
       expect(ln.rel).to eq('describedby')
       expect(ln.href).to eq(URI('http://example.com/info_about_set1_of_resources.xml'))
     end
+
+    it 'parses example 8' do
+      data = File.read('spec/data/examples/example-8.xml')
+      sitemapindex = Parser.parse(data)
+
+      md = sitemapindex.md
+      expect(md.capability).to eq('resourcelist')
+      expect(md.at).to eq(Time.utc(2013, 1, 3, 9))
+
+      sitemap = sitemapindex.sitemap
+      expect(sitemap.size).to eq(2)
+
+      sitemap0 = sitemap[0]
+      expect(sitemap0.loc).to eq(URI('http://example.com/resourcelist-part1.xml'))
+
+      sitemap1 = sitemap[1]
+      expect(sitemap1.loc).to eq(URI('http://example.com/resourcelist-part2.xml'))
+    end
+
+  end
+
+  describe '#parse' do
+    it 'parses an XML document' do
+      data = File.read('spec/data/examples/example-1.xml')
+      doc = REXML::Document.new(data)
+      urlset = Parser.parse(doc)
+      expect(urlset).to be_a(Urlset)
+    end
+
+    it 'parses an XML element' do
+      data = File.read('spec/data/examples/example-1.xml')
+      root = REXML::Document.new(data).root
+      urlset = Parser.parse(root)
+      expect(urlset).to be_a(Urlset)
+    end
+
+    it 'parses a String' do
+      data = File.read('spec/data/examples/example-1.xml')
+      urlset = Parser.parse(data)
+      expect(urlset).to be_a(Urlset)
+    end
+
+    it 'fails when it gets somethign other than a <urlset/> or <sitemap/>' do
+      data = '<loc>http://example.com/resourcelist-part1.xml</loc>'
+      expect { Parser.parse(data) }.to raise_exception
+    end
+
+    it 'fails when it gets something other than XML' do
+      data = 12345
+      expect { Parser.parse(data) }.to raise_exception
+    end
+
   end
 
 end
