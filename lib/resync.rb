@@ -1,8 +1,9 @@
 require 'xml/mapping'
+require 'time'
 
 module Resync
 
-  class DateTimeNode < XML::Mapping::SingleAttributeNode
+  class TimeNode < XML::Mapping::SingleAttributeNode
     def initialize(*args)
       path, *args = super(*args)
       @path = XML::XXPath.new(path)
@@ -10,15 +11,16 @@ module Resync
     end
 
     def extract_attr_value(xml) # :nodoc:
-      DateTime.new(default_when_xpath_err{ @path.first(xml).text })
+      value = default_when_xpath_err{ @path.first(xml).text }
+      value ? Time.iso8601(value).utc : nil
     end
-    
+
     def set_attr_value(xml, value) # :nodoc:
       @path.first(xml,:ensure_created=>true).text = value.to_s
     end
   end
 
-  XML::Mapping.add_node_class DateTimeNode
+  XML::Mapping.add_node_class TimeNode
 
   class UriNode < XML::Mapping::SingleAttributeNode
     def initialize(*args)

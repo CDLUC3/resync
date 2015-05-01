@@ -9,7 +9,7 @@ module Resync
     # tag 'url'
 
     uri_node :loc, 'loc', :default_value => nil
-    date_time_node :lastmod, 'lastmod', :default_value => nil
+    time_node :lastmod, 'lastmod', :default_value => nil
     changefreq_node :changefreq, 'changefreq', :default_value => nil
     numeric_node :priority, 'priority', :default_value => nil
 
