@@ -1,14 +1,15 @@
 require 'spec_helper'
 
 module Resync
-  describe Url do
-    def parse(xml_string)
-      doc = REXML::Document.new(xml_string)
-      Url.load_from_xml(doc.root)
-    end
+  module XML
+    describe Url do
+      def parse(xml_string)
+        doc = REXML::Document.new(xml_string)
+        Url.load_from_xml(doc.root)
+      end
 
-    it 'can round-trip to XML' do
-      xml = '<url>
+      it 'can round-trip to XML' do
+        xml = '<url>
               <loc>http://example.org/foo</loc>
               <lastmod>2006-06-06T06:00:00Z</lastmod>
               <changefreq>never</changefreq>
@@ -22,8 +23,9 @@ module Resync
                   href="https://example.org/" length="54321" modified="2013-02-04T09:00:00Z" path="/foo/bar" pri="1.2345" rel="qux"
                   type="quux"/>
             </url>'
-      url = parse(xml)
-      expect(url.save_to_xml).to be_xml(xml)
+        url = parse(xml)
+        expect(url.save_to_xml).to be_xml(xml)
+      end
     end
   end
 end
