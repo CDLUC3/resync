@@ -10,7 +10,7 @@ module Resync
       def self.from_str(time_str)
         xml_string = "<elem time='#{time_str}'/>"
         doc = REXML::Document.new(xml_string)
-        self.load_from_xml(doc.root)
+        load_from_xml(doc.root)
       end
     end
 
