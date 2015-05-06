@@ -70,8 +70,9 @@ module Resync
       end
 
       it 'parses @type' do
-        md = parse('<md type="elvis"/>')
-        expect(md.type).to eq('elvis')
+        mt = MIME::Types['text/plain'].first
+        md = parse('<md type="text/plain"/>')
+        expect(md.type).to eq(mt)
       end
 
       it 'parses @until' do
@@ -96,7 +97,7 @@ module Resync
                 length="54321"
                 modified="2004-04-04T04:00:00Z"
                 path="/foo"
-                type="bar"
+                type="bar/baz"
                 until="2005-05-05T05:00:00Z"
             />'
         md = parse(xml)

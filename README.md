@@ -9,7 +9,6 @@ A Ruby gem for working with the [ResourceSync](http://www.openarchives.org/rs/1.
 The [ResourceSync schema](http://www.openarchives.org/rs/0.9.1/resourcesync.xsd) defines restrictions on the values of several attributes:
 
 - Path values must start with a slash, must not end with a slash
-- MIME content types must conform with [RFC 2045](http://tools.ietf.org/html/rfc2045) and [RFC 2046](http://tools.ietf.org/html/rfc2046)
 - Priorities must be positive and < 1,000,000
 - Link relation types must conform with [RFC 5988](http://tools.ietf.org/html/rfc5988)
 
@@ -18,7 +17,7 @@ The [Sitemap](http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd) and [Site
 - URIs have a minimum length of 12 and a max of 2048 characters.
 - Priorities must be in the range 0.0-1.0 (inclusive)
 
-None of these are currently enforced by `resync`, although it wouldn't be too hard to implement.
+None of these are currently enforced by `resync`, although they wouldn't be too hard to implement.
 
 ### `Ln`, `Md`, and `hash`
 

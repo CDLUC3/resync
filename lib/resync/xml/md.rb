@@ -12,7 +12,7 @@ module Resync
       time_node :modified, '@modified', default_value: nil
 
       numeric_node :length, '@length', default_value: nil
-      text_node :type, '@type', default_value: nil
+      mime_type_node :type, '@type', default_value: nil
       text_node :encoding, '@encoding', default_value: nil
       text_node :_hash, '@hash', default_value: nil
 
