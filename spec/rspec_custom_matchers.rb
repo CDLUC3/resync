@@ -1,20 +1,24 @@
 require 'rspec/expectations'
+require 'equivalent-xml'
 
 RSpec::Matchers.define :be_xml do |expected|
 
-  def to_element(xml)
+  def to_nokogiri(xml)
     case xml
-    when String
-      REXML::Document.new(xml).root
-    when REXML::Document
-      xml.root
-    when REXML::Element
+    when Nokogiri::XML::Element
       xml
+    when Nokogiri::XML::Document
+      xml.root
+    when String
+      to_nokogiri(Nokogiri::XML(xml))
+    when REXML::Element
+      to_nokogiri(xml.to_s)
     end
   end
 
-  def to_string(xml)
-    return nil unless xml
+  def to_pretty(xml_str)
+    return nil unless xml_str
+    xml = REXML::Document.new(xml_str)
     formatter = REXML::Formatters::Pretty.new(2)
     formatter.compact = true
     out = StringIO.new
@@ -23,14 +27,15 @@ RSpec::Matchers.define :be_xml do |expected|
   end
 
   match do |actual|
-    expected_xml = to_element(expected) || fail("expected value #{expected} does not appear to be XML")
-    actual_xml = to_element(actual)
-    to_string(actual_xml) == to_string(expected_xml)
+    expected_xml = to_nokogiri(expected) || fail("expected value #{expected} does not appear to be XML")
+    actual_xml = to_nokogiri(actual)
+
+    EquivalentXml.equivalent?(expected_xml, actual_xml, element_order: true, normalize_whitespace: true)
   end
 
   failure_message do |actual|
-    expected_string = to_string(to_element(expected))
-    actual_string = to_string(to_element(actual)) || actual
+    expected_string = to_pretty(to_nokogiri(expected))
+    actual_string = to_pretty(to_nokogiri(actual)) || actual
     "expected XML:\n#{expected_string}\n\nbut was:\n#{actual_string}"
   end
 
