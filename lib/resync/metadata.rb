@@ -18,7 +18,7 @@ module Resync
     # ------------------------------------------------------------
     # Initializer
 
-    def initialize(# rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
+    def initialize( # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
         at_time: nil,
         from_time: nil,
         until_time: nil,
