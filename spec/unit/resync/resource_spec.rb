@@ -6,13 +6,13 @@ module Resync
 
       it 'accepts a URI' do
         uri = URI('http://example.org/')
-        resource = Resource.new(uri:uri)
+        resource = Resource.new(uri: uri)
         expect(resource.uri).to eq(uri)
       end
 
       it 'accepts a string URI' do
         uri = 'http://example.org/'
-        resource = Resource.new(uri:uri)
+        resource = Resource.new(uri: uri)
         expect(resource.uri).to eq(URI(uri))
       end
 

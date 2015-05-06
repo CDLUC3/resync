@@ -68,14 +68,14 @@ module Resync
         expect(url0.lastmod).to eq(Time.utc(2013, 1, 2, 13))
         md0 = url0.md
         expect(md0).not_to be_nil
-        expect(md0.change).to be(Change::UPDATED)
+        expect(md0.change).to be(Resync::Types::Change::UPDATED)
 
         url1 = urls[1]
         expect(url1.loc).to eq(URI('http://example.com/res3.tiff'))
         expect(url1.lastmod).to eq(Time.utc(2013, 1, 2, 18))
         md1 = url1.md
         expect(md1).not_to be_nil
-        expect(md1.change).to be(Change::DELETED)
+        expect(md1.change).to be(Resync::Types::Change::DELETED)
       end
 
       it 'parses example 4' do

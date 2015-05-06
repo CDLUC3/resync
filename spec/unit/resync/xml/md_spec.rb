@@ -31,7 +31,7 @@ module Resync
 
       it 'parses @change' do
         md = parse('<md change="deleted"/>')
-        expect(md.change).to eq(Change::DELETED)
+        expect(md.change).to eq(Resync::Types::Change::DELETED)
       end
 
       it 'parses @completed' do
