@@ -102,6 +102,36 @@ module Resync
         end
       end
 
+      describe 'mime_type' do
+        it 'accepts a standard MIME type' do
+          mt = MIME::Types['text/plain'].first
+          metadata = Metadata.new(mime_type: mt)
+          expect(metadata.mime_type).to eq(mt)
+        end
+
+        it 'accepts a non-standard MIME type' do
+          mt = MIME::Type.new('elvis/presley')
+          metadata = Metadata.new(mime_type: mt)
+          expect(metadata.mime_type).to eq(mt)
+        end
+
+        it 'accepts a MIME type as a string' do
+          mt_string = 'elvis/presley'
+          metadata = Metadata.new(mime_type: mt_string)
+          expect(metadata.mime_type).to eq(MIME::Type.new(mt_string))
+        end
+
+        it 'defaults to nil if no MIME type is specified' do
+          metadata = Metadata.new
+          expect(metadata.length).to be_nil
+        end
+
+        it 'fails if mime_type isn\'t a MIME type' do
+          mt_string = 'I am not a mime type'
+          expect { Metadata.new(mime_type: mt_string) }.to raise_error(MIME::Type::InvalidContentType)
+        end
+      end
+
     end
   end
 end
