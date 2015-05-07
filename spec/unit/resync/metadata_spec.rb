@@ -132,6 +132,20 @@ module Resync
         end
       end
 
+      describe 'capability' do
+        it 'accepts a capability' do
+          cap = 'resourcelist'
+          metadata = Metadata.new(capability: cap)
+          expect(metadata.capability).to eq(cap)
+        end
+
+        it 'defaults to nil if no capability specified' do
+          metadata = Metadata.new
+          expect(metadata.capability).to be_nil
+        end
+
+      end
+
     end
   end
 end

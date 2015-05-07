@@ -15,6 +15,8 @@ module Resync
     attr_reader :length
     attr_reader :mime_type
 
+    attr_reader :capability
+
     # ------------------------------------------------------------
     # Initializer
 
@@ -24,8 +26,11 @@ module Resync
         until_time: nil,
         completed_time: nil,
         modified_time: nil,
+
         length: nil,
-        mime_type: nil
+        mime_type: nil,
+
+        capability: nil
     )
       @at_time = time_or_nil(at_time)
       @from_time = time_or_nil(from_time)
@@ -35,6 +40,7 @@ module Resync
 
       @length = natural_number_or_nil(length)
       @mime_type = mime_type_or_nil(mime_type)
+      @capability = capability
     end
 
     # ------------------------------------------------------------
