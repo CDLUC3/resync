@@ -5,9 +5,5 @@ module Resync
 
     CAPABILITY = 'resourcelist'
 
-    def initialize(resources: nil, metadata: nil)
-      super
-    end
-
   end
 end
