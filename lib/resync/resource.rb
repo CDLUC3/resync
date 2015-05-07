@@ -5,12 +5,14 @@ module Resync
     # Attributes
 
     attr_reader :uri
+    attr_reader :metadata
 
     # ------------------------------------------------------------
     # Initializer
 
-    def initialize(uri:)
+    def initialize(uri:, metadata: nil)
       @uri = to_uri(uri)
+      @metadata = metadata
     end
 
     # ------------------------------------------------------------
