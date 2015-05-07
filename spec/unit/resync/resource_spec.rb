@@ -4,7 +4,7 @@ module Resync
   describe Resource do
     describe '#new' do
 
-      describe '@uri' do
+      describe 'uri' do
 
         it 'accepts a URI' do
           uri = URI('http://example.org/')
@@ -29,7 +29,20 @@ module Resync
 
       end
 
-      describe '@metadata' do
+      describe 'lastmod' do
+        it 'accepts a lastmod timestamp' do
+          lastmod = Time.utc(1997, 7, 16, 19, 20, 30.45)
+          resource = Resource.new(uri: 'http://example.org', lastmod: lastmod)
+          expect(resource.lastmod).to be_time(lastmod)
+        end
+
+        it 'defaults to nil if no lastmod timestamp specified' do
+          resource = Resource.new(uri: 'http://example.org')
+          expect(resource.lastmod).to be_nil
+        end
+      end
+
+      describe 'metadata' do
 
         it 'accepts metadata' do
           md = Metadata.new
@@ -45,5 +58,6 @@ module Resync
       end
 
     end
+
   end
 end
