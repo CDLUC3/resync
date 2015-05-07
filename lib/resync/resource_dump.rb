@@ -1,4 +1,9 @@
+require_relative 'list_base'
+
 module Resync
-  class ResourceDump
+  class ResourceDump < ListBase
+
+    CAPABILITY = 'resourcedump'
+
   end
 end
