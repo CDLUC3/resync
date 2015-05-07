@@ -88,7 +88,10 @@ module Resync
         mime_type = default_when_xpath_err { @path.first(xml).text }
         return nil unless mime_type
         return mime_type if mime_type.is_a?(MIME::Type)
-        mt = MIME::Types[mime_type].first and return mt
+
+        mt = MIME::Types[mime_type].first
+        return mt if mt
+
         MIME::Type.new(mime_type)
       end
 

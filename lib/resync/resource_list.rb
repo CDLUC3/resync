@@ -1,25 +1,12 @@
+require_relative 'list_base'
+
 module Resync
-  class ResourceList
-    attr_reader :resources
-    attr_reader :metadata
+  class ResourceList < ListBase
 
-    def initialize(resources: [], metadata: Metadata.new(capability: 'resourcelist'))
-      @resources = resources
-      @metadata = metadata_with_correct_capability(metadata)
-    end
+    CAPABILITY = 'resourcelist'
 
-    # ------------------------------------------------------------
-    # Private methods
-
-    private
-
-    # ------------------------------
-    # Parameter validators
-
-    def metadata_with_correct_capability(metadata)
-      fail ArgumentError, "#{metadata} does not appear to be metadata" unless metadata.respond_to?('capability')
-      fail ArgumentError, "Wrong capability for ResourceList metadata; expected 'resourcelist', was '#{metadata.capability}'" unless metadata.capability == 'resourcelist'
-      metadata
+    def initialize(resources: nil, metadata: nil)
+      super
     end
 
   end

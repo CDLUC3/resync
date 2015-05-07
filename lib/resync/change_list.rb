@@ -1,11 +1,12 @@
-module Resync
-  class ChangeList
-    attr_reader :resources
-    attr_reader :metadata
+require_relative 'list_base'
 
-    def initialize(resources: [], metadata: Metadata.new(capability: 'changelist'))
-      @resources = sorted(resources)
-      @metadata = metadata_with_correct_capability(metadata)
+module Resync
+  class ChangeList < ListBase
+
+    CAPABILITY = 'changelist'
+
+    def initialize(resources: nil, metadata: nil)
+      super(resources: sorted(resources), metadata: metadata)
     end
 
     # ------------------------------------------------------------
@@ -14,18 +15,10 @@ module Resync
     private
 
     # ------------------------------
-    # Parameter validators
-
-    def metadata_with_correct_capability(metadata)
-      fail ArgumentError, "#{metadata} does not appear to be metadata" unless metadata.respond_to?('capability')
-      fail ArgumentError, "Wrong capability for ChangeList metadata; expected 'changelist', was '#{metadata.capability}'" unless metadata.capability == 'changelist'
-      metadata
-    end
-
-    # ------------------------------
     # Conversions
 
     def sorted(resources)
+      return nil unless resources
       resources.sort do |left, right|
         if left.lastmod && right.lastmod
           left.lastmod <=> right.lastmod
