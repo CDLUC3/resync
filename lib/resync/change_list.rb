@@ -17,7 +17,7 @@ module Resync
     # Parameter validators
 
     def metadata_with_correct_capability(metadata)
-      fail ArgumentError, "#{metadata} does not appear to be metadata" unless metadata.is_a?(Metadata)
+      fail ArgumentError, "#{metadata} does not appear to be metadata" unless metadata.respond_to?('capability')
       fail ArgumentError, "Wrong capability for ChangeList metadata; expected 'changelist', was '#{metadata.capability}'" unless metadata.capability == 'changelist'
       metadata
     end
