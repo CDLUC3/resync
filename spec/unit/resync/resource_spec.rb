@@ -4,6 +4,7 @@ module Resync
   describe Resource do
     describe '#new' do
 
+      # TODO: Find a way to share this with capability_list_spec 'source description'
       describe 'uri' do
 
         it 'accepts a URI' do

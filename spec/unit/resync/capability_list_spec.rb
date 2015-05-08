@@ -27,6 +27,7 @@ module Resync
     # Tests
 
     describe '#new' do
+      # TODO: Find a way to share this with resource_spec 'uri'
       describe 'source description' do
         it 'accepts a URI' do
           uri = URI('http://example.org/')
