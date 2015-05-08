@@ -15,7 +15,7 @@ module Resync
     # ------------------------------------------------------------
     # Public methods
 
-    def resource_for(capability: capability)
+    def resource_for(capability:)
       @capabilities[capability]
     end
 
