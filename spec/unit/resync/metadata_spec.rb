@@ -6,6 +6,7 @@ module Resync
 
       describe 'timestamps' do
 
+        # TODO: Find a way to share the examples for the different time attributes
         it 'accepts an at timestamp' do
           at_time = Time.utc(1997, 7, 16, 19, 20, 30.45)
           metadata = Metadata.new(at_time: at_time)
