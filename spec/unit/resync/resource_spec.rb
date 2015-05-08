@@ -59,5 +59,18 @@ module Resync
 
     end
 
+    describe 'capability' do
+      it 'extracts the capability from the metadata' do
+        md = Metadata.new(capability: 'changelist')
+        resource = Resource.new(uri: 'http://example.org', metadata: md)
+        expect(resource.capability).to eq('changelist')
+      end
+
+      it 'returns nil if no metadata was specified' do
+        resource = Resource.new(uri: 'http://example.org')
+        expect(resource.capability).to be_nil
+      end
+    end
+
   end
 end

@@ -4,7 +4,7 @@ module Resync
     attr_reader :metadata
 
     def initialize(resources: nil, metadata: nil)
-      @resources = resources ? resources : []
+      @resources = resources || []
       @metadata = metadata_with_correct_capability(metadata)
     end
 
@@ -12,6 +12,9 @@ module Resync
     # Private methods
 
     private
+
+    # ------------------------------
+    # Parameter validators
 
     def metadata_with_correct_capability(metadata)
       capability = self.class::CAPABILITY

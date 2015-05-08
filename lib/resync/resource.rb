@@ -18,6 +18,13 @@ module Resync
     end
 
     # ------------------------------------------------------------
+    # Public methods
+
+    def capability
+      metadata ? metadata.capability : nil
+    end
+
+    # ------------------------------------------------------------
     # Private methods
 
     private
