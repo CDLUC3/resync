@@ -1,7 +1,7 @@
-require_relative 'base_list'
+require_relative 'shared/base_resource_list'
 
 module Resync
-  class ResourceDump < BaseList
+  class ResourceDump < BaseResourceList
     CAPABILITY = 'resourcedump'
   end
 end

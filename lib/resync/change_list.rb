@@ -1,7 +1,7 @@
-require_relative 'base_sorted_list'
+require_relative 'shared/sorted_resource_list'
 
 module Resync
-  class ChangeList < BaseSortedList
+  class ChangeList < SortedResourceList
     CAPABILITY = 'changelist'
   end
 end
