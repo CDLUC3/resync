@@ -1,1 +1,1 @@
-This directory contains examples from the [ResourceSync specification](http://www.openarchives.org/rs/1.0/resourcesync). 
+This directory contains examples from the [ResourceSync specification](http://www.openarchives.org/rs/1.0/resourcesync). (Note that examples 9-11 in the specification are not actually ResourceSync document examples, and so out of scope for our parse tests.)
