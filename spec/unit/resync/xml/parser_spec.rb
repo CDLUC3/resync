@@ -357,6 +357,80 @@ module Resync
         end
       end
 
+      it 'parses example 17' do
+        data = File.read('spec/data/examples/example-17.xml')
+        urlset = Parser.parse(data)
+
+        lns = urlset.ln
+        expect(lns.size).to eq(1)
+        ln0 = lns[0]
+        expect(ln0.rel).to eq('up')
+        expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
+
+        md = urlset.md
+        expect(md.capability).to eq('resourcedump')
+        expect(md.at).to be_time(Time.utc(2013, 1, 3, 9))
+        expect(md.completed).to be_time(Time.utc(2013, 1, 3, 9, 4))
+
+        urls = urlset.url
+        expect(urls.size).to eq(3)
+
+        expected_lengths = [4765, 9875, 2298]
+        expected_ats = [Time.utc(2013, 1, 3, 9), Time.utc(2013, 1, 3, 9, 1), Time.utc(2013, 1, 3, 9, 3)]
+        expected_completeds = [Time.utc(2013, 1, 3, 9, 2), Time.utc(2013, 1, 3, 9, 3), Time.utc(2013, 1, 3, 9, 4)]
+
+        (0..2).each do |i|
+          url = urls[i]
+          expect(url.loc).to eq(URI("http://example.com/resourcedump-part#{i+1}.zip"))
+          md = url.md
+          expect(md.type).to eq(MIME::Types['application/zip'].first)
+          expect(md.length).to eq(expected_lengths[i])
+          expect(md.at).to be_time(expected_ats[i])
+          expect(md.completed).to be_time(expected_completeds[i])
+          lns = url.ln
+          expect(lns.size).to eq(1)
+          ln = lns[0]
+          expect(ln.rel).to eq('contents')
+          expect(ln.href).to eq(URI("http://example.com/resourcedump_manifest-part#{i+1}.xml"))
+          expect(ln.type).to eq(MIME::Types['application/xml'].first)
+        end
+      end
+
+      it 'parses example 18' do
+        data = File.read('spec/data/examples/example-18.xml')
+        urlset = Parser.parse(data)
+
+        lns = urlset.ln
+        expect(lns.size).to eq(1)
+        ln0 = lns[0]
+        expect(ln0.rel).to eq('up')
+        expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
+
+        md = urlset.md
+        expect(md.capability).to eq('resourcedump-manifest')
+        expect(md.at).to be_time(Time.utc(2013, 1, 3, 9))
+        expect(md.completed).to be_time(Time.utc(2013, 1, 3, 9, 2))
+
+        urls = urlset.url
+        expect(urls.size).to eq(2)
+
+        expected_lastmods = [Time.utc(2013, 1, 2, 13), Time.utc(2013, 1, 2, 14)]
+        expected_hashes = ['md5:1584abdf8ebdc9802ac0c6a7402c03b6', 'md5:1e0d5cb8ef6ba40c99b14c0237be735e sha-256:854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784']
+        expected_lengths = [8876, 14599]
+        expected_types = [MIME::Types['text/html'].first, MIME::Types['application/pdf'].first]
+
+        (0..1).each do |i|
+          url = urls[i]
+          expect(url.loc).to eq(URI("http://example.com/res#{i+1}"))
+          expect(url.lastmod).to be_time(expected_lastmods[i])
+          md = url.md
+          expect(md.hash).to eq(expected_hashes[i])
+          expect(md.length).to eq(expected_lengths[i])
+          expect(md.type).to eq(expected_types[i])
+          expect(md.path).to eq("/resources/res#{i+1}")
+        end
+      end
+
     end
 
     describe '#parse' do
