@@ -144,7 +144,12 @@ module Resync
           metadata = Metadata.new
           expect(metadata.capability).to be_nil
         end
+      end
 
+      describe 'hash' do
+        # see e.g. spec Example 14
+        it 'allows hash access by algorithm'
+        it 'allows multiple hashes with different algorithms'
       end
 
     end
