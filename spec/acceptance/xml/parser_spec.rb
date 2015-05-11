@@ -652,7 +652,7 @@ module Resync
         expect(url.loc).to eq(URI('http://example.com/res1'))
         expect(url.lastmod).to be_time(Time.utc(2013, 1, 3, 18))
         md = url.md
-        expect(md.change).to eq(Change::UPDATED)
+        expect(md.change).to be(Change::UPDATED)
         expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
         expect(md.type).to be_mime_type('text/html')
@@ -761,7 +761,7 @@ module Resync
         expect(url0.loc).to eq(URI('http://example.com/res4'))
         expect(url0.lastmod).to be_time(Time.utc(2013, 1, 3, 17))
         md0 = url0.md
-        expect(md0.change).to eq(Change::UPDATED)
+        expect(md0.change).to be(Change::UPDATED)
         expect(md0.hash).to eq('sha-256:f4OxZX_x_DFGFDgghgdfb6rtSx-iosjf6735432nklj')
         expect(md0.length).to eq(56_778)
         expect(md0.type).to be_mime_type('application/json')
@@ -779,7 +779,7 @@ module Resync
         expect(url1.loc).to eq(URI('http://example.com/res5-full.tiff'))
         expect(url1.lastmod).to be_time(Time.utc(2013, 1, 3, 18))
         md1 = url1.md
-        expect(md1.change).to eq(Change::UPDATED)
+        expect(md1.change).to be(Change::UPDATED)
         expect(md1.hash).to eq('sha-256:f4OxZX_x_FO5LcGBSKHWXfwtSx-j1ncoSt3SABJtkGk')
         expect(md1.length).to eq(9_788_456_778)
         expect(md1.type).to be_mime_type('image/tiff')
@@ -792,7 +792,104 @@ module Resync
         expect(ln1.hash).to(eq('sha-256:h986gT_t_87HTkjHYE76G558hY-jdfgy76t55sadJUYT'))
         expect(ln1.length).to(eq(4533))
         expect(ln1.type).to(be_mime_type('application/x-tiff-diff'))
+      end
 
+      it 'parses example 28' do
+        data = File.read('spec/data/examples/example-28.xml')
+        urlset = Parser.parse(data)
+
+        lns = urlset.ln
+        expect(lns.size).to eq(1)
+        ln0 = lns[0]
+        expect(ln0.rel).to eq('up')
+        expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
+
+        md = urlset.md
+        expect(md.capability).to eq('changelist')
+        expect(md.from).to be_time(Time.utc(2013, 1, 3))
+
+        urls = urlset.url
+        expect(urls.size).to eq(2)
+
+        url0 = urls[0]
+        expect(url0.loc).to eq(URI('http://example.com/res2.pdf'))
+        expect(url0.lastmod).to be_time(Time.utc(2013, 1, 3, 18))
+        md0 = url0.md
+        expect(md0.change).to be(Change::UPDATED)
+        expect(md0.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md0.length).to eq(8876)
+        expect(md0.type).to be_mime_type('application/pdf')
+        lns0 = url0.ln
+        expect(lns0.size).to eq(1)
+        ln0 = lns0[0]
+        expect(ln0.rel).to(eq('describedby'))
+        expect(ln0.href).to(eq(URI('http://example.com/res2_dublin-core_metadata.xml')))
+        expect(ln0.modified).to(eq(Time.utc(2013, 1, 1, 12)))
+        expect(ln0.type).to(be_mime_type('application/xml'))
+
+        url1 = urls[1]
+        expect(url1.loc).to eq(URI('http://example.com/res2_dublin-core_metadata.xml'))
+        expect(url1.lastmod).to be_time(Time.utc(2013, 1, 3, 19))
+        md1 = url1.md
+        expect(md1.change).to be(Change::UPDATED)
+        expect(md1.type).to be_mime_type('application/xml')
+        lns1 = url1.ln
+        expect(lns1.size).to eq(2)
+        ln1 = lns1[0]
+        expect(ln1.rel).to(eq('describes'))
+        expect(ln1.href).to(eq(URI('http://example.com/res2.pdf')))
+        expect(ln1.modified).to(eq(Time.utc(2013, 1, 3, 18)))
+        expect(ln1.hash).to(eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6'))
+        expect(ln1.length).to(eq(8876))
+        expect(ln1.type).to(be_mime_type('application/pdf'))
+        ln2 = lns1[1]
+        expect(ln2.rel).to(eq('profile'))
+        expect(ln2.href).to(eq(URI('http://purl.org/dc/elements/1.1/')))
+      end
+
+      it 'parses example 29' do
+        data = File.read('spec/data/examples/example-29.xml')
+        urlset = Parser.parse(data)
+
+        lns = urlset.ln
+        expect(lns.size).to eq(1)
+        ln0 = lns[0]
+        expect(ln0.rel).to eq('up')
+        expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
+
+        md = urlset.md
+        expect(md.capability).to eq('changelist')
+        expect(md.from).to be_time(Time.utc(2013, 1, 3))
+
+        urls = urlset.url
+        expect(urls.size).to eq(1)
+
+        url = urls[0]
+        expect(url.loc).to eq(URI('http://example.com/res1'))
+        expect(url.lastmod).to be_time(Time.utc(2013, 1, 3, 18))
+        md = url.md
+        expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md.length).to eq(8876)
+        expect(md.type).to be_mime_type('text/html')
+        expect(md.change).to be(Change::UPDATED)
+
+        lns = url.ln
+        expect(lns.size).to eq(3)
+        ln0 = lns[0]
+        expect(ln0.rel).to eq('memento')
+        expect(ln0.href).to eq(URI('http://example.com/20130103070000/res1'))
+        expect(ln0.modified).to be_time(Time.utc(2013, 1, 2, 18))
+        expect(ln0.type).to be_mime_type('text/html')
+        expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md.length).to eq(8876)
+        expect(md.type).to be_mime_type('text/html')
+        ln1 = lns[1]
+        expect(ln1.rel).to eq('timegate')
+        expect(ln1.href).to eq(URI('http://example.com/timegate/http://example.com/res1'))
+        ln2 = lns[2]
+        expect(ln2.rel).to eq('timemap')
+        expect(ln2.href).to eq(URI('http://example.com/timemap/http://example.com/res1'))
+        expect(ln2.type).to be_mime_type('application/link-format')
       end
     end
 
