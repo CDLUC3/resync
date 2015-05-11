@@ -66,3 +66,26 @@ RSpec::Matchers.define :be_time do |expected|
     "expected time:\n#{expected_str}\n\nbut was:\n#{actual_str}"
   end
 end
+
+def to_mime_type(mime_type)
+  return nil unless mime_type
+  return mime_type if mime_type.is_a?(MIME::Type)
+
+  mt = MIME::Types[mime_type].first
+  return mt if mt
+
+  MIME::Type.new(mime_type)
+end
+
+RSpec::Matchers.define :be_mime_type do |expected|
+
+  expected_mime_type = to_mime_type(expected)
+
+  match do |actual|
+    actual == expected_mime_type
+  end
+
+  failure_message do |actual|
+    "expected MIME type:\n#{expected_mime_type}\nbut was:\n#{actual}"
+  end
+end

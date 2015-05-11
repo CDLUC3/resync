@@ -284,7 +284,7 @@ module Resync
         expected_lastmods = [Time.utc(2013, 1, 2, 13), Time.utc(2013, 1, 2, 14)]
         expected_hashes = ['md5:1584abdf8ebdc9802ac0c6a7402c03b6', 'md5:1e0d5cb8ef6ba40c99b14c0237be735e sha-256:854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784']
         expected_lengths = [8876, 14_599]
-        expected_types = [MIME::Types['text/html'].first, MIME::Types['application/pdf'].first]
+        expected_types = ['text/html', 'application/pdf']
 
         (0..1).each do |i|
           url = urls[i]
@@ -293,7 +293,7 @@ module Resync
           md = url.md
           expect(md.hash).to eq(expected_hashes[i])
           expect(md.length).to eq(expected_lengths[i])
-          expect(md.type).to eq(expected_types[i])
+          expect(md.type).to be_mime_type(expected_types[i])
         end
       end
 
@@ -347,7 +347,7 @@ module Resync
         expected_lastmods = [Time.utc(2013, 1, 2, 13), Time.utc(2013, 1, 2, 14)]
         expected_hashes = ['md5:1584abdf8ebdc9802ac0c6a7402c8753', 'md5:4556abdf8ebdc9802ac0c6a7402c9881']
         expected_lengths = [4385, 883]
-        expected_types = [MIME::Types['application/pdf'].first, MIME::Types['image/png'].first]
+        expected_types = ['application/pdf', 'image/png']
 
         (0..1).each do |i|
           url = urls[i]
@@ -356,7 +356,7 @@ module Resync
           md = url.md
           expect(md.hash).to eq(expected_hashes[i])
           expect(md.length).to eq(expected_lengths[i])
-          expect(md.type).to eq(expected_types[i])
+          expect(md.type).to be_mime_type(expected_types[i])
         end
       end
 
@@ -386,7 +386,7 @@ module Resync
           url = urls[i]
           expect(url.loc).to eq(URI("http://example.com/resourcedump-part#{i + 1}.zip"))
           md = url.md
-          expect(md.type).to eq(MIME::Types['application/zip'].first)
+          expect(md.type).to be_mime_type('application/zip')
           expect(md.length).to eq(expected_lengths[i])
           expect(md.at).to be_time(expected_ats[i])
           expect(md.completed).to be_time(expected_completeds[i])
@@ -395,7 +395,7 @@ module Resync
           ln = lns[0]
           expect(ln.rel).to eq('contents')
           expect(ln.href).to eq(URI("http://example.com/resourcedump_manifest-part#{i + 1}.xml"))
-          expect(ln.type).to eq(MIME::Types['application/xml'].first)
+          expect(ln.type).to be_mime_type('application/xml')
         end
       end
 
@@ -420,7 +420,7 @@ module Resync
         expected_lastmods = [Time.utc(2013, 1, 2, 13), Time.utc(2013, 1, 2, 14)]
         expected_hashes = ['md5:1584abdf8ebdc9802ac0c6a7402c03b6', 'md5:1e0d5cb8ef6ba40c99b14c0237be735e sha-256:854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784']
         expected_lengths = [8876, 14_599]
-        expected_types = [MIME::Types['text/html'].first, MIME::Types['application/pdf'].first]
+        expected_types = ['text/html', 'application/pdf']
 
         (0..1).each do |i|
           url = urls[i]
@@ -429,7 +429,7 @@ module Resync
           md = url.md
           expect(md.hash).to eq(expected_hashes[i])
           expect(md.length).to eq(expected_lengths[i])
-          expect(md.type).to eq(expected_types[i])
+          expect(md.type).to be_mime_type(expected_types[i])
           expect(md.path).to eq("/resources/res#{i + 1}")
         end
       end
@@ -562,7 +562,7 @@ module Resync
           expect(url.loc).to eq(URI("http://example.com/2013010#{i + 1}-changedump.zip"))
           expect(url.lastmod).to eq(expected_lastmods[i])
           md = url.md
-          expect(md.type).to eq(MIME::Types['application/zip'].first)
+          expect(md.type).to be_mime_type('application/zip')
           expect(md.length).to eq(expected_lengths[i])
           expect(md.from).to be_time(Time.utc(2013, 1, i + 1))
           expect(md.until).to be_time(Time.utc(2013, 1, i + 2))
@@ -571,7 +571,7 @@ module Resync
           ln = lns[0]
           expect(ln.rel).to eq('contents')
           expect(ln.href).to eq(URI("http://example.com/2013010#{i + 1}-changedump-manifest.xml"))
-          expect(ln.type).to eq(MIME::Types['application/xml'].first)
+          expect(ln.type).to be_mime_type('application/xml')
         end
 
       end
@@ -611,10 +611,10 @@ module Resync
         ]
         expected_lengths = [4339, 38_297, nil, 5426]
         expected_types = [
-          MIME::Types['text/html'].first,
-          MIME::Types['application/pdf'].first,
+          'text/html',
+          'application/pdf',
           nil,
-          MIME::Types['text/html'].first
+          'text/html'
         ]
         expected_paths = ['/changes/res7.html', '/changes/res9.pdf', nil, '/changes/res7-v2.html']
 
@@ -626,7 +626,7 @@ module Resync
           expect(md.change).to eq(expected_changes[i])
           expect(md.hash).to eq(expected_hashes[i])
           expect(md.length).to eq(expected_lengths[i])
-          expect(md.type).to eq(expected_types[i])
+          expect(md.type).to be_mime_type(expected_types[i])
           expect(md.path).to eq(expected_paths[i])
         end
       end
@@ -655,7 +655,7 @@ module Resync
         expect(md.change).to eq(Change::UPDATED)
         expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
-        expect(md.type).to eq(MIME::Types['text/html'].first)
+        expect(md.type).to be_mime_type('text/html')
 
         lns = url.ln
         expect(lns.size).to eq(3)
@@ -670,9 +670,130 @@ module Resync
           expect(ln.href).to eq(expected_uris[i])
           expect(ln.modified).to be_time(Time.utc(2013, 1, 3, 18))
         end
-
       end
 
+      it 'parses example 25' do
+        data = File.read('spec/data/examples/example-25.xml')
+        urlset = Parser.parse(data)
+
+        lns = urlset.ln
+        expect(lns.size).to eq(1)
+        ln0 = lns[0]
+        expect(ln0.rel).to eq('up')
+        expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
+
+        md = urlset.md
+        expect(md.capability).to eq('changelist')
+        expect(md.from).to be_time(Time.utc(2013, 1, 3, 11))
+
+        urls = urlset.url
+        expect(urls.size).to eq(1)
+
+        url = urls[0]
+        expect(url.loc).to eq(URI('http://example.com/res1'))
+        expect(url.lastmod).to be_time(Time.utc(2013, 1, 3, 18))
+        md = url.md
+        expect(md.change).to be(Change::UPDATED)
+        lns = url.ln
+        expect(lns.size).to eq(2)
+        ln0 = lns[0]
+        expect(ln0.rel).to eq('alternate')
+        expect(ln0.href).to eq(URI('http://example.com/res1.html'))
+        expect(ln0.modified).to be_time(Time.utc(2013, 1, 3, 18))
+        expect(ln0.type).to be_mime_type('text/html')
+        ln1 = lns[1]
+        expect(ln1.rel).to eq('alternate')
+        expect(ln1.href).to eq(URI('http://example.com/res1.pdf'))
+        expect(ln1.modified).to be_time(Time.utc(2013, 1, 3, 18))
+        expect(ln1.type).to be_mime_type('application/pdf')
+      end
+
+      it 'parses example 26' do
+        data = File.read('spec/data/examples/example-26.xml')
+        urlset = Parser.parse(data)
+
+        lns = urlset.ln
+        expect(lns.size).to eq(1)
+        ln = lns[0]
+        expect(ln.rel).to eq('up')
+        expect(ln.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
+
+        md = urlset.md
+        expect(md.capability).to eq('changelist')
+        expect(md.from).to be_time(Time.utc(2013, 1, 3))
+
+        urls = urlset.url
+        expect(urls.size).to eq(1)
+
+        url = urls[0]
+        expect(url.loc).to eq(URI('http://example.com/res1.html'))
+        expect(url.lastmod).to be_time(Time.utc(2013, 1, 3, 18))
+        md = url.md
+        expect(md.change).to be(Change::UPDATED)
+        expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md.length).to eq(8876)
+        lns = url.ln
+        expect(lns.size).to eq(1)
+        ln = lns[0]
+        expect(ln.rel).to eq('canonical')
+        expect(ln.href).to eq(URI('http://example.com/res1'))
+        expect(ln.modified).to be_time(Time.utc(2013, 1, 3, 18))
+      end
+
+      it 'parses example 27' do
+        data = File.read('spec/data/examples/example-27.xml')
+        urlset = Parser.parse(data)
+
+        lns = urlset.ln
+        expect(lns.size).to eq(1)
+        ln0 = lns[0]
+        expect(ln0.rel).to eq('up')
+        expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
+
+        md = urlset.md
+        expect(md.capability).to eq('changelist')
+        expect(md.from).to be_time(Time.utc(2013, 1, 3))
+
+        urls = urlset.url
+        expect(urls.size).to eq(2)
+
+        url0 = urls[0]
+        expect(url0.loc).to eq(URI('http://example.com/res4'))
+        expect(url0.lastmod).to be_time(Time.utc(2013, 1, 3, 17))
+        md0 = url0.md
+        expect(md0.change).to eq(Change::UPDATED)
+        expect(md0.hash).to eq('sha-256:f4OxZX_x_DFGFDgghgdfb6rtSx-iosjf6735432nklj')
+        expect(md0.length).to eq(56_778)
+        expect(md0.type).to be_mime_type('application/json')
+        lns0 = url0.ln
+        expect(lns0.size).to eq(1)
+        ln0 = lns0[0]
+        expect(ln0.rel).to(eq('http://www.openarchives.org/rs/terms/patch'))
+        expect(ln0.href).to(eq(URI('http://example.com/res4-json-patch')))
+        expect(ln0.modified).to(eq(Time.utc(2013, 1, 3, 17)))
+        expect(ln0.hash).to(eq('sha-256:y66dER_t_HWEIKpesdkeb7rtSc-ippjf9823742opld'))
+        expect(ln0.length).to(eq(73))
+        expect(ln0.type).to(be_mime_type('application/json-patch'))
+
+        url1 = urls[1]
+        expect(url1.loc).to eq(URI('http://example.com/res5-full.tiff'))
+        expect(url1.lastmod).to be_time(Time.utc(2013, 1, 3, 18))
+        md1 = url1.md
+        expect(md1.change).to eq(Change::UPDATED)
+        expect(md1.hash).to eq('sha-256:f4OxZX_x_FO5LcGBSKHWXfwtSx-j1ncoSt3SABJtkGk')
+        expect(md1.length).to eq(9_788_456_778)
+        expect(md1.type).to be_mime_type('image/tiff')
+        lns1 = url1.ln
+        expect(lns1.size).to eq(1)
+        ln1 = lns1[0]
+        expect(ln1.rel).to(eq('http://www.openarchives.org/rs/terms/patch'))
+        expect(ln1.href).to(eq(URI('http://example.com/res5-diff')))
+        expect(ln1.modified).to(eq(Time.utc(2013, 1, 3, 18)))
+        expect(ln1.hash).to(eq('sha-256:h986gT_t_87HTkjHYE76G558hY-jdfgy76t55sadJUYT'))
+        expect(ln1.length).to(eq(4533))
+        expect(ln1.type).to(be_mime_type('application/x-tiff-diff'))
+
+      end
     end
 
   end
