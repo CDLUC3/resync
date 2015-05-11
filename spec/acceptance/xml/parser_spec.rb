@@ -517,10 +517,10 @@ module Resync
         expected_filenames = %w(res7 res9 res5 res7)
         expected_extensions = %w(html pdf tiff html)
         expected_lastmods = [
-          Time.utc(2013, 1, 2, 12),
-          Time.utc(2013, 1, 2, 13),
-          Time.utc(2013, 1, 2, 19),
-          Time.utc(2013, 1, 2, 20)
+            Time.utc(2013, 1, 2, 12),
+            Time.utc(2013, 1, 2, 13),
+            Time.utc(2013, 1, 2, 19),
+            Time.utc(2013, 1, 2, 20)
         ]
 
         expected_changes = [Change::CREATED, Change::UPDATED, Change::DELETED, Change::UPDATED]
@@ -551,9 +551,9 @@ module Resync
         expect(urls.size).to eq(3)
 
         expected_lastmods = [
-          Time.utc(2013, 1, 1, 23, 59, 59),
-          Time.utc(2013, 1, 2, 23, 59, 59),
-          Time.utc(2013, 1, 3, 23, 59, 59)
+            Time.utc(2013, 1, 1, 23, 59, 59),
+            Time.utc(2013, 1, 2, 23, 59, 59),
+            Time.utc(2013, 1, 3, 23, 59, 59)
         ]
         expected_lengths = [3109, 6629, 8124]
 
@@ -597,24 +597,24 @@ module Resync
         expected_filenames = %w(res7 res9 res5 res7)
         expected_extensions = %w(html pdf tiff html)
         expected_lastmods = [
-          Time.utc(2013, 1, 2, 12),
-          Time.utc(2013, 1, 2, 13),
-          Time.utc(2013, 1, 2, 19),
-          Time.utc(2013, 1, 2, 20)
+            Time.utc(2013, 1, 2, 12),
+            Time.utc(2013, 1, 2, 13),
+            Time.utc(2013, 1, 2, 19),
+            Time.utc(2013, 1, 2, 20)
         ]
         expected_changes = [Change::CREATED, Change::UPDATED, Change::DELETED, Change::UPDATED]
         expected_hashes = [
-          'md5:1c1b0e264fa9b7e1e9aa6f9db8d6362b',
-          'md5:f906610c3d4aa745cb2b986f25b37c5a',
-          nil,
-          'md5:0988647082c8bc51778894a48ec3b576'
+            'md5:1c1b0e264fa9b7e1e9aa6f9db8d6362b',
+            'md5:f906610c3d4aa745cb2b986f25b37c5a',
+            nil,
+            'md5:0988647082c8bc51778894a48ec3b576'
         ]
         expected_lengths = [4339, 38_297, nil, 5426]
         expected_types = [
-          'text/html',
-          'application/pdf',
-          nil,
-          'text/html'
+            'text/html',
+            'application/pdf',
+            nil,
+            'text/html'
         ]
         expected_paths = ['/changes/res7.html', '/changes/res9.pdf', nil, '/changes/res7-v2.html']
 
@@ -891,7 +891,63 @@ module Resync
         expect(ln2.href).to eq(URI('http://example.com/timemap/http://example.com/res1'))
         expect(ln2.type).to be_mime_type('application/link-format')
       end
-    end
 
+      it 'parses example 30' do
+        data = File.read('spec/data/examples/example-30.xml')
+        urlset = Parser.parse(data)
+
+        lns = urlset.ln
+        expect(lns.size).to eq(1)
+        ln0 = lns[0]
+        expect(ln0.rel).to eq('up')
+        expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
+
+        md = urlset.md
+        expect(md.capability).to eq('changelist')
+        expect(md.from).to be_time(Time.utc(2013, 1, 3))
+        urls = urlset.url
+        expect(urls.size).to eq(1)
+
+        url = urls[0]
+        expect(url.loc).to eq(URI('http://example.com/res1'))
+        expect(url.lastmod).to be_time(Time.utc(2013, 1, 3, 7))
+        md = url.md
+        expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md.length).to eq(8876)
+        expect(md.type).to be_mime_type('text/html')
+        expect(md.change).to be(Change::UPDATED)
+
+        lns = url.ln
+        ln = lns[0]
+        expect(ln.rel).to eq('collection')
+        expect(ln.href).to eq(URI('http://example.com/aggregation/0601007'))
+      end
+
+      it 'parses example 31' do
+        data = File.read('spec/data/examples/example-31.xml')
+        urlset = Parser.parse(data)
+
+        lns = urlset.ln
+        expect(lns.size).to eq(1)
+        ln0 = lns[0]
+        expect(ln0.rel).to eq('up')
+        expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
+
+        md = urlset.md
+        expect(md.capability).to eq('changelist')
+        expect(md.from).to be_time(Time.utc(2013, 1, 3))
+        urls = urlset.url
+        expect(urls.size).to eq(1)
+
+        url = urls[0]
+        expect(url.loc).to eq(URI('http://original.example.com/res1.html'))
+        expect(url.lastmod).to be_time(Time.utc(2013, 1, 3, 7))
+        md = url.md
+        expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md.length).to eq(8876)
+        expect(md.type).to be_mime_type('text/html')
+        expect(md.change).to be(Change::UPDATED)
+      end
+    end
   end
 end
