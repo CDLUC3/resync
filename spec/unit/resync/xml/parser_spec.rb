@@ -250,7 +250,7 @@ module Resync
         urls = urlset.url
         expect(urls.size).to eq(4)
 
-        expected_capabilities = ['resourcelist', 'resourcedump', 'changelist', 'changedump']
+        expected_capabilities = %w(resourcelist resourcedump changelist changedump)
         (0..3).each do |i|
           url = urls[i]
           capability = expected_capabilities[i]
@@ -280,12 +280,12 @@ module Resync
 
         expected_lastmods = [Time.utc(2013, 1, 2, 13), Time.utc(2013, 1, 2, 14)]
         expected_hashes = ['md5:1584abdf8ebdc9802ac0c6a7402c03b6', 'md5:1e0d5cb8ef6ba40c99b14c0237be735e sha-256:854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784']
-        expected_lengths = [8876, 14599]
+        expected_lengths = [8876, 14_599]
         expected_types = [MIME::Types['text/html'].first, MIME::Types['application/pdf'].first]
 
         (0..1).each do |i|
           url = urls[i]
-          expect(url.loc).to eq(URI("http://example.com/res#{i+1}"))
+          expect(url.loc).to eq(URI("http://example.com/res#{i + 1}"))
           expect(url.lastmod).to be_time(expected_lastmods[i])
           md = url.md
           expect(md.hash).to eq(expected_hashes[i])
@@ -315,7 +315,7 @@ module Resync
         expected_times = [Time.utc(2013, 1, 3, 9), Time.utc(2013, 1, 3, 9, 3), Time.utc(2013, 1, 3, 9, 7)]
         (0..2).each do |i|
           sitemap = sitemaps[i]
-          expect(sitemap.loc).to eq(URI("http://example.com/resourcelist#{i+1}.xml"))
+          expect(sitemap.loc).to eq(URI("http://example.com/resourcelist#{i + 1}.xml"))
           md = sitemap.md
           expect(md.at).to be_time(expected_times[i])
         end
@@ -348,7 +348,7 @@ module Resync
 
         (0..1).each do |i|
           url = urls[i]
-          expect(url.loc).to eq(URI("http://example.com/res#{i+3}"))
+          expect(url.loc).to eq(URI("http://example.com/res#{i + 3}"))
           expect(url.lastmod).to be_time(expected_lastmods[i])
           md = url.md
           expect(md.hash).to eq(expected_hashes[i])
@@ -381,7 +381,7 @@ module Resync
 
         (0..2).each do |i|
           url = urls[i]
-          expect(url.loc).to eq(URI("http://example.com/resourcedump-part#{i+1}.zip"))
+          expect(url.loc).to eq(URI("http://example.com/resourcedump-part#{i + 1}.zip"))
           md = url.md
           expect(md.type).to eq(MIME::Types['application/zip'].first)
           expect(md.length).to eq(expected_lengths[i])
@@ -391,7 +391,7 @@ module Resync
           expect(lns.size).to eq(1)
           ln = lns[0]
           expect(ln.rel).to eq('contents')
-          expect(ln.href).to eq(URI("http://example.com/resourcedump_manifest-part#{i+1}.xml"))
+          expect(ln.href).to eq(URI("http://example.com/resourcedump_manifest-part#{i + 1}.xml"))
           expect(ln.type).to eq(MIME::Types['application/xml'].first)
         end
       end
@@ -416,18 +416,18 @@ module Resync
 
         expected_lastmods = [Time.utc(2013, 1, 2, 13), Time.utc(2013, 1, 2, 14)]
         expected_hashes = ['md5:1584abdf8ebdc9802ac0c6a7402c03b6', 'md5:1e0d5cb8ef6ba40c99b14c0237be735e sha-256:854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784']
-        expected_lengths = [8876, 14599]
+        expected_lengths = [8876, 14_599]
         expected_types = [MIME::Types['text/html'].first, MIME::Types['application/pdf'].first]
 
         (0..1).each do |i|
           url = urls[i]
-          expect(url.loc).to eq(URI("http://example.com/res#{i+1}"))
+          expect(url.loc).to eq(URI("http://example.com/res#{i + 1}"))
           expect(url.lastmod).to be_time(expected_lastmods[i])
           md = url.md
           expect(md.hash).to eq(expected_hashes[i])
           expect(md.length).to eq(expected_lengths[i])
           expect(md.type).to eq(expected_types[i])
-          expect(md.path).to eq("/resources/res#{i+1}")
+          expect(md.path).to eq("/resources/res#{i + 1}")
         end
       end
 
