@@ -1,4 +1,5 @@
 require_relative 'shared/base_resource_list_examples'
+require_relative 'shared/uri_field_examples'
 
 module Resync
   describe CapabilityList do
@@ -8,7 +9,7 @@ module Resync
 
     # Fixture overrides
 
-    def new_list_override(**args)
+    def new_instance_override(**args)
       CapabilityList.new(source_description: 'http://example.org/', **args)
     end
 
@@ -27,28 +28,10 @@ module Resync
     # Tests
 
     describe '#new' do
-      # TODO: Find a way to share this with resource_spec 'uri'
+
       describe 'source description' do
-        it 'accepts a URI' do
-          uri = URI('http://example.org/')
-          capability_list = CapabilityList.new(source_description: uri)
-          expect(capability_list.source_description).to eq(uri)
-        end
-
-        it 'accepts a string URI' do
-          uri = 'http://example.org/'
-          capability_list = CapabilityList.new(source_description: uri)
-          expect(capability_list.source_description).to eq(URI(uri))
-        end
-
-        it 'rejects an invalid URI' do
-          invalid_url = 'I am not a valid URI'
-          expect { CapabilityList.new source_description: invalid_url }.to raise_error(URI::InvalidURIError)
-        end
-
-        it 'requires a URI' do
-          expect { CapabilityList.new }.to raise_error(ArgumentError)
-        end
+        def uri_field; :source_description; end # rubocop:disable Style/SingleLineMethods
+        it_behaves_like 'a URI field'
       end
 
       describe 'resources' do

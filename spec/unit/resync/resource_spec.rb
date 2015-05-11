@@ -1,33 +1,13 @@
 require 'spec_helper'
+require_relative 'shared/uri_field_examples'
 
 module Resync
   describe Resource do
     describe '#new' do
 
-      # TODO: Find a way to share this with capability_list_spec 'source description'
       describe 'uri' do
-
-        it 'accepts a URI' do
-          uri = URI('http://example.org/')
-          resource = Resource.new(uri: uri)
-          expect(resource.uri).to eq(uri)
-        end
-
-        it 'accepts a string URI' do
-          uri = 'http://example.org/'
-          resource = Resource.new(uri: uri)
-          expect(resource.uri).to eq(URI(uri))
-        end
-
-        it 'rejects an invalid URI' do
-          invalid_url = 'I am not a valid URI'
-          expect { Resource.new uri: invalid_url }.to raise_error(URI::InvalidURIError)
-        end
-
-        it 'requires a URI' do
-          expect { Resource.new }.to raise_error(ArgumentError)
-        end
-
+        def uri_field; :uri; end # rubocop:disable Style/SingleLineMethods
+        it_behaves_like 'a URI field'
       end
 
       describe 'lastmod' do

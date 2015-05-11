@@ -10,9 +10,9 @@ module Resync
     it_behaves_like BaseResourceList
 
     # TODO: Figure out how to share this with ListBase (use RSpec helper methods?)
-    def new_list(**args)
-      if defined? new_list_override
-        new_list_override(**args)
+    def new_instance(**args)
+      if defined? new_instance_override
+        new_instance_override(**args)
       else
         described_class.new(**args)
       end
@@ -27,7 +27,7 @@ module Resync
         it 'sorts resources by lastmod' do
           resource0 = Resource.new(uri: 'http://example.org', lastmod: Time.utc(1997, 7, 16, 19, 20, 30.45))
           resource1 = Resource.new(uri: 'http://example.org', lastmod: Time.utc(1998, 7, 16, 19, 20, 30.45))
-          list = new_list(resources: [resource1, resource0])
+          list = new_instance(resources: [resource1, resource0])
           expect(list.resources).to eq([resource0, resource1])
         end
 
@@ -35,7 +35,7 @@ module Resync
           resource0 = Resource.new(uri: 'http://example.org', lastmod: Time.utc(1997, 7, 16, 19, 20, 30.45))
           resource1 = Resource.new(uri: 'http://example.org', lastmod: Time.utc(1998, 7, 16, 19, 20, 30.45))
           resource2 = Resource.new(uri: 'http://example.com')
-          list = new_list(resources: [resource1, resource2, resource0])
+          list = new_instance(resources: [resource1, resource2, resource0])
           expect(list.resources).to eq([resource0, resource1, resource2])
         end
       end
