@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Resync
-  RSpec.shared_examples ListBase do
+  RSpec.shared_examples BaseList do
 
     # ------------------------------------------------------
     # "Virtual" fixture methods

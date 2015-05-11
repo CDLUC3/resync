@@ -1,7 +1,7 @@
-require_relative 'sorted_list_base_spec'
+require_relative 'base_sorted_list_spec'
 
 module Resync
   describe ChangeList do
-    it_behaves_like SortedListBase
+    it_behaves_like BaseSortedList
   end
 end

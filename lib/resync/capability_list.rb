@@ -1,7 +1,7 @@
-require_relative 'list_base'
+require_relative 'base_list'
 
 module Resync
-  class CapabilityList < ListBase
+  class CapabilityList < BaseList
     CAPABILITY = 'capabilitylist'
 
     attr_reader :source_description

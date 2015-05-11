@@ -1,7 +1,7 @@
-require_relative 'sorted_list_base'
+require_relative 'base_sorted_list'
 
 module Resync
-  class ChangeList < SortedListBase
+  class ChangeList < BaseSortedList
     CAPABILITY = 'changelist'
   end
 end

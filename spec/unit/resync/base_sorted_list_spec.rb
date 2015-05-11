@@ -1,13 +1,13 @@
-require_relative 'list_base_spec'
+require_relative 'base_list_spec'
 
 module Resync
 
-  RSpec.shared_examples SortedListBase do
+  RSpec.shared_examples BaseSortedList do
 
     # ------------------------------------------------------
     # Superclass conformance
 
-    it_behaves_like ListBase
+    it_behaves_like BaseList
 
     # TODO: Figure out how to share this with ListBase (use RSpec helper methods?)
     def new_list(**args)

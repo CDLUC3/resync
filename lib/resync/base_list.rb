@@ -1,5 +1,5 @@
 module Resync
-  class ListBase
+  class BaseList
     attr_reader :resources
     attr_reader :metadata
 

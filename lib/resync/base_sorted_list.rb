@@ -1,7 +1,7 @@
-require_relative 'list_base'
+require_relative 'base_list'
 
 module Resync
-  class SortedListBase < ListBase
+  class BaseSortedList < BaseList
 
     def initialize(resources: nil, metadata: nil)
       super(resources: sorted(resources), metadata: metadata)

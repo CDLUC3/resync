@@ -1,4 +1,4 @@
-require_relative 'list_base_spec'
+require_relative 'base_list_spec'
 
 module Resync
   describe CapabilityList do
@@ -21,7 +21,7 @@ module Resync
 
     # Tests
 
-    it_behaves_like ListBase
+    it_behaves_like BaseList
 
     # ------------------------------------------------------
     # Tests
