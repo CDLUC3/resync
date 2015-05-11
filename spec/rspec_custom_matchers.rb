@@ -52,8 +52,12 @@ RSpec::Matchers.define :be_time do |expected|
   end
 
   match do |actual|
-    fail "Expected value #{expected} is not a Time" unless expected.is_a?(Time)
-    actual.is_a?(Time) && (to_string(expected) == to_string(actual))
+    if expected
+      fail "Expected value #{expected} is not a Time" unless expected.is_a?(Time)
+      actual.is_a?(Time) && (to_string(expected) == to_string(actual))
+    else
+      return actual.nil?
+    end
   end
 
   failure_message do |actual|

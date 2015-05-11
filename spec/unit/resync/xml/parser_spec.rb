@@ -431,6 +431,102 @@ module Resync
         end
       end
 
+      it 'parses example 19' do
+        data = File.read('spec/data/examples/example-19.xml')
+        urlset = Parser.parse(data)
+
+        lns = urlset.ln
+        expect(lns.size).to eq(1)
+        ln0 = lns[0]
+        expect(ln0.rel).to eq('up')
+        expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
+
+        md = urlset.md
+        expect(md.capability).to eq('changelist')
+        expect(md.from).to be_time(Time.utc(2013, 1, 3))
+
+        urls = urlset.url
+        expect(urls.size).to eq(4)
+
+        expected_filenames = %w(res1 res2 res3 res2)
+        expected_extensions = %w(html pdf tiff pdf)
+        expected_lastmods = [Time.utc(2013, 1, 3, 11), Time.utc(2013, 1, 3, 13), Time.utc(2013, 1, 3, 18), Time.utc(2013, 1, 3, 21)]
+
+        Change = Resync::Types::Change
+        expected_changes = [Change::CREATED, Change::UPDATED, Change::DELETED, Change::UPDATED]
+
+        (0..3).each do |i|
+          url = urls[i]
+          expect(url.loc).to eq(URI("http://example.com/#{expected_filenames[i]}.#{expected_extensions[i]}"))
+          expect(url.lastmod).to be_time(expected_lastmods[i])
+          expect(url.md.change).to eq(expected_changes[i])
+        end
+      end
+
+      it 'parses example 20' do
+        data = File.read('spec/data/examples/example-20.xml')
+        sitemapindex = Parser.parse(data)
+
+        lns = sitemapindex.ln
+        expect(lns.size).to eq(1)
+        ln0 = lns[0]
+        expect(ln0.rel).to eq('up')
+        expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
+
+        md = sitemapindex.md
+        expect(md.capability).to eq('changelist')
+        expect(md.from).to be_time(Time.utc(2013, 1, 1))
+
+        sitemaps = sitemapindex.sitemap
+        expect(sitemaps.size).to eq(3)
+
+        expected_froms = [Time.utc(2013, 1, 1), Time.utc(2013, 1, 2), Time.utc(2013, 1, 3)]
+        expected_untils = [Time.utc(2013, 1, 2), Time.utc(2013, 1, 3), nil]
+        (0..2).each do |i|
+          sitemap = sitemaps[i]
+          expect(sitemap.loc).to eq(URI("http://example.com/2013010#{i + 1}-changelist.xml"))
+          md = sitemap.md
+          expect(md.from).to be_time(expected_froms[i])
+          expect(md.until).to be_time(expected_untils[i])
+        end
+      end
+
+      it 'parses example 21' do
+        data = File.read('spec/data/examples/example-21.xml')
+        urlset = Parser.parse(data)
+
+        lns = urlset.ln
+        expect(lns.size).to eq(2)
+        ln0 = lns[0]
+        expect(ln0.rel).to eq('up')
+        expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
+        ln1 = lns[1]
+        expect(ln1.rel).to eq('index')
+        expect(ln1.href).to eq(URI('http://example.com/dataset1/changelist.xml'))
+
+        md = urlset.md
+        expect(md.capability).to eq('changelist')
+        expect(md.from).to be_time(Time.utc(2013, 1, 2))
+        expect(md.until).to be_time(Time.utc(2013, 1, 3))
+
+        urls = urlset.url
+        expect(urls.size).to eq(4)
+
+        expected_filenames = %w(res7 res9 res5 res7)
+        expected_extensions = %w(html pdf tiff html)
+        expected_lastmods = [Time.utc(2013, 1, 2, 12), Time.utc(2013, 1, 2, 13), Time.utc(2013, 1, 2, 19), Time.utc(2013, 1, 2, 20)]
+
+        Change = Resync::Types::Change
+        expected_changes = [Change::CREATED, Change::UPDATED, Change::DELETED, Change::UPDATED]
+
+        (0..3).each do |i|
+          url = urls[i]
+          expect(url.loc).to eq(URI("http://example.com/#{expected_filenames[i]}.#{expected_extensions[i]}"))
+          expect(url.lastmod).to be_time(expected_lastmods[i])
+          expect(url.md.change).to eq(expected_changes[i])
+        end
+      end
+
     end
 
     describe '#parse' do
