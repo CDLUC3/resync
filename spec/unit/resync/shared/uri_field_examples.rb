@@ -7,6 +7,8 @@ module Resync
       described_class.new(**args)
     end
 
+    # TODO: Something better than def for uri_field (and maybe for new_instance)
+
     it 'accepts a URI' do
       uri = URI('http://example.org/')
       instance = new_instance(uri_field => uri)
