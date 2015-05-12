@@ -1,7 +1,10 @@
+require_relative 'link_collection'
+
 module Resync
   class BaseResourceList
+    include LinkCollection
+
     attr_reader :resources
-    attr_reader :links
     attr_reader :metadata
 
     def initialize(resources: nil, links: nil, metadata: nil)

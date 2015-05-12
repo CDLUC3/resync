@@ -5,8 +5,8 @@ module Resync
     # Attributes
 
     attr_reader :uri
-    attr_reader :metadata
     attr_reader :lastmod
+    attr_reader :metadata
 
     # ------------------------------------------------------------
     # Initializer
