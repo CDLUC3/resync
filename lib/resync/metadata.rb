@@ -1,6 +1,8 @@
 require 'mime/types'
 
 module Resync
+
+  # TODO: Share code with Link
   class Metadata
 
     # ------------------------------------------------------------

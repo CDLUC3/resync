@@ -103,6 +103,7 @@ module Resync
         end
       end
 
+      # TODO: share examples with Link
       describe 'mime_type' do
         it 'accepts a standard MIME type' do
           mt = MIME::Types['text/plain'].first
@@ -149,8 +150,8 @@ module Resync
       describe 'hash' do
         it 'accepts a hash of hashes' do
           hashes = {
-              'md5' => '1e0d5cb8ef6ba40c99b14c0237be735e',
-              'sha-256' => '854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784'
+            'md5' => '1e0d5cb8ef6ba40c99b14c0237be735e',
+            'sha-256' => '854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784'
           }
           metadata = Metadata.new(hashes: hashes)
           expect(metadata.hashes).to eq(hashes)
