@@ -18,10 +18,10 @@ module Resync
     def sorted(resources)
       return nil unless resources
       resources.sort do |left, right|
-        if left.lastmod && right.lastmod
-          left.lastmod <=> right.lastmod
+        if left.modified_time && right.modified_time
+          left.modified_time <=> right.modified_time
         else
-          right.lastmod ? 1 : -1
+          right.modified_time ? 1 : -1
         end
       end
     end

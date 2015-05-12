@@ -11,16 +11,16 @@ module Resync
         it_behaves_like 'a URI field'
       end
 
-      describe 'lastmod' do
-        it 'accepts a lastmod timestamp' do
+      describe 'modified_time' do
+        it 'accepts a modified_time timestamp' do
           lastmod = Time.utc(1997, 7, 16, 19, 20, 30.45)
-          resource = Resource.new(uri: 'http://example.org', lastmod: lastmod)
-          expect(resource.lastmod).to be_time(lastmod)
+          resource = Resource.new(uri: 'http://example.org', modified_time: lastmod)
+          expect(resource.modified_time).to be_time(lastmod)
         end
 
-        it 'defaults to nil if no lastmod timestamp specified' do
+        it 'defaults to nil if no modified_time timestamp specified' do
           resource = Resource.new(uri: 'http://example.org')
-          expect(resource.lastmod).to be_nil
+          expect(resource.modified_time).to be_nil
         end
       end
 

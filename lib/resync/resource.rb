@@ -8,15 +8,16 @@ module Resync
     # Attributes
 
     attr_reader :uri
-    attr_reader :lastmod
+    attr_reader :modified_time
     attr_reader :metadata
 
     # ------------------------------------------------------------
     # Initializer
 
-    def initialize(uri:, lastmod: nil, links: nil, metadata: nil)
+    def initialize(uri:, modified_time: nil, links: nil, metadata: nil)
       @uri = to_uri(uri)
-      @lastmod = lastmod
+      @modified_time = modified_time
+
       @links = links || []
       @metadata = metadata
     end
