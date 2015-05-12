@@ -3,8 +3,8 @@ require_relative 'base_resource_list'
 module Resync
   class SortedResourceList < BaseResourceList
 
-    def initialize(resources: nil, metadata: nil)
-      super(resources: sorted(resources), metadata: metadata)
+    def initialize(resources: nil, links: nil, metadata: nil)
+      super(resources: sorted(resources), links: links, metadata: metadata)
     end
 
     # ------------------------------------------------------------

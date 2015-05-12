@@ -1,10 +1,12 @@
 module Resync
   class BaseResourceList
     attr_reader :resources
+    attr_reader :links
     attr_reader :metadata
 
-    def initialize(resources: nil, metadata: nil)
+    def initialize(resources: nil, links: nil, metadata: nil)
       @resources = resources || []
+      @links = links || []
       @metadata = metadata_with_correct_capability(metadata)
     end
 

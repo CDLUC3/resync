@@ -6,10 +6,10 @@ module Resync
 
     attr_reader :source_description
 
-    def initialize(resources: nil, metadata: nil, source_description:)
+    def initialize(resources: nil, links: nil, metadata: nil, source_description:)
       @source_description = to_uri(source_description)
       @capabilities = to_capability_map(resources)
-      super(resources: @capabilities.values, metadata: metadata)
+      super(resources: @capabilities.values, links: links, metadata: metadata)
     end
 
     # ------------------------------------------------------------
