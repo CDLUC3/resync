@@ -1,5 +1,6 @@
 require 'spec_helper'
 require_relative 'shared/uri_field_examples'
+require_relative 'shared/link_collection_examples'
 
 module Resync
   describe Resource do
@@ -21,6 +22,13 @@ module Resync
           resource = Resource.new(uri: 'http://example.org')
           expect(resource.lastmod).to be_nil
         end
+      end
+
+      describe 'links' do
+        def required_arguments
+          { uri: 'http://example.org' }
+        end
+        it_behaves_like LinkCollection
       end
 
       describe 'metadata' do

@@ -1,5 +1,8 @@
+require_relative 'shared/link_collection'
+
 module Resync
   class Resource
+    include LinkCollection
 
     # ------------------------------------------------------------
     # Attributes
@@ -11,9 +14,10 @@ module Resync
     # ------------------------------------------------------------
     # Initializer
 
-    def initialize(uri:, lastmod: nil, metadata: nil)
+    def initialize(uri:, lastmod: nil, links: nil, metadata: nil)
       @uri = to_uri(uri)
       @lastmod = lastmod
+      @links = links || []
       @metadata = metadata
     end
 
