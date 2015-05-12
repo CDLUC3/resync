@@ -146,6 +146,19 @@ module Resync
         end
       end
 
+      describe 'change' do
+        it 'accepts a change' do
+          change = Types::Change::DELETED
+          metadata = Metadata.new(change: change)
+          expect(metadata.change).to eq(change)
+        end
+
+        it 'defaults to nil if no change specified' do
+          metadata = Metadata.new
+          expect(metadata.change).to be_nil
+        end
+      end
+
       describe 'hash' do
         it 'accepts a hash of hashes' do
           hashes = {
