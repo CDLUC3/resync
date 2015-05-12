@@ -133,6 +133,37 @@ module Resync
         end
       end
 
+      describe 'encoding' do
+        it 'accepts an encoding' do
+          encoding = 'utf-8'
+          metadata = Metadata.new(encoding: encoding)
+          expect(metadata.encoding).to eq(encoding)
+        end
+
+        it 'defaults to nil if no encoding specified' do
+          metadata = Metadata.new
+          expect(metadata.encoding).to be_nil
+        end
+      end
+
+      describe 'hash' do
+        it 'accepts a hash of hashes' do
+          hashes = {
+              'md5' => '1e0d5cb8ef6ba40c99b14c0237be735e',
+              'sha-256' => '854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784'
+          }
+          metadata = Metadata.new(hashes: hashes)
+          expect(metadata.hashes).to eq(hashes)
+          expect(metadata.hash('md5')). to eq('1e0d5cb8ef6ba40c99b14c0237be735e')
+          expect(metadata.hash('sha-256')). to eq('854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784')
+        end
+
+        it 'defaults to an empty hash if no hash specified' do
+          metadata = Metadata.new
+          expect(metadata.hashes).to eq({})
+        end
+      end
+
       describe 'capability' do
         it 'accepts a capability' do
           cap = 'resourcelist'
@@ -156,24 +187,6 @@ module Resync
         it 'defaults to nil if no change specified' do
           metadata = Metadata.new
           expect(metadata.change).to be_nil
-        end
-      end
-
-      describe 'hash' do
-        it 'accepts a hash of hashes' do
-          hashes = {
-            'md5' => '1e0d5cb8ef6ba40c99b14c0237be735e',
-            'sha-256' => '854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784'
-          }
-          metadata = Metadata.new(hashes: hashes)
-          expect(metadata.hashes).to eq(hashes)
-          expect(metadata.hash('md5')). to eq('1e0d5cb8ef6ba40c99b14c0237be735e')
-          expect(metadata.hash('sha-256')). to eq('854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784')
-        end
-
-        it 'defaults to an empty hash if no hash specified' do
-          metadata = Metadata.new
-          expect(metadata.hashes).to eq({})
         end
       end
 

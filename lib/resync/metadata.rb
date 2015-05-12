@@ -14,9 +14,11 @@ module Resync
 
     attr_reader :length
     attr_reader :mime_type
-    attr_reader :capability
+    attr_reader :encoding
     attr_reader :hashes
+
     attr_reader :change
+    attr_reader :capability
     attr_reader :path
 
     # ------------------------------------------------------------
@@ -31,9 +33,11 @@ module Resync
 
         length: nil,
         mime_type: nil,
-        capability: nil,
-        change: nil,
+        encoding: nil,
         hashes: {},
+
+        change: nil,
+        capability: nil,
         path: nil
     )
       @at_time = time_or_nil(at_time)
@@ -44,9 +48,11 @@ module Resync
 
       @length = natural_number_or_nil(length)
       @mime_type = mime_type_or_nil(mime_type)
-      @capability = capability
-      @change = change
+      @encoding = encoding
       @hashes = hashes
+
+      @change = change
+      @capability = capability
       @path = path
     end
 
