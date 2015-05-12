@@ -1,27 +1,17 @@
 module Resync
-  class Resource
-
+  class Link
     # ------------------------------------------------------------
     # Attributes
 
-    attr_reader :uri
-    attr_reader :metadata
-    attr_reader :lastmod
+    attr_reader :rel
+    attr_reader :href
 
     # ------------------------------------------------------------
     # Initializer
 
-    def initialize(uri:, lastmod: nil, metadata: nil)
-      @uri = to_uri(uri)
-      @lastmod = lastmod
-      @metadata = metadata
-    end
-
-    # ------------------------------------------------------------
-    # Public methods
-
-    def capability
-      metadata ? metadata.capability : nil
+    def initialize(rel:, href:)
+      @rel = rel
+      @href = to_uri(href)
     end
 
     # ------------------------------------------------------------

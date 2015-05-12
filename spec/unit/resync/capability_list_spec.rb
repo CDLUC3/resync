@@ -9,11 +9,9 @@ module Resync
 
     # Fixture overrides
 
-    def new_instance_override(**args)
-      CapabilityList.new(source_description: 'http://example.org/', **args)
-    end
+    def required_arguments; { source_description: 'http://example.org' }; end # rubocop:disable Style/SingleLineMethods
 
-    def resource_list_override
+    def valid_resources
       [Resource.new(uri: 'http://example.com/dataset1/resourcelist.xml', metadata: Metadata.new(capability: 'resourcelist')),
        Resource.new(uri: 'http://example.com/dataset1/resourcedump.xml', metadata: Metadata.new(capability: 'resourcedump')),
        Resource.new(uri: 'http://example.com/dataset1/changelist.xml', metadata: Metadata.new(capability: 'changelist')),
@@ -49,7 +47,7 @@ module Resync
 
     describe 'resource_for' do
       it 'maps resources by capability' do
-        resources = resource_list_override
+        resources = valid_resources
         capability_list = CapabilityList.new(resources: resources, source_description: 'http://example.org/')
         expect(capability_list.resource_for(capability: 'resourcelist')).to eq(resources[0])
         expect(capability_list.resource_for(capability: 'resourcedump')).to eq(resources[1])

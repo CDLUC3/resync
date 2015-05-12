@@ -14,8 +14,9 @@ module Resync
 
     attr_reader :length
     attr_reader :mime_type
-
     attr_reader :capability
+    attr_reader :hashes
+    attr_reader :path
 
     # ------------------------------------------------------------
     # Initializer
@@ -30,7 +31,11 @@ module Resync
         length: nil,
         mime_type: nil,
 
-        capability: nil
+        capability: nil,
+
+        hashes: {},
+
+        path: nil
     )
       @at_time = time_or_nil(at_time)
       @from_time = time_or_nil(from_time)
@@ -41,6 +46,15 @@ module Resync
       @length = natural_number_or_nil(length)
       @mime_type = mime_type_or_nil(mime_type)
       @capability = capability
+      @hashes = hashes
+      @path = path
+    end
+
+    # ------------------------------------------------------------
+    # Public methods
+
+    def hash(algorithm)
+      hashes[algorithm]
     end
 
     # ------------------------------------------------------------

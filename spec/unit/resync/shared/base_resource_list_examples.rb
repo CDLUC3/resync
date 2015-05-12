@@ -6,20 +6,16 @@ module Resync
     # ------------------------------------------------------
     # "Virtual" fixture methods
 
+    # TODO: Find a better way to express this
     def resource_list
-      if defined? resource_list_override
-        resource_list_override
-      else
-        [Resource.new(uri: 'http://example.org/'), Resource.new(uri: 'http://example.com/')]
-      end
+      (defined? valid_resources) ? valid_resources : [Resource.new(uri: 'http://example.org/'), Resource.new(uri: 'http://example.com/')]
     end
 
+    # TODO: Find a better way to express this
     def new_instance(**args)
-      if defined? new_instance_override
-        new_instance_override(**args)
-      else
-        described_class.new(**args)
-      end
+      required_args = (defined? required_arguments) ? required_arguments : {}
+      args = required_args.merge(args)
+      described_class.new(**args)
     end
 
     # ------------------------------------------------------

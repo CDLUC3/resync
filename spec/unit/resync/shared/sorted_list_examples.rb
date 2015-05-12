@@ -9,13 +9,10 @@ module Resync
 
     it_behaves_like BaseResourceList
 
-    # TODO: Figure out how to share this with ListBase (use RSpec helper methods?)
     def new_instance(**args)
-      if defined? new_instance_override
-        new_instance_override(**args)
-      else
-        described_class.new(**args)
-      end
+      required_args = (defined? required_arguments) ? required_arguments : {}
+      args = required_args.merge(args)
+      described_class.new(**args)
     end
 
     # ------------------------------------------------------

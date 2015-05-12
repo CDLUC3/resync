@@ -27,6 +27,7 @@ module Resync
     # ------------------------------
     # Conversions
 
+    # TODO: Share all of these
     def to_uri(url)
       (url.is_a? URI) ? url : URI.parse(url)
     end

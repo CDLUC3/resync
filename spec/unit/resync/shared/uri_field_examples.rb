@@ -3,11 +3,13 @@ require 'spec_helper'
 module Resync
   RSpec.shared_examples 'a URI field' do
 
+    # TODO: Find a better way to express this (incl. uri_field)
     def new_instance(**args)
+      required_args = (defined? required_arguments) ? required_arguments : {}
+      required_args.delete(uri_field)
+      args = required_args.merge(args)
       described_class.new(**args)
     end
-
-    # TODO: Something better than def for uri_field (and maybe for new_instance)
 
     it 'accepts a URI' do
       uri = URI('http://example.org/')
