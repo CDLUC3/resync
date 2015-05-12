@@ -948,6 +948,76 @@ module Resync
         expect(md.type).to be_mime_type('text/html')
         expect(md.change).to be(Change::UPDATED)
       end
+
+      it 'parses example 32' do
+        data = File.read('spec/data/examples/example-32.xml')
+        urlset = Parser.parse(data)
+
+        lns = urlset.ln
+        expect(lns.size).to eq(1)
+        ln0 = lns[0]
+        expect(ln0.rel).to eq('up')
+        expect(ln0.href).to eq(URI('http://aggregator1.example.com/dataset1/capabilitylist.xml'))
+
+        md = urlset.md
+        expect(md.capability).to eq('changelist')
+        expect(md.from).to be_time(Time.utc(2013, 1, 3, 11))
+        urls = urlset.url
+        expect(urls.size).to eq(1)
+
+        url = urls[0]
+        expect(url.loc).to eq(URI('http://aggregator1.example.com/res1.html'))
+        expect(url.lastmod).to be_time(Time.utc(2013, 1, 3, 20))
+        md = url.md
+        expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md.length).to eq(8876)
+        expect(md.type).to be_mime_type('text/html')
+        expect(md.change).to be(Change::UPDATED)
+
+        lns = url.ln
+        ln = lns[0]
+        expect(ln.rel).to eq('via')
+        expect(ln.href).to eq(URI('http://original.example.com/res1.html'))
+        expect(ln.modified).to be_time(Time.utc(2013, 1, 3, 7))
+        expect(ln.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(ln.length).to eq(8876)
+        expect(ln.type).to be_mime_type('text/html')
+      end
+
+      it 'parses example 33' do
+        data = File.read('spec/data/examples/example-33.xml')
+        urlset = Parser.parse(data)
+
+        lns = urlset.ln
+        expect(lns.size).to eq(1)
+        ln0 = lns[0]
+        expect(ln0.rel).to eq('up')
+        expect(ln0.href).to eq(URI('http://aggregator2.example.com/dataset1/capabilitylist.xml'))
+
+        md = urlset.md
+        expect(md.capability).to eq('changelist')
+        expect(md.from).to be_time(Time.utc(2013, 1, 3, 12))
+        urls = urlset.url
+        expect(urls.size).to eq(1)
+
+        url = urls[0]
+        expect(url.loc).to eq(URI('http://aggregator2.example.com/res1.html'))
+        expect(url.lastmod).to be_time(Time.utc(2013, 1, 4, 9))
+        md = url.md
+        expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md.length).to eq(8876)
+        expect(md.type).to be_mime_type('text/html')
+        expect(md.change).to be(Change::UPDATED)
+
+        lns = url.ln
+        ln = lns[0]
+        expect(ln.rel).to eq('via')
+        expect(ln.href).to eq(URI('http://original.example.com/res1.html'))
+        expect(ln.modified).to be_time(Time.utc(2013, 1, 3, 7))
+        expect(ln.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(ln.length).to eq(8876)
+        expect(ln.type).to be_mime_type('text/html')
+      end
     end
   end
 end
