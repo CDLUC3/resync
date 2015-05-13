@@ -38,6 +38,7 @@ module Resync
     # ------------------------------
     # Factory method
 
+    # TODO: If we're going to do this, what are the mapping classes getting us exactly? Maybe rename some attributes, automate?
     def self.from_xml(xml)
       ln = to_ln(xml)
       Link.new(
