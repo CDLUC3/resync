@@ -29,6 +29,12 @@ module Resync
         expect(elem).to be_a(REXML::Element)
         expect(elem).to be_xml(xml_str)
       end
+
+      it 'fails when it gets something other than XML' do
+        data = 12_345
+        expect { XML.element(data) }.to raise_exception
+      end
+
     end
   end
 end
