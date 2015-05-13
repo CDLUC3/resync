@@ -59,8 +59,8 @@ module Resync
       end
 
       it 'parses @type' do
-        ln = parse('<ln type="elvis"/>')
-        expect(ln.type).to eq('elvis')
+        ln = parse('<ln type="elvis/presley"/>')
+        expect(ln.type).to be_mime_type('elvis/presley')
       end
 
       it 'can\'t be used as a hash key' do
@@ -78,7 +78,7 @@ module Resync
                 path="/foo/"
                 pri="3.14159"
                 rel="bar"
-                type="baz"
+                type="baz/qux"
             />'
         ln = parse(xml)
         expect(ln.save_to_xml).to be_xml(xml)
