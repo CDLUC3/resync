@@ -25,7 +25,6 @@ module Resync
       end
     end
 
-
     describe 'length' do
       it 'accepts a length' do
         length = 12_345
@@ -91,8 +90,8 @@ module Resync
     describe 'hash' do
       it 'accepts a hash of hashes' do
         hashes = {
-            'md5' => '1e0d5cb8ef6ba40c99b14c0237be735e',
-            'sha-256' => '854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784'
+          'md5' => '1e0d5cb8ef6ba40c99b14c0237be735e',
+          'sha-256' => '854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784'
         }
         descriptor = new_instance(hashes: hashes)
         expect(descriptor.hashes).to eq(hashes)
