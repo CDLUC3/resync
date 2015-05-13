@@ -71,7 +71,6 @@ module Resync
           expect { Metadata.new(completed_time: '12:45 pm') }.to raise_error(ArgumentError)
         end
 
-
       end
 
       describe 'capability' do

@@ -7,7 +7,9 @@ module Resync
     describe '#new' do
 
       describe 'uri' do
-        def uri_field; :uri; end # rubocop:disable Style/SingleLineMethods
+        def uri_field
+          :uri
+        end
         it_behaves_like 'a URI field'
       end
 

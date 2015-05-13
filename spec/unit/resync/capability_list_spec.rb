@@ -9,7 +9,9 @@ module Resync
 
     # Fixture overrides
 
-    def required_arguments; { source_description: 'http://example.org' }; end # rubocop:disable Style/SingleLineMethods
+    def required_arguments
+      { source_description: 'http://example.org' }
+    end
 
     def valid_resources
       [Resource.new(uri: 'http://example.com/dataset1/resourcelist.xml', metadata: Metadata.new(capability: 'resourcelist')),
@@ -28,7 +30,9 @@ module Resync
     describe '#new' do
 
       describe 'source description' do
-        def uri_field; :source_description; end # rubocop:disable Style/SingleLineMethods
+        def uri_field
+          :source_description
+        end
         it_behaves_like 'a URI field'
       end
 
