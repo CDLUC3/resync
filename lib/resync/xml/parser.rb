@@ -2,10 +2,7 @@ require 'rexml/document'
 
 module Resync
   module XML
-    class Parser
-
-      # ------------------------------
-      # Public methods
+    module Parser
 
       # @return [Urlset, Sitemapindex]
       def self.parse(xml)
@@ -29,6 +26,8 @@ module Resync
           fail "Unexpected argument type; expected XML document, was #{xml.class}"
         end
       end
+
+      private_class_method :find_root
 
       def self.get_parse_class(root)
         root_name = root.name
