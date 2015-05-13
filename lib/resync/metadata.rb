@@ -1,9 +1,8 @@
-require 'mime/types'
+require_relative 'shared/resource_descriptor'
 
 module Resync
 
-  # TODO: Share code with Link
-  class Metadata
+  class Metadata < ResourceDescriptor
 
     # ------------------------------------------------------------
     # Attributes
@@ -12,16 +11,8 @@ module Resync
     attr_reader :from_time
     attr_reader :until_time
     attr_reader :completed_time
-    attr_reader :modified_time
-
-    attr_reader :length
-    attr_reader :mime_type
-    attr_reader :encoding
-    attr_reader :hashes
-
     attr_reader :change
     attr_reader :capability
-    attr_reader :path
 
     # ------------------------------------------------------------
     # Initializer
@@ -36,61 +27,21 @@ module Resync
         length: nil,
         mime_type: nil,
         encoding: nil,
-        hashes: {},
+        hashes: nil,
 
         change: nil,
         capability: nil,
         path: nil
     )
+      super(modified_time: modified_time, length: length, mime_type: mime_type, encoding: encoding, hashes: hashes, path: path)
+
       @at_time = time_or_nil(at_time)
       @from_time = time_or_nil(from_time)
       @until_time = time_or_nil(until_time)
       @completed_time = time_or_nil(completed_time)
-      @modified_time = time_or_nil(modified_time)
-
-      @length = natural_number_or_nil(length)
-      @mime_type = mime_type_or_nil(mime_type)
-      @encoding = encoding
-      @hashes = hashes
 
       @change = change
       @capability = capability
-      @path = path
-    end
-
-    # ------------------------------------------------------------
-    # Public methods
-
-    def hash(algorithm)
-      hashes[algorithm]
-    end
-
-    # ------------------------------------------------------------
-    # Private methods
-
-    private
-
-    # ------------------------------
-    # Parameter validators
-
-    def time_or_nil(time)
-      fail ArgumentError, "time #{time} is not a Time" if time && !time.is_a?(Time)
-      time
-    end
-
-    def natural_number_or_nil(value)
-      fail ArgumentError, "value #{value} must be a non-negative integer" if value && (!value.is_a?(Integer) || value < 0)
-      value
-    end
-
-    def mime_type_or_nil(mime_type)
-      return nil unless mime_type
-      return mime_type if mime_type.is_a?(MIME::Type)
-
-      mt = MIME::Types[mime_type].first
-      return mt if mt
-
-      MIME::Type.new(mime_type)
     end
 
   end
