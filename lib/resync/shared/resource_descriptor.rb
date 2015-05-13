@@ -67,5 +67,11 @@ module Resync
       MIME::Type.new(mime_type)
     end
 
+    # ------------------------------
+    # Conversions
+
+    def self.extract_hashes(hash_str)
+      hash_str.split(/[[:space:]]+/).map { |hash| hash.split(':') }.to_h
+    end
   end
 end
