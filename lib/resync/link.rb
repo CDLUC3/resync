@@ -13,7 +13,7 @@ module Resync
     # ------------------------------------------------------------
     # Initializer
 
-    def initialize( # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
+    def initialize(# rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
         rel:,
         href:,
 
@@ -36,11 +36,34 @@ module Resync
     end
 
     # ------------------------------
+    # Factory method
+
+    def self.from_xml(xml)
+      ln = to_ln(xml)
+      Link.new(
+          rel: ln.rel,
+          href: ln.href,
+          priority: ln.pri,
+          modified_time: ln.modified,
+          length: ln.length,
+          mime_type: ln.type,
+          hashes: extract_hashes(ln.hash),
+          path: ln.path
+      )
+    end
+
+    # ------------------------------
     # Conversions
+
+    def self.to_ln(xml)
+      return xml if xml.is_a?(XML::Ln)
+      XML::Ln.load_from_xml(XML.element(xml))
+    end
 
     # TODO: Share all of these
     def to_uri(url)
       (url.is_a? URI) ? url : URI.parse(url)
     end
+
   end
 end
