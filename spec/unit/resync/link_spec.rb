@@ -6,7 +6,7 @@ module Resync
   describe Link do
 
     def required_arguments
-      {rel: 'describedby', href: 'http://example.org'}
+      { rel: 'describedby', href: 'http://example.org' }
     end
 
     it_behaves_like ResourceDescriptor

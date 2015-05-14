@@ -7,7 +7,7 @@ module Resync
     # used to map to XML.
     module Convertible
 
-      def self.included base
+      def self.included(base)
         base.extend XMLConversions
       end
 
@@ -21,8 +21,8 @@ module Resync
         # Creates an instance of this class from the provided XML
         def from_xml(xml)
           mapped_instance = map(xml)
-          self.new(mapped_instance.instance_variables.map do |name|
-            [name.to_s.delete('@').to_sym, mapped_instance.instance_variable_get(name)]
+          new(mapped_instance.instance_variables.map do |name|
+            [name.to_s.delete('@').to_sym, map_value(mapped_instance.instance_variable_get(name))]
           end.to_h)
         end
 
@@ -35,6 +35,20 @@ module Resync
           xml_type = self::XML_TYPE
           return xml if xml.is_a?(xml_type)
           xml_type.load_from_xml(::Resync::XML.element(xml))
+        end
+
+        # TODO: a better hack for nested elements -- maybe register all conversions here, instead of class-by-class?
+        def map_value(xml)
+          case xml
+          when Ln
+            Link.from_xml(xml)
+          when Md
+            Metadata.from_xml(xml)
+          when Array
+            xml.map { |v| map_value(v) }
+          else
+            xml
+          end
         end
       end
 

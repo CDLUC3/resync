@@ -34,7 +34,6 @@ module Resync
       end
 
       describe 'metadata' do
-
         it 'accepts metadata' do
           md = Metadata.new
           resource = Resource.new(uri: 'http://example.org', metadata: md)
@@ -45,9 +44,27 @@ module Resync
           resource = Resource.new(uri: 'http://example.org')
           expect(resource.metadata).to be_nil
         end
-
       end
 
+      describe 'changefreq' do
+        it 'accepts a change frequency' do
+          cf = Types::ChangeFrequency::DAILY
+          resource = Resource.new(uri: 'http://example.org', changefreq: cf)
+          expect(resource.changefreq).to eq(cf)
+        end
+
+        it 'defaults to nil if no change frequency specified'
+      end
+
+      describe 'priority' do
+        it 'accepts a priority' do
+          priority = 1.234
+          resource = Resource.new(uri: 'http://example.org', priority: priority)
+          expect(resource.priority).to eq(priority)
+        end
+
+        it 'defaults to nil if no priority specified'
+      end
     end
 
     describe 'capability' do
@@ -63,5 +80,53 @@ module Resync
       end
     end
 
+    describe 'converts from XML' do
+      describe '#from_xml' do
+        it 'parses an XML string' do
+          xml = '<url>
+                    <loc>http://example.com/res1</loc>
+                    <lastmod>2013-01-03T18:00:00Z</lastmod>
+                    <rs:md change="updated"
+                           hash="md5:1584abdf8ebdc9802ac0c6a7402c03b6"
+                           length="8876"
+                           type="text/html"/>
+                    <rs:ln rel="duplicate"
+                           pri="1"
+                           href="http://mirror1.example.com/res1"
+                           modified="2013-01-03T18:00:00Z"/>
+                    <rs:ln rel="duplicate"
+                           pri="2"
+                           href="http://mirror2.example.com/res1"
+                           modified="2013-01-03T18:00:00Z"/>
+                    <rs:ln rel="duplicate"
+                           pri="3"
+                           href="gsiftp://gridftp.example.com/res1"
+                           modified="2013-01-03T18:00:00Z"/>
+                </url>'
+          resource = Resource.from_xml(xml)
+          expect(resource).to be_a(Resource)
+          expect(resource.uri).to eq(URI('http://example.com/res1'))
+          expect(resource.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
+          metadata = resource.metadata
+          expect(metadata.change).to eq(Types::Change::UPDATED)
+          expect(metadata.hash('md5')).to eq('1584abdf8ebdc9802ac0c6a7402c03b6')
+          expect(metadata.length).to eq(8_876)
+          expect(metadata.mime_type).to be_mime_type('text/html')
+          links = resource.links
+          expect(links.size).to eq(3)
+          expected_uris = [URI('http://mirror1.example.com/res1'),
+                           URI('http://mirror2.example.com/res1'),
+                           URI('gsiftp://gridftp.example.com/res1')]
+
+          (0..2).each do |i|
+            ln = links[i]
+            expect(ln.rel).to eq('duplicate')
+            expect(ln.priority).to eq(i + 1)
+            expect(ln.href).to eq(expected_uris[i])
+            expect(ln.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
+          end
+        end
+      end
+    end
   end
 end

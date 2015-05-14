@@ -126,12 +126,12 @@ module Resync
         data = File.read('spec/data/examples/example-6.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(2)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(2)
+        ln0 = links[0]
         expect(ln0.rel).to eq('describedby')
         expect(ln0.href).to eq(URI('http://example.com/info_about_set1_of_resources.xml'))
-        ln1 = lns[1]
+        ln1 = links[1]
         expect(ln1.rel).to eq('up')
         expect(ln1.href).to eq(URI('http://example.com/resourcesync_description.xml'))
 
@@ -161,9 +161,9 @@ module Resync
         data = File.read('spec/data/examples/example-7.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln = links[0]
         expect(ln.rel).to eq('describedby')
         expect(ln.href).to eq(URI('http://example.com/info-about-source.xml'))
 
@@ -177,10 +177,10 @@ module Resync
         expect(url.uri).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
         md = url.metadata
         expect(md.capability).to eq('capabilitylist')
-        lns = url.links
+        links = url.links
 
-        expect(lns.size).to eq(1)
-        ln = lns[0]
+        expect(links.size).to eq(1)
+        ln = links[0]
         expect(ln.rel).to eq('describedby')
         expect(ln.href).to eq(URI('http://example.com/info_about_set1_of_resources.xml'))
       end
@@ -209,9 +209,9 @@ module Resync
         data = File.read('spec/data/examples/example-12.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln = links[0]
         expect(ln.rel).to eq('describedby')
         expect(ln.href).to eq(URI('http://example.com/info_about_source.xml'))
 
@@ -226,9 +226,9 @@ module Resync
           expect(url.uri).to eq(URI("http://example.com/capabilitylist#{i}.xml"))
           md = url.metadata
           expect(md.capability).to eq('capabilitylist')
-          lns = url.links
-          expect(lns.size).to eq(1)
-          ln = lns[0]
+          links = url.links
+          expect(links.size).to eq(1)
+          ln = links[0]
           expect(ln.rel).to eq('describedby')
           expect(ln.href).to eq(URI("http://example.com/info_about_set#{i}_of_resources.xml"))
         end
@@ -238,12 +238,12 @@ module Resync
         data = File.read('spec/data/examples/example-13.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(2)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(2)
+        ln0 = links[0]
         expect(ln0.rel).to eq('describedby')
         expect(ln0.href).to eq(URI('http://example.com/info_about_set1_of_resources.xml'))
-        ln1 = lns[1]
+        ln1 = links[1]
         expect(ln1.rel).to eq('up')
         expect(ln1.href).to eq(URI('http://example.com/resourcesync_description.xml'))
 
@@ -267,9 +267,9 @@ module Resync
         data = File.read('spec/data/examples/example-14.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
@@ -301,9 +301,9 @@ module Resync
         data = File.read('spec/data/examples/example-15.xml')
         sitemapindex = Parser.parse(data)
 
-        lns = sitemapindex.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = sitemapindex.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
@@ -328,12 +328,12 @@ module Resync
         data = File.read('spec/data/examples/example-16.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(2)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(2)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
-        ln1 = lns[1]
+        ln1 = links[1]
         expect(ln1.rel).to eq('index')
         expect(ln1.href).to eq(URI('http://example.com/dataset1/resourcelist-index.xml'))
 
@@ -364,9 +364,9 @@ module Resync
         data = File.read('spec/data/examples/example-17.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
@@ -390,9 +390,9 @@ module Resync
           expect(md.length).to eq(expected_lengths[i])
           expect(md.at_time).to be_time(expected_ats[i])
           expect(md.completed_time).to be_time(expected_completeds[i])
-          lns = url.links
-          expect(lns.size).to eq(1)
-          ln = lns[0]
+          links = url.links
+          expect(links.size).to eq(1)
+          ln = links[0]
           expect(ln.rel).to eq('contents')
           expect(ln.href).to eq(URI("http://example.com/resourcedump_manifest-part#{i + 1}.xml"))
           expect(ln.mime_type).to be_mime_type('application/xml')
@@ -403,9 +403,9 @@ module Resync
         data = File.read('spec/data/examples/example-18.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
@@ -438,9 +438,9 @@ module Resync
         data = File.read('spec/data/examples/example-19.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
@@ -469,9 +469,9 @@ module Resync
         data = File.read('spec/data/examples/example-20.xml')
         sitemapindex = Parser.parse(data)
 
-        lns = sitemapindex.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = sitemapindex.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
@@ -497,12 +497,12 @@ module Resync
         data = File.read('spec/data/examples/example-21.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(2)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(2)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
-        ln1 = lns[1]
+        ln1 = links[1]
         expect(ln1.rel).to eq('index')
         expect(ln1.href).to eq(URI('http://example.com/dataset1/changelist.xml'))
 
@@ -537,9 +537,9 @@ module Resync
         data = File.read('spec/data/examples/example-22.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
@@ -566,9 +566,9 @@ module Resync
           expect(md.length).to eq(expected_lengths[i])
           expect(md.from_time).to be_time(Time.utc(2013, 1, i + 1))
           expect(md.until_time).to be_time(Time.utc(2013, 1, i + 2))
-          lns = url.links
-          expect(lns.size).to eq(1)
-          ln = lns[0]
+          links = url.links
+          expect(links.size).to eq(1)
+          ln = links[0]
           expect(ln.rel).to eq('contents')
           expect(ln.href).to eq(URI("http://example.com/2013010#{i + 1}-changedump-manifest.xml"))
           expect(ln.mime_type).to be_mime_type('application/xml')
@@ -580,9 +580,9 @@ module Resync
         data = File.read('spec/data/examples/example-23.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
@@ -635,9 +635,9 @@ module Resync
         data = File.read('spec/data/examples/example-24.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
@@ -657,14 +657,14 @@ module Resync
         expect(md.length).to eq(8876)
         expect(md.mime_type).to be_mime_type('text/html')
 
-        lns = url.links
-        expect(lns.size).to eq(3)
+        links = url.links
+        expect(links.size).to eq(3)
         expected_uris = [URI('http://mirror1.example.com/res1'),
                          URI('http://mirror2.example.com/res1'),
                          URI('gsiftp://gridftp.example.com/res1')]
 
         (0..2).each do |i|
-          ln = lns[i]
+          ln = links[i]
           expect(ln.rel).to eq('duplicate')
           expect(ln.priority).to eq(i + 1)
           expect(ln.href).to eq(expected_uris[i])
@@ -676,9 +676,9 @@ module Resync
         data = File.read('spec/data/examples/example-25.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
@@ -694,14 +694,14 @@ module Resync
         expect(url.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
         md = url.metadata
         expect(md.change).to be(Change::UPDATED)
-        lns = url.links
-        expect(lns.size).to eq(2)
-        ln0 = lns[0]
+        links = url.links
+        expect(links.size).to eq(2)
+        ln0 = links[0]
         expect(ln0.rel).to eq('alternate')
         expect(ln0.href).to eq(URI('http://example.com/res1.html'))
         expect(ln0.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
         expect(ln0.mime_type).to be_mime_type('text/html')
-        ln1 = lns[1]
+        ln1 = links[1]
         expect(ln1.rel).to eq('alternate')
         expect(ln1.href).to eq(URI('http://example.com/res1.pdf'))
         expect(ln1.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
@@ -712,9 +712,9 @@ module Resync
         data = File.read('spec/data/examples/example-26.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln = links[0]
         expect(ln.rel).to eq('up')
         expect(ln.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
@@ -732,9 +732,9 @@ module Resync
         expect(md.change).to be(Change::UPDATED)
         expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
-        lns = url.links
-        expect(lns.size).to eq(1)
-        ln = lns[0]
+        links = url.links
+        expect(links.size).to eq(1)
+        ln = links[0]
         expect(ln.rel).to eq('canonical')
         expect(ln.href).to eq(URI('http://example.com/res1'))
         expect(ln.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
@@ -744,9 +744,9 @@ module Resync
         data = File.read('spec/data/examples/example-27.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
@@ -798,9 +798,9 @@ module Resync
         data = File.read('spec/data/examples/example-28.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
@@ -851,9 +851,9 @@ module Resync
         data = File.read('spec/data/examples/example-29.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
@@ -873,9 +873,9 @@ module Resync
         expect(md.mime_type).to be_mime_type('text/html')
         expect(md.change).to be(Change::UPDATED)
 
-        lns = url.links
-        expect(lns.size).to eq(3)
-        ln0 = lns[0]
+        links = url.links
+        expect(links.size).to eq(3)
+        ln0 = links[0]
         expect(ln0.rel).to eq('memento')
         expect(ln0.href).to eq(URI('http://example.com/20130103070000/res1'))
         expect(ln0.modified_time).to be_time(Time.utc(2013, 1, 2, 18))
@@ -883,10 +883,10 @@ module Resync
         expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
         expect(md.mime_type).to be_mime_type('text/html')
-        ln1 = lns[1]
+        ln1 = links[1]
         expect(ln1.rel).to eq('timegate')
         expect(ln1.href).to eq(URI('http://example.com/timegate/http://example.com/res1'))
-        ln2 = lns[2]
+        ln2 = links[2]
         expect(ln2.rel).to eq('timemap')
         expect(ln2.href).to eq(URI('http://example.com/timemap/http://example.com/res1'))
         expect(ln2.mime_type).to be_mime_type('application/link-format')
@@ -896,9 +896,9 @@ module Resync
         data = File.read('spec/data/examples/example-30.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
@@ -917,8 +917,8 @@ module Resync
         expect(md.mime_type).to be_mime_type('text/html')
         expect(md.change).to be(Change::UPDATED)
 
-        lns = url.links
-        ln = lns[0]
+        links = url.links
+        ln = links[0]
         expect(ln.rel).to eq('collection')
         expect(ln.href).to eq(URI('http://example.com/aggregation/0601007'))
       end
@@ -927,9 +927,9 @@ module Resync
         data = File.read('spec/data/examples/example-31.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
@@ -953,9 +953,9 @@ module Resync
         data = File.read('spec/data/examples/example-32.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://aggregator1.example.com/dataset1/capabilitylist.xml'))
 
@@ -974,8 +974,8 @@ module Resync
         expect(md.mime_type).to be_mime_type('text/html')
         expect(md.change).to be(Change::UPDATED)
 
-        lns = url.links
-        ln = lns[0]
+        links = url.links
+        ln = links[0]
         expect(ln.rel).to eq('via')
         expect(ln.href).to eq(URI('http://original.example.com/res1.html'))
         expect(ln.modified_time).to be_time(Time.utc(2013, 1, 3, 7))
@@ -988,9 +988,9 @@ module Resync
         data = File.read('spec/data/examples/example-33.xml')
         urlset = Parser.parse(data)
 
-        lns = urlset.links
-        expect(lns.size).to eq(1)
-        ln0 = lns[0]
+        links = urlset.links
+        expect(links.size).to eq(1)
+        ln0 = links[0]
         expect(ln0.rel).to eq('up')
         expect(ln0.href).to eq(URI('http://aggregator2.example.com/dataset1/capabilitylist.xml'))
 
@@ -1009,8 +1009,8 @@ module Resync
         expect(md.mime_type).to be_mime_type('text/html')
         expect(md.change).to be(Change::UPDATED)
 
-        lns = url.links
-        ln = lns[0]
+        links = url.links
+        ln = links[0]
         expect(ln.rel).to eq('via')
         expect(ln.href).to eq(URI('http://original.example.com/res1.html'))
         expect(ln.modified_time).to be_time(Time.utc(2013, 1, 3, 7))

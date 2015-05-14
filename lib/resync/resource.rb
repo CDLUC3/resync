@@ -1,8 +1,11 @@
 require_relative 'shared/link_collection'
+require_relative 'xml'
 
 module Resync
   class Resource
     include LinkCollection
+    include XML::Convertible
+    XML_TYPE = XML::Url
 
     # ------------------------------------------------------------
     # Attributes
@@ -10,13 +13,19 @@ module Resync
     attr_reader :uri
     attr_reader :modified_time
     attr_reader :metadata
+    attr_reader :changefreq
+    attr_reader :priority
 
     # ------------------------------------------------------------
     # Initializer
 
-    def initialize(uri:, modified_time: nil, links: nil, metadata: nil)
+    def initialize( # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
+        uri:, modified_time: nil, changefreq: nil, priority: nil, links: nil, metadata: nil
+    )
       @uri = to_uri(uri)
       @modified_time = modified_time
+      @changefreq = changefreq
+      @priority = priority
 
       @links = links || []
       @metadata = metadata
