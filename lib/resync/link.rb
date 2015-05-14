@@ -13,7 +13,7 @@ module Resync
     # ------------------------------------------------------------
     # Initializer
 
-    def initialize(# rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
+    def initialize( # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
         rel:,
         href:,
 
@@ -39,17 +39,17 @@ module Resync
     # Factory method
 
     # TODO: If we're going to do this, what are the mapping classes getting us exactly? Maybe rename some attributes, automate?
-    def self.from_xml(xml)
+    def self.from_xml(xml) # rubocop:disable Metrics/MethodLength
       ln = to_ln(xml)
       Link.new(
-          rel: ln.rel,
-          href: ln.href,
-          priority: ln.pri,
-          modified_time: ln.modified,
-          length: ln.length,
-          mime_type: ln.type,
-          hashes: extract_hashes(ln.hash),
-          path: ln.path
+        rel: ln.rel,
+        href: ln.href,
+        priority: ln.pri,
+        modified_time: ln.modified,
+        length: ln.length,
+        mime_type: ln.type,
+        hashes: hash_of_hashcodes(ln.hash),
+        path: ln.path
       )
     end
 

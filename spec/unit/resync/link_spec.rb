@@ -66,7 +66,7 @@ module Resync
         expect(link.href).to eq(URI('http://example.org'))
         expect(link.priority).to eq(3.14159)
         expect(link.modified_time).to be_time(Time.utc(2013, 1, 3, 9))
-        expect(link.length).to eq(12345)
+        expect(link.length).to eq(12_345)
         expect(link.mime_type).to be_mime_type('baz/qux')
         expect(link.hash('md5')).to eq('1e0d5cb8ef6ba40c99b14c0237be735e')
         expect(link.path).to eq('/foo/')

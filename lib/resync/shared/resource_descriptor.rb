@@ -28,7 +28,7 @@ module Resync
       @length = natural_number_or_nil(length)
       @mime_type = mime_type_or_nil(mime_type)
       @encoding = encoding
-      @hashes = hashes || {}
+      @hashes = ResourceDescriptor.hash_of_hashcodes(hashes)
       @path = path
     end
 
@@ -70,8 +70,10 @@ module Resync
     # ------------------------------
     # Conversions
 
-    def self.extract_hashes(hash_str)
-      hash_str.split(/[[:space:]]+/).map { |hash| hash.split(':') }.to_h
+    def self.hash_of_hashcodes(hashes)
+      return {} unless hashes
+      return hashes if hashes.is_a?(Hash)
+      hashes.split(/[[:space:]]+/).map { |hash| hash.split(':') }.to_h
     end
   end
 end
