@@ -1,8 +1,13 @@
 require_relative 'shared/resource_descriptor'
+require_relative 'xml'
 
 module Resync
 
   class Link < ResourceDescriptor
+    include XML::Convertible
+
+    XML_TYPE = XML::Ln
+
     # ------------------------------------------------------------
     # Attributes
 
@@ -36,30 +41,7 @@ module Resync
     end
 
     # ------------------------------
-    # Factory method
-
-    # TODO: If we're going to do this, what are the mapping classes getting us exactly? Maybe rename some attributes, automate?
-    def self.from_xml(xml) # rubocop:disable Metrics/MethodLength
-      ln = to_ln(xml)
-      Link.new(
-        rel: ln.rel,
-        href: ln.href,
-        priority: ln.priority,
-        modified_time: ln.modified_time,
-        length: ln.length,
-        mime_type: ln.mime_type,
-        hashes: ln.hashes,
-        path: ln.path
-      )
-    end
-
-    # ------------------------------
     # Conversions
-
-    def self.to_ln(xml)
-      return xml if xml.is_a?(XML::Ln)
-      XML::Ln.load_from_xml(XML.element(xml))
-    end
 
     # TODO: Share all of these
     def to_uri(url)
