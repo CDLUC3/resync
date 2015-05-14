@@ -21,6 +21,7 @@ module Resync
         # Creates an instance of this class from the provided XML
         def from_xml(xml)
           mapped_instance = map(xml)
+          # TODO: Something less ugly cf.  
           hashed_fields = mapped_instance.instance_variables.map do |name|
             [name.to_s.delete('@').to_sym, map_value(mapped_instance.instance_variable_get(name))]
           end.to_h
