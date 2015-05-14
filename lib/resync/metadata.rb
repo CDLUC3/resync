@@ -1,8 +1,12 @@
 require_relative 'shared/resource_descriptor'
+require_relative 'xml'
 
 module Resync
 
   class Metadata < ResourceDescriptor
+    include XML::Convertible
+
+    XML_TYPE = XML::Md
 
     # ------------------------------------------------------------
     # Attributes
