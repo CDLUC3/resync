@@ -6,7 +6,7 @@ module Resync
   describe Link do
 
     def required_arguments
-      { rel: 'describedby', href: 'http://example.org' }
+      {rel: 'describedby', href: 'http://example.org'}
     end
 
     it_behaves_like ResourceDescriptor
@@ -29,6 +29,7 @@ module Resync
         def uri_field
           :href
         end
+
         it_behaves_like 'a URI field'
       end
 
@@ -47,9 +48,10 @@ module Resync
 
     end
 
-    describe '#from_xml' do
-      it 'parses an XML string' do
-        xml = '<ln
+    describe 'XML conversion' do
+      describe '#from_xml' do
+        it 'parses an XML string' do
+          xml = '<ln
                 encoding="utf-8"
                 hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"
                 href="http://example.org/"
@@ -60,21 +62,21 @@ module Resync
                 rel="bar"
                 type="baz/qux"
             />'
-        link = Link.from_xml(xml)
-        expect(link).to be_a(Link)
-        expect(link.rel).to eq('bar')
-        expect(link.href).to eq(URI('http://example.org'))
-        expect(link.priority).to eq(3.14159)
-        expect(link.modified_time).to be_time(Time.utc(2013, 1, 3, 9))
-        expect(link.length).to eq(12_345)
-        expect(link.mime_type).to be_mime_type('baz/qux')
-        expect(link.hash('md5')).to eq('1e0d5cb8ef6ba40c99b14c0237be735e')
-        expect(link.path).to eq('/foo/')
+          link = Link.from_xml(xml)
+          expect(link).to be_a(Link)
+          expect(link.rel).to eq('bar')
+          expect(link.href).to eq(URI('http://example.org'))
+          expect(link.priority).to eq(3.14159)
+          expect(link.modified_time).to be_time(Time.utc(2013, 1, 3, 9))
+          expect(link.length).to eq(12_345)
+          expect(link.mime_type).to be_mime_type('baz/qux')
+          expect(link.hash('md5')).to eq('1e0d5cb8ef6ba40c99b14c0237be735e')
+          expect(link.path).to eq('/foo/')
+        end
       end
-    end
 
-    it 'parses an Ln object' do
-      ln = XML::Ln.load_from_xml(REXML::Document.new('<ln
+      it 'parses an Ln object' do
+        ln = XML::Ln.load_from_xml(REXML::Document.new('<ln
                 encoding="utf-8"
                 hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"
                 href="http://example.org/"
@@ -85,16 +87,17 @@ module Resync
                 rel="bar"
                 type="baz/qux"
             />').root)
-      link = Link.from_xml(ln)
-      expect(link).to be_a(Link)
-      expect(link.rel).to eq('bar')
-      expect(link.href).to eq(URI('http://example.org'))
-      expect(link.priority).to eq(3.14159)
-      expect(link.modified_time).to be_time(Time.utc(2013, 1, 3, 9))
-      expect(link.length).to eq(12_345)
-      expect(link.mime_type).to be_mime_type('baz/qux')
-      expect(link.hash('md5')).to eq('1e0d5cb8ef6ba40c99b14c0237be735e')
-      expect(link.path).to eq('/foo/')
+        link = Link.from_xml(ln)
+        expect(link).to be_a(Link)
+        expect(link.rel).to eq('bar')
+        expect(link.href).to eq(URI('http://example.org'))
+        expect(link.priority).to eq(3.14159)
+        expect(link.modified_time).to be_time(Time.utc(2013, 1, 3, 9))
+        expect(link.length).to eq(12_345)
+        expect(link.mime_type).to be_mime_type('baz/qux')
+        expect(link.hash('md5')).to eq('1e0d5cb8ef6ba40c99b14c0237be735e')
+        expect(link.path).to eq('/foo/')
+      end
     end
   end
 end
