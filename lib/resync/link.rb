@@ -44,10 +44,10 @@ module Resync
       Link.new(
         rel: ln.rel,
         href: ln.href,
-        priority: ln.pri,
-        modified_time: ln.modified,
+        priority: ln.priority,
+        modified_time: ln.modified_time,
         length: ln.length,
-        mime_type: ln.type,
+        mime_type: ln.mime_type,
         hashes: ln.hashes,
         path: ln.path
       )

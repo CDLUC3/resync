@@ -14,7 +14,7 @@ module Resync
         md = urlset.md
         expect(md).not_to be_nil
         expect(md.capability).to eq('resourcelist')
-        expect(md.at).to be_time(Time.utc(2013, 1, 3, 9))
+        expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
 
         urls = urlset.url
         expect(urls.size).to eq(2)
@@ -33,7 +33,7 @@ module Resync
         md = urlset.md
         expect(md).not_to be_nil
         expect(md.capability).to eq('resourcelist')
-        expect(md.at).to be_time(Time.utc(2013, 1, 3, 9))
+        expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
 
         urls = urlset.url
         expect(urls.size).to eq(2)
@@ -87,7 +87,7 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('resourcedump')
-        expect(md.at).to be_time(Time.utc(2013, 1, 3, 9))
+        expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
 
         urls = urlset.url
         expect(urls.size).to eq(1)
@@ -103,7 +103,7 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('resourcedump-manifest')
-        expect(md.at).to be_time(Time.utc(2013, 1, 3, 9))
+        expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
 
         urls = urlset.url
         expect(urls.size).to eq(2)
@@ -191,7 +191,7 @@ module Resync
 
         md = sitemapindex.md
         expect(md.capability).to eq('resourcelist')
-        expect(md.at).to be_time(Time.utc(2013, 1, 3, 9))
+        expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
 
         sitemap = sitemapindex.sitemap
         expect(sitemap.size).to eq(2)
@@ -275,8 +275,8 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('resourcelist')
-        expect(md.at).to be_time(Time.utc(2013, 1, 3, 9))
-        expect(md.completed).to be_time(Time.utc(2013, 1, 3, 9, 1))
+        expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
+        expect(md.completed_time).to be_time(Time.utc(2013, 1, 3, 9, 1))
 
         urls = urlset.url
         expect(urls.size).to eq(2)
@@ -293,7 +293,7 @@ module Resync
           md = url.md
           expect(md.hashes).to eq(expected_hashes[i])
           expect(md.length).to eq(expected_lengths[i])
-          expect(md.type).to be_mime_type(expected_types[i])
+          expect(md.mime_type).to be_mime_type(expected_types[i])
         end
       end
 
@@ -309,8 +309,8 @@ module Resync
 
         md = sitemapindex.md
         expect(md.capability).to eq('resourcelist')
-        expect(md.at).to be_time(Time.utc(2013, 1, 3, 9))
-        expect(md.completed).to be_time(Time.utc(2013, 1, 3, 9, 10))
+        expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
+        expect(md.completed_time).to be_time(Time.utc(2013, 1, 3, 9, 10))
 
         sitemaps = sitemapindex.sitemap
         expect(sitemaps.size).to eq(3)
@@ -320,7 +320,7 @@ module Resync
           sitemap = sitemaps[i]
           expect(sitemap.loc).to eq(URI("http://example.com/resourcelist#{i + 1}.xml"))
           md = sitemap.md
-          expect(md.at).to be_time(expected_times[i])
+          expect(md.at_time).to be_time(expected_times[i])
         end
       end
 
@@ -339,7 +339,7 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('resourcelist')
-        expect(md.at).to be_time(Time.utc(2013, 1, 3, 9))
+        expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
 
         urls = urlset.url
         expect(urls.size).to eq(2)
@@ -356,7 +356,7 @@ module Resync
           md = url.md
           expect(md.hashes).to eq(expected_hashes[i])
           expect(md.length).to eq(expected_lengths[i])
-          expect(md.type).to be_mime_type(expected_types[i])
+          expect(md.mime_type).to be_mime_type(expected_types[i])
         end
       end
 
@@ -372,8 +372,8 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('resourcedump')
-        expect(md.at).to be_time(Time.utc(2013, 1, 3, 9))
-        expect(md.completed).to be_time(Time.utc(2013, 1, 3, 9, 4))
+        expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
+        expect(md.completed_time).to be_time(Time.utc(2013, 1, 3, 9, 4))
 
         urls = urlset.url
         expect(urls.size).to eq(3)
@@ -386,16 +386,16 @@ module Resync
           url = urls[i]
           expect(url.loc).to eq(URI("http://example.com/resourcedump-part#{i + 1}.zip"))
           md = url.md
-          expect(md.type).to be_mime_type('application/zip')
+          expect(md.mime_type).to be_mime_type('application/zip')
           expect(md.length).to eq(expected_lengths[i])
-          expect(md.at).to be_time(expected_ats[i])
-          expect(md.completed).to be_time(expected_completeds[i])
+          expect(md.at_time).to be_time(expected_ats[i])
+          expect(md.completed_time).to be_time(expected_completeds[i])
           lns = url.ln
           expect(lns.size).to eq(1)
           ln = lns[0]
           expect(ln.rel).to eq('contents')
           expect(ln.href).to eq(URI("http://example.com/resourcedump_manifest-part#{i + 1}.xml"))
-          expect(ln.type).to be_mime_type('application/xml')
+          expect(ln.mime_type).to be_mime_type('application/xml')
         end
       end
 
@@ -411,8 +411,8 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('resourcedump-manifest')
-        expect(md.at).to be_time(Time.utc(2013, 1, 3, 9))
-        expect(md.completed).to be_time(Time.utc(2013, 1, 3, 9, 2))
+        expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
+        expect(md.completed_time).to be_time(Time.utc(2013, 1, 3, 9, 2))
 
         urls = urlset.url
         expect(urls.size).to eq(2)
@@ -429,7 +429,7 @@ module Resync
           md = url.md
           expect(md.hashes).to eq(expected_hashes[i])
           expect(md.length).to eq(expected_lengths[i])
-          expect(md.type).to be_mime_type(expected_types[i])
+          expect(md.mime_type).to be_mime_type(expected_types[i])
           expect(md.path).to eq("/resources/res#{i + 1}")
         end
       end
@@ -446,7 +446,7 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('changelist')
-        expect(md.from).to be_time(Time.utc(2013, 1, 3))
+        expect(md.from_time).to be_time(Time.utc(2013, 1, 3))
 
         urls = urlset.url
         expect(urls.size).to eq(4)
@@ -477,7 +477,7 @@ module Resync
 
         md = sitemapindex.md
         expect(md.capability).to eq('changelist')
-        expect(md.from).to be_time(Time.utc(2013, 1, 1))
+        expect(md.from_time).to be_time(Time.utc(2013, 1, 1))
 
         sitemaps = sitemapindex.sitemap
         expect(sitemaps.size).to eq(3)
@@ -488,8 +488,8 @@ module Resync
           sitemap = sitemaps[i]
           expect(sitemap.loc).to eq(URI("http://example.com/2013010#{i + 1}-changelist.xml"))
           md = sitemap.md
-          expect(md.from).to be_time(expected_froms[i])
-          expect(md.until).to be_time(expected_untils[i])
+          expect(md.from_time).to be_time(expected_froms[i])
+          expect(md.until_time).to be_time(expected_untils[i])
         end
       end
 
@@ -508,8 +508,8 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('changelist')
-        expect(md.from).to be_time(Time.utc(2013, 1, 2))
-        expect(md.until).to be_time(Time.utc(2013, 1, 3))
+        expect(md.from_time).to be_time(Time.utc(2013, 1, 2))
+        expect(md.until_time).to be_time(Time.utc(2013, 1, 3))
 
         urls = urlset.url
         expect(urls.size).to eq(4)
@@ -545,7 +545,7 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('changedump')
-        expect(md.from).to be_time(Time.utc(2013, 1, 1))
+        expect(md.from_time).to be_time(Time.utc(2013, 1, 1))
 
         urls = urlset.url
         expect(urls.size).to eq(3)
@@ -562,16 +562,16 @@ module Resync
           expect(url.loc).to eq(URI("http://example.com/2013010#{i + 1}-changedump.zip"))
           expect(url.lastmod).to eq(expected_lastmods[i])
           md = url.md
-          expect(md.type).to be_mime_type('application/zip')
+          expect(md.mime_type).to be_mime_type('application/zip')
           expect(md.length).to eq(expected_lengths[i])
-          expect(md.from).to be_time(Time.utc(2013, 1, i + 1))
-          expect(md.until).to be_time(Time.utc(2013, 1, i + 2))
+          expect(md.from_time).to be_time(Time.utc(2013, 1, i + 1))
+          expect(md.until_time).to be_time(Time.utc(2013, 1, i + 2))
           lns = url.ln
           expect(lns.size).to eq(1)
           ln = lns[0]
           expect(ln.rel).to eq('contents')
           expect(ln.href).to eq(URI("http://example.com/2013010#{i + 1}-changedump-manifest.xml"))
-          expect(ln.type).to be_mime_type('application/xml')
+          expect(ln.mime_type).to be_mime_type('application/xml')
         end
 
       end
@@ -588,8 +588,8 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('changedump-manifest')
-        expect(md.from).to be_time(Time.utc(2013, 1, 2))
-        expect(md.until).to be_time(Time.utc(2013, 1, 3))
+        expect(md.from_time).to be_time(Time.utc(2013, 1, 2))
+        expect(md.until_time).to be_time(Time.utc(2013, 1, 3))
 
         urls = urlset.url
         expect(urls.size).to eq(4)
@@ -626,7 +626,7 @@ module Resync
           expect(md.change).to eq(expected_changes[i])
           expect(md.hashes).to eq(expected_hashes[i])
           expect(md.length).to eq(expected_lengths[i])
-          expect(md.type).to be_mime_type(expected_types[i])
+          expect(md.mime_type).to be_mime_type(expected_types[i])
           expect(md.path).to eq(expected_paths[i])
         end
       end
@@ -643,7 +643,7 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('changelist')
-        expect(md.from).to be_time(Time.utc(2013, 1, 3))
+        expect(md.from_time).to be_time(Time.utc(2013, 1, 3))
 
         urls = urlset.url
         expect(urls.size).to eq(1)
@@ -655,7 +655,7 @@ module Resync
         expect(md.change).to be(Change::UPDATED)
         expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
-        expect(md.type).to be_mime_type('text/html')
+        expect(md.mime_type).to be_mime_type('text/html')
 
         lns = url.ln
         expect(lns.size).to eq(3)
@@ -666,9 +666,9 @@ module Resync
         (0..2).each do |i|
           ln = lns[i]
           expect(ln.rel).to eq('duplicate')
-          expect(ln.pri).to eq(i + 1)
+          expect(ln.priority).to eq(i + 1)
           expect(ln.href).to eq(expected_uris[i])
-          expect(ln.modified).to be_time(Time.utc(2013, 1, 3, 18))
+          expect(ln.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
         end
       end
 
@@ -684,7 +684,7 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('changelist')
-        expect(md.from).to be_time(Time.utc(2013, 1, 3, 11))
+        expect(md.from_time).to be_time(Time.utc(2013, 1, 3, 11))
 
         urls = urlset.url
         expect(urls.size).to eq(1)
@@ -699,13 +699,13 @@ module Resync
         ln0 = lns[0]
         expect(ln0.rel).to eq('alternate')
         expect(ln0.href).to eq(URI('http://example.com/res1.html'))
-        expect(ln0.modified).to be_time(Time.utc(2013, 1, 3, 18))
-        expect(ln0.type).to be_mime_type('text/html')
+        expect(ln0.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
+        expect(ln0.mime_type).to be_mime_type('text/html')
         ln1 = lns[1]
         expect(ln1.rel).to eq('alternate')
         expect(ln1.href).to eq(URI('http://example.com/res1.pdf'))
-        expect(ln1.modified).to be_time(Time.utc(2013, 1, 3, 18))
-        expect(ln1.type).to be_mime_type('application/pdf')
+        expect(ln1.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
+        expect(ln1.mime_type).to be_mime_type('application/pdf')
       end
 
       it 'parses example 26' do
@@ -720,7 +720,7 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('changelist')
-        expect(md.from).to be_time(Time.utc(2013, 1, 3))
+        expect(md.from_time).to be_time(Time.utc(2013, 1, 3))
 
         urls = urlset.url
         expect(urls.size).to eq(1)
@@ -737,7 +737,7 @@ module Resync
         ln = lns[0]
         expect(ln.rel).to eq('canonical')
         expect(ln.href).to eq(URI('http://example.com/res1'))
-        expect(ln.modified).to be_time(Time.utc(2013, 1, 3, 18))
+        expect(ln.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
       end
 
       it 'parses example 27' do
@@ -752,7 +752,7 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('changelist')
-        expect(md.from).to be_time(Time.utc(2013, 1, 3))
+        expect(md.from_time).to be_time(Time.utc(2013, 1, 3))
 
         urls = urlset.url
         expect(urls.size).to eq(2)
@@ -764,16 +764,16 @@ module Resync
         expect(md0.change).to be(Change::UPDATED)
         expect(md0.hashes).to eq('sha-256' => 'f4OxZX_x_DFGFDgghgdfb6rtSx-iosjf6735432nklj')
         expect(md0.length).to eq(56_778)
-        expect(md0.type).to be_mime_type('application/json')
+        expect(md0.mime_type).to be_mime_type('application/json')
         lns0 = url0.ln
         expect(lns0.size).to eq(1)
         ln0 = lns0[0]
         expect(ln0.rel).to(eq('http://www.openarchives.org/rs/terms/patch'))
         expect(ln0.href).to(eq(URI('http://example.com/res4-json-patch')))
-        expect(ln0.modified).to(eq(Time.utc(2013, 1, 3, 17)))
+        expect(ln0.modified_time).to(eq(Time.utc(2013, 1, 3, 17)))
         expect(ln0.hashes).to(eq('sha-256' => 'y66dER_t_HWEIKpesdkeb7rtSc-ippjf9823742opld'))
         expect(ln0.length).to(eq(73))
-        expect(ln0.type).to(be_mime_type('application/json-patch'))
+        expect(ln0.mime_type).to(be_mime_type('application/json-patch'))
 
         url1 = urls[1]
         expect(url1.loc).to eq(URI('http://example.com/res5-full.tiff'))
@@ -782,16 +782,16 @@ module Resync
         expect(md1.change).to be(Change::UPDATED)
         expect(md1.hashes).to eq('sha-256' => 'f4OxZX_x_FO5LcGBSKHWXfwtSx-j1ncoSt3SABJtkGk')
         expect(md1.length).to eq(9_788_456_778)
-        expect(md1.type).to be_mime_type('image/tiff')
+        expect(md1.mime_type).to be_mime_type('image/tiff')
         lns1 = url1.ln
         expect(lns1.size).to eq(1)
         ln1 = lns1[0]
         expect(ln1.rel).to(eq('http://www.openarchives.org/rs/terms/patch'))
         expect(ln1.href).to(eq(URI('http://example.com/res5-diff')))
-        expect(ln1.modified).to(eq(Time.utc(2013, 1, 3, 18)))
+        expect(ln1.modified_time).to(eq(Time.utc(2013, 1, 3, 18)))
         expect(ln1.hashes).to(eq('sha-256' => 'h986gT_t_87HTkjHYE76G558hY-jdfgy76t55sadJUYT'))
         expect(ln1.length).to(eq(4533))
-        expect(ln1.type).to(be_mime_type('application/x-tiff-diff'))
+        expect(ln1.mime_type).to(be_mime_type('application/x-tiff-diff'))
       end
 
       it 'parses example 28' do
@@ -806,7 +806,7 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('changelist')
-        expect(md.from).to be_time(Time.utc(2013, 1, 3))
+        expect(md.from_time).to be_time(Time.utc(2013, 1, 3))
 
         urls = urlset.url
         expect(urls.size).to eq(2)
@@ -818,30 +818,30 @@ module Resync
         expect(md0.change).to be(Change::UPDATED)
         expect(md0.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md0.length).to eq(8876)
-        expect(md0.type).to be_mime_type('application/pdf')
+        expect(md0.mime_type).to be_mime_type('application/pdf')
         lns0 = url0.ln
         expect(lns0.size).to eq(1)
         ln0 = lns0[0]
         expect(ln0.rel).to(eq('describedby'))
         expect(ln0.href).to(eq(URI('http://example.com/res2_dublin-core_metadata.xml')))
-        expect(ln0.modified).to(eq(Time.utc(2013, 1, 1, 12)))
-        expect(ln0.type).to(be_mime_type('application/xml'))
+        expect(ln0.modified_time).to(eq(Time.utc(2013, 1, 1, 12)))
+        expect(ln0.mime_type).to(be_mime_type('application/xml'))
 
         url1 = urls[1]
         expect(url1.loc).to eq(URI('http://example.com/res2_dublin-core_metadata.xml'))
         expect(url1.lastmod).to be_time(Time.utc(2013, 1, 3, 19))
         md1 = url1.md
         expect(md1.change).to be(Change::UPDATED)
-        expect(md1.type).to be_mime_type('application/xml')
+        expect(md1.mime_type).to be_mime_type('application/xml')
         lns1 = url1.ln
         expect(lns1.size).to eq(2)
         ln1 = lns1[0]
         expect(ln1.rel).to(eq('describes'))
         expect(ln1.href).to(eq(URI('http://example.com/res2.pdf')))
-        expect(ln1.modified).to(eq(Time.utc(2013, 1, 3, 18)))
+        expect(ln1.modified_time).to(eq(Time.utc(2013, 1, 3, 18)))
         expect(ln1.hashes).to(eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6'))
         expect(ln1.length).to(eq(8876))
-        expect(ln1.type).to(be_mime_type('application/pdf'))
+        expect(ln1.mime_type).to(be_mime_type('application/pdf'))
         ln2 = lns1[1]
         expect(ln2.rel).to(eq('profile'))
         expect(ln2.href).to(eq(URI('http://purl.org/dc/elements/1.1/')))
@@ -859,7 +859,7 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('changelist')
-        expect(md.from).to be_time(Time.utc(2013, 1, 3))
+        expect(md.from_time).to be_time(Time.utc(2013, 1, 3))
 
         urls = urlset.url
         expect(urls.size).to eq(1)
@@ -870,7 +870,7 @@ module Resync
         md = url.md
         expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
-        expect(md.type).to be_mime_type('text/html')
+        expect(md.mime_type).to be_mime_type('text/html')
         expect(md.change).to be(Change::UPDATED)
 
         lns = url.ln
@@ -878,18 +878,18 @@ module Resync
         ln0 = lns[0]
         expect(ln0.rel).to eq('memento')
         expect(ln0.href).to eq(URI('http://example.com/20130103070000/res1'))
-        expect(ln0.modified).to be_time(Time.utc(2013, 1, 2, 18))
-        expect(ln0.type).to be_mime_type('text/html')
+        expect(ln0.modified_time).to be_time(Time.utc(2013, 1, 2, 18))
+        expect(ln0.mime_type).to be_mime_type('text/html')
         expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
-        expect(md.type).to be_mime_type('text/html')
+        expect(md.mime_type).to be_mime_type('text/html')
         ln1 = lns[1]
         expect(ln1.rel).to eq('timegate')
         expect(ln1.href).to eq(URI('http://example.com/timegate/http://example.com/res1'))
         ln2 = lns[2]
         expect(ln2.rel).to eq('timemap')
         expect(ln2.href).to eq(URI('http://example.com/timemap/http://example.com/res1'))
-        expect(ln2.type).to be_mime_type('application/link-format')
+        expect(ln2.mime_type).to be_mime_type('application/link-format')
       end
 
       it 'parses example 30' do
@@ -904,7 +904,7 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('changelist')
-        expect(md.from).to be_time(Time.utc(2013, 1, 3))
+        expect(md.from_time).to be_time(Time.utc(2013, 1, 3))
         urls = urlset.url
         expect(urls.size).to eq(1)
 
@@ -914,7 +914,7 @@ module Resync
         md = url.md
         expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
-        expect(md.type).to be_mime_type('text/html')
+        expect(md.mime_type).to be_mime_type('text/html')
         expect(md.change).to be(Change::UPDATED)
 
         lns = url.ln
@@ -935,7 +935,7 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('changelist')
-        expect(md.from).to be_time(Time.utc(2013, 1, 3))
+        expect(md.from_time).to be_time(Time.utc(2013, 1, 3))
         urls = urlset.url
         expect(urls.size).to eq(1)
 
@@ -945,7 +945,7 @@ module Resync
         md = url.md
         expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
-        expect(md.type).to be_mime_type('text/html')
+        expect(md.mime_type).to be_mime_type('text/html')
         expect(md.change).to be(Change::UPDATED)
       end
 
@@ -961,7 +961,7 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('changelist')
-        expect(md.from).to be_time(Time.utc(2013, 1, 3, 11))
+        expect(md.from_time).to be_time(Time.utc(2013, 1, 3, 11))
         urls = urlset.url
         expect(urls.size).to eq(1)
 
@@ -971,17 +971,17 @@ module Resync
         md = url.md
         expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
-        expect(md.type).to be_mime_type('text/html')
+        expect(md.mime_type).to be_mime_type('text/html')
         expect(md.change).to be(Change::UPDATED)
 
         lns = url.ln
         ln = lns[0]
         expect(ln.rel).to eq('via')
         expect(ln.href).to eq(URI('http://original.example.com/res1.html'))
-        expect(ln.modified).to be_time(Time.utc(2013, 1, 3, 7))
+        expect(ln.modified_time).to be_time(Time.utc(2013, 1, 3, 7))
         expect(ln.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(ln.length).to eq(8876)
-        expect(ln.type).to be_mime_type('text/html')
+        expect(ln.mime_type).to be_mime_type('text/html')
       end
 
       it 'parses example 33' do
@@ -996,7 +996,7 @@ module Resync
 
         md = urlset.md
         expect(md.capability).to eq('changelist')
-        expect(md.from).to be_time(Time.utc(2013, 1, 3, 12))
+        expect(md.from_time).to be_time(Time.utc(2013, 1, 3, 12))
         urls = urlset.url
         expect(urls.size).to eq(1)
 
@@ -1006,17 +1006,17 @@ module Resync
         md = url.md
         expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
-        expect(md.type).to be_mime_type('text/html')
+        expect(md.mime_type).to be_mime_type('text/html')
         expect(md.change).to be(Change::UPDATED)
 
         lns = url.ln
         ln = lns[0]
         expect(ln.rel).to eq('via')
         expect(ln.href).to eq(URI('http://original.example.com/res1.html'))
-        expect(ln.modified).to be_time(Time.utc(2013, 1, 3, 7))
+        expect(ln.modified_time).to be_time(Time.utc(2013, 1, 3, 7))
         expect(ln.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(ln.length).to eq(8876)
-        expect(ln.type).to be_mime_type('text/html')
+        expect(ln.mime_type).to be_mime_type('text/html')
       end
     end
   end

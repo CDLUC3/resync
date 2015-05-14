@@ -21,7 +21,7 @@ module Resync
 
       it 'parses @at' do
         md = parse('<md at="2013-01-03T09:00:00Z"/>')
-        expect(md.at).to eq(Time.utc(2013, 1, 3, 9))
+        expect(md.at_time).to eq(Time.utc(2013, 1, 3, 9))
       end
 
       it 'parses @capability' do
@@ -36,7 +36,7 @@ module Resync
 
       it 'parses @completed' do
         md = parse('<md completed="2013-01-03T09:00:00Z"/>')
-        expect(md.completed).to eq(Time.utc(2013, 1, 3, 9))
+        expect(md.completed_time).to eq(Time.utc(2013, 1, 3, 9))
       end
 
       it 'parses @encoding' do
@@ -46,7 +46,7 @@ module Resync
 
       it 'parses @from' do
         md = parse('<md from="2013-01-03T09:00:00Z"/>')
-        expect(md.from).to eq(Time.utc(2013, 1, 3, 9))
+        expect(md.from_time).to eq(Time.utc(2013, 1, 3, 9))
       end
 
       describe 'parses @hash' do
@@ -69,7 +69,7 @@ module Resync
 
       it 'parses @modified' do
         md = parse('<md modified="2013-01-03T09:00:00Z"/>')
-        expect(md.modified).to eq(Time.utc(2013, 1, 3, 9))
+        expect(md.modified_time).to eq(Time.utc(2013, 1, 3, 9))
       end
 
       it 'parses @path' do
@@ -80,12 +80,12 @@ module Resync
       it 'parses @type' do
         mt = MIME::Types['text/plain'].first
         md = parse('<md type="text/plain"/>')
-        expect(md.type).to eq(mt)
+        expect(md.mime_type).to eq(mt)
       end
 
       it 'parses @until' do
         md = parse('<md until="2013-01-03T09:00:00Z"/>')
-        expect(md.until).to eq(Time.utc(2013, 1, 3, 9))
+        expect(md.until_time).to eq(Time.utc(2013, 1, 3, 9))
       end
 
       it 'can round-trip to XML' do

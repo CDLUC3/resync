@@ -48,7 +48,7 @@ module Resync
 
       it 'parses @modified' do
         ln = parse('<ln modified="2013-01-03T09:00:00Z"/>')
-        expect(ln.modified).to eq(Time.utc(2013, 1, 3, 9))
+        expect(ln.modified_time).to eq(Time.utc(2013, 1, 3, 9))
       end
 
       it 'parses @path' do
@@ -58,7 +58,7 @@ module Resync
 
       it 'parses @pri' do
         ln = parse('<ln pri="3.14159"/>')
-        expect(ln.pri).to eq(3.14159)
+        expect(ln.priority).to eq(3.14159)
       end
 
       it 'parses @rel' do
@@ -68,7 +68,7 @@ module Resync
 
       it 'parses @type' do
         ln = parse('<ln type="elvis/presley"/>')
-        expect(ln.type).to be_mime_type('elvis/presley')
+        expect(ln.mime_type).to be_mime_type('elvis/presley')
       end
 
       it 'can round-trip to XML' do
