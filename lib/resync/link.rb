@@ -48,7 +48,7 @@ module Resync
         modified_time: ln.modified,
         length: ln.length,
         mime_type: ln.type,
-        hashes: hash_of_hashcodes(ln.hash),
+        hashes: ln.hashes,
         path: ln.path
       )
     end
