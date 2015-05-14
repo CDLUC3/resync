@@ -4,6 +4,10 @@ module Resync
   describe ResourceList do
     it_behaves_like BaseResourceList
 
+    describe 'links' do
+      it_behaves_like LinkCollection
+    end
+
     describe 'converts from XML' do
       describe '#from_xml' do
         it 'parses an XML string' do

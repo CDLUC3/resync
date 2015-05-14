@@ -1,13 +1,16 @@
 require_relative 'shared/base_resource_list'
+require_relative 'xml'
 
 module Resync
   class CapabilityList < BaseResourceList
+    include XML::Convertible
+    XML_TYPE = XML::Urlset
     CAPABILITY = 'capabilitylist'
 
     attr_reader :source_description
 
-    def initialize(resources: nil, links: nil, metadata: nil, source_description:)
-      @source_description = to_uri(source_description)
+    def initialize(resources: nil, links: nil, metadata: nil)
+      @source_description = source_description_from(links)
       @capabilities = to_capability_map(resources)
       super(resources: @capabilities.values, links: links, metadata: metadata)
     end
@@ -27,11 +30,6 @@ module Resync
     # ------------------------------
     # Conversions
 
-    # TODO: Share all of these
-    def to_uri(url)
-      (url.is_a? URI) ? url : URI.parse(url)
-    end
-
     def to_capability_map(resources)
       capabilities = {}
       (resources || []).each do |resource|
@@ -43,5 +41,11 @@ module Resync
       capabilities
     end
 
+    def source_description_from(links)
+      return nil unless links
+      desc = links.map { |link| link.href if link.rel == 'up' }.compact.first
+      fail ArgumentError, "No source descrption (<link rel='up'/>) provided" unless desc
+      desc
+    end
   end
 end

@@ -36,10 +36,6 @@ module Resync
         end
       end
 
-      describe 'links' do
-        it_behaves_like LinkCollection
-      end
-
       describe 'metadata' do
         it 'accepts metadata' do
           metadata = Metadata.new(capability: described_class::CAPABILITY)

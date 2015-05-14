@@ -4,6 +4,10 @@ module Resync
   describe ResourceDumpManifest do
     it_behaves_like BaseResourceList
 
+    describe 'links' do
+      it_behaves_like LinkCollection
+    end
+
     describe 'converts from XML' do
       describe '#from_xml' do
         it 'parses an XML string' do
@@ -25,7 +29,7 @@ module Resync
           expect(urls.size).to eq(2)
 
           expected_lastmods = [Time.utc(2013, 1, 2, 13), Time.utc(2013, 1, 2, 14)]
-          expected_hashes = [{'md5' => '1584abdf8ebdc9802ac0c6a7402c03b6'}, {'md5' => '1e0d5cb8ef6ba40c99b14c0237be735e', 'sha-256' => '854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784'}]
+          expected_hashes = [{ 'md5' => '1584abdf8ebdc9802ac0c6a7402c03b6' }, { 'md5' => '1e0d5cb8ef6ba40c99b14c0237be735e', 'sha-256' => '854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784' }]
           expected_lengths = [8876, 14_599]
           expected_types = ['text/html', 'application/pdf']
 

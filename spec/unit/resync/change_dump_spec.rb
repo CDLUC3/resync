@@ -23,9 +23,9 @@ module Resync
           expect(urls.size).to eq(3)
 
           expected_lastmods = [
-              Time.utc(2013, 1, 1, 23, 59, 59),
-              Time.utc(2013, 1, 2, 23, 59, 59),
-              Time.utc(2013, 1, 3, 23, 59, 59)
+            Time.utc(2013, 1, 1, 23, 59, 59),
+            Time.utc(2013, 1, 2, 23, 59, 59),
+            Time.utc(2013, 1, 3, 23, 59, 59)
           ]
           expected_lengths = [3109, 6629, 8124]
 
