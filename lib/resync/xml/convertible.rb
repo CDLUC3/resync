@@ -1,5 +1,10 @@
 module Resync
   module XML
+
+    # Adds XML conversions to the classes that include it. To use,
+    # +include+ +Resync::XML::Convertible+ and define a constant
+    # +XML_TYPE+ whose value is the +XML::Mapping+ mapping class
+    # used to map to XML.
     module Convertible
 
       def self.included base
