@@ -43,7 +43,7 @@ module Resync
         expect(url0.lastmod).to be_time(Time.utc(2013, 1, 2, 13))
         md0 = url0.md
         expect(md0).not_to be_nil
-        expect(md0.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md0.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         lns0 = urls[0].ln
         expect(lns0.size).to eq(0)
 
@@ -52,7 +52,7 @@ module Resync
         expect(url1.lastmod).to be_time(Time.utc(2013, 1, 2, 14))
         md1 = url1.md
         expect(md1).not_to be_nil
-        expect(md1.hash).to eq('md5:1e0d5cb8ef6ba40c99b14c0237be735e')
+        expect(md1.hashes).to eq('md5' => '1e0d5cb8ef6ba40c99b14c0237be735e')
         lns1 = urls[1].ln
         expect(lns1.size).to eq(1)
         ln1 = lns1[0]
@@ -111,14 +111,14 @@ module Resync
         expect(url0.loc).to eq(URI('http://example.com/res1'))
         expect(url0.lastmod).to be_time(Time.utc(2013, 1, 3, 3))
         md0 = url0.md
-        expect(md0.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md0.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md0.path).to eq('/resources/res1')
 
         url1 = urls[1]
         expect(url1.loc).to eq(URI('http://example.com/res2'))
         expect(url1.lastmod).to be_time(Time.utc(2013, 1, 3, 4))
         md1 = url1.md
-        expect(md1.hash).to eq('md5:1e0d5cb8ef6ba40c99b14c0237be735e')
+        expect(md1.hashes).to eq('md5' => '1e0d5cb8ef6ba40c99b14c0237be735e')
         expect(md1.path).to eq('/resources/res2')
       end
 
@@ -282,7 +282,7 @@ module Resync
         expect(urls.size).to eq(2)
 
         expected_lastmods = [Time.utc(2013, 1, 2, 13), Time.utc(2013, 1, 2, 14)]
-        expected_hashes = ['md5:1584abdf8ebdc9802ac0c6a7402c03b6', 'md5:1e0d5cb8ef6ba40c99b14c0237be735e sha-256:854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784']
+        expected_hashes = [{ 'md5' => '1584abdf8ebdc9802ac0c6a7402c03b6' }, { 'md5' => '1e0d5cb8ef6ba40c99b14c0237be735e', 'sha-256' => '854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784' }]
         expected_lengths = [8876, 14_599]
         expected_types = ['text/html', 'application/pdf']
 
@@ -291,7 +291,7 @@ module Resync
           expect(url.loc).to eq(URI("http://example.com/res#{i + 1}"))
           expect(url.lastmod).to be_time(expected_lastmods[i])
           md = url.md
-          expect(md.hash).to eq(expected_hashes[i])
+          expect(md.hashes).to eq(expected_hashes[i])
           expect(md.length).to eq(expected_lengths[i])
           expect(md.type).to be_mime_type(expected_types[i])
         end
@@ -345,7 +345,7 @@ module Resync
         expect(urls.size).to eq(2)
 
         expected_lastmods = [Time.utc(2013, 1, 2, 13), Time.utc(2013, 1, 2, 14)]
-        expected_hashes = ['md5:1584abdf8ebdc9802ac0c6a7402c8753', 'md5:4556abdf8ebdc9802ac0c6a7402c9881']
+        expected_hashes = [{ 'md5' => '1584abdf8ebdc9802ac0c6a7402c8753' }, { 'md5' => '4556abdf8ebdc9802ac0c6a7402c9881' }]
         expected_lengths = [4385, 883]
         expected_types = ['application/pdf', 'image/png']
 
@@ -354,7 +354,7 @@ module Resync
           expect(url.loc).to eq(URI("http://example.com/res#{i + 3}"))
           expect(url.lastmod).to be_time(expected_lastmods[i])
           md = url.md
-          expect(md.hash).to eq(expected_hashes[i])
+          expect(md.hashes).to eq(expected_hashes[i])
           expect(md.length).to eq(expected_lengths[i])
           expect(md.type).to be_mime_type(expected_types[i])
         end
@@ -418,7 +418,7 @@ module Resync
         expect(urls.size).to eq(2)
 
         expected_lastmods = [Time.utc(2013, 1, 2, 13), Time.utc(2013, 1, 2, 14)]
-        expected_hashes = ['md5:1584abdf8ebdc9802ac0c6a7402c03b6', 'md5:1e0d5cb8ef6ba40c99b14c0237be735e sha-256:854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784']
+        expected_hashes = [{ 'md5' => '1584abdf8ebdc9802ac0c6a7402c03b6' }, { 'md5' => '1e0d5cb8ef6ba40c99b14c0237be735e', 'sha-256' => '854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784' }]
         expected_lengths = [8876, 14_599]
         expected_types = ['text/html', 'application/pdf']
 
@@ -427,7 +427,7 @@ module Resync
           expect(url.loc).to eq(URI("http://example.com/res#{i + 1}"))
           expect(url.lastmod).to be_time(expected_lastmods[i])
           md = url.md
-          expect(md.hash).to eq(expected_hashes[i])
+          expect(md.hashes).to eq(expected_hashes[i])
           expect(md.length).to eq(expected_lengths[i])
           expect(md.type).to be_mime_type(expected_types[i])
           expect(md.path).to eq("/resources/res#{i + 1}")
@@ -604,10 +604,10 @@ module Resync
         ]
         expected_changes = [Change::CREATED, Change::UPDATED, Change::DELETED, Change::UPDATED]
         expected_hashes = [
-          'md5:1c1b0e264fa9b7e1e9aa6f9db8d6362b',
-          'md5:f906610c3d4aa745cb2b986f25b37c5a',
+          { 'md5' => '1c1b0e264fa9b7e1e9aa6f9db8d6362b' },
+          { 'md5' => 'f906610c3d4aa745cb2b986f25b37c5a' },
           nil,
-          'md5:0988647082c8bc51778894a48ec3b576'
+          { 'md5' => '0988647082c8bc51778894a48ec3b576' }
         ]
         expected_lengths = [4339, 38_297, nil, 5426]
         expected_types = [
@@ -624,7 +624,7 @@ module Resync
           expect(url.lastmod).to be_time(expected_lastmods[i])
           md = url.md
           expect(md.change).to eq(expected_changes[i])
-          expect(md.hash).to eq(expected_hashes[i])
+          expect(md.hashes).to eq(expected_hashes[i])
           expect(md.length).to eq(expected_lengths[i])
           expect(md.type).to be_mime_type(expected_types[i])
           expect(md.path).to eq(expected_paths[i])
@@ -653,7 +653,7 @@ module Resync
         expect(url.lastmod).to be_time(Time.utc(2013, 1, 3, 18))
         md = url.md
         expect(md.change).to be(Change::UPDATED)
-        expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
         expect(md.type).to be_mime_type('text/html')
 
@@ -730,7 +730,7 @@ module Resync
         expect(url.lastmod).to be_time(Time.utc(2013, 1, 3, 18))
         md = url.md
         expect(md.change).to be(Change::UPDATED)
-        expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
         lns = url.ln
         expect(lns.size).to eq(1)
@@ -762,7 +762,7 @@ module Resync
         expect(url0.lastmod).to be_time(Time.utc(2013, 1, 3, 17))
         md0 = url0.md
         expect(md0.change).to be(Change::UPDATED)
-        expect(md0.hash).to eq('sha-256:f4OxZX_x_DFGFDgghgdfb6rtSx-iosjf6735432nklj')
+        expect(md0.hashes).to eq('sha-256' => 'f4OxZX_x_DFGFDgghgdfb6rtSx-iosjf6735432nklj')
         expect(md0.length).to eq(56_778)
         expect(md0.type).to be_mime_type('application/json')
         lns0 = url0.ln
@@ -771,7 +771,7 @@ module Resync
         expect(ln0.rel).to(eq('http://www.openarchives.org/rs/terms/patch'))
         expect(ln0.href).to(eq(URI('http://example.com/res4-json-patch')))
         expect(ln0.modified).to(eq(Time.utc(2013, 1, 3, 17)))
-        expect(ln0.hash).to(eq('sha-256:y66dER_t_HWEIKpesdkeb7rtSc-ippjf9823742opld'))
+        expect(ln0.hashes).to(eq('sha-256' => 'y66dER_t_HWEIKpesdkeb7rtSc-ippjf9823742opld'))
         expect(ln0.length).to(eq(73))
         expect(ln0.type).to(be_mime_type('application/json-patch'))
 
@@ -780,7 +780,7 @@ module Resync
         expect(url1.lastmod).to be_time(Time.utc(2013, 1, 3, 18))
         md1 = url1.md
         expect(md1.change).to be(Change::UPDATED)
-        expect(md1.hash).to eq('sha-256:f4OxZX_x_FO5LcGBSKHWXfwtSx-j1ncoSt3SABJtkGk')
+        expect(md1.hashes).to eq('sha-256' => 'f4OxZX_x_FO5LcGBSKHWXfwtSx-j1ncoSt3SABJtkGk')
         expect(md1.length).to eq(9_788_456_778)
         expect(md1.type).to be_mime_type('image/tiff')
         lns1 = url1.ln
@@ -789,7 +789,7 @@ module Resync
         expect(ln1.rel).to(eq('http://www.openarchives.org/rs/terms/patch'))
         expect(ln1.href).to(eq(URI('http://example.com/res5-diff')))
         expect(ln1.modified).to(eq(Time.utc(2013, 1, 3, 18)))
-        expect(ln1.hash).to(eq('sha-256:h986gT_t_87HTkjHYE76G558hY-jdfgy76t55sadJUYT'))
+        expect(ln1.hashes).to(eq('sha-256' => 'h986gT_t_87HTkjHYE76G558hY-jdfgy76t55sadJUYT'))
         expect(ln1.length).to(eq(4533))
         expect(ln1.type).to(be_mime_type('application/x-tiff-diff'))
       end
@@ -816,7 +816,7 @@ module Resync
         expect(url0.lastmod).to be_time(Time.utc(2013, 1, 3, 18))
         md0 = url0.md
         expect(md0.change).to be(Change::UPDATED)
-        expect(md0.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md0.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md0.length).to eq(8876)
         expect(md0.type).to be_mime_type('application/pdf')
         lns0 = url0.ln
@@ -839,7 +839,7 @@ module Resync
         expect(ln1.rel).to(eq('describes'))
         expect(ln1.href).to(eq(URI('http://example.com/res2.pdf')))
         expect(ln1.modified).to(eq(Time.utc(2013, 1, 3, 18)))
-        expect(ln1.hash).to(eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6'))
+        expect(ln1.hashes).to(eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6'))
         expect(ln1.length).to(eq(8876))
         expect(ln1.type).to(be_mime_type('application/pdf'))
         ln2 = lns1[1]
@@ -868,7 +868,7 @@ module Resync
         expect(url.loc).to eq(URI('http://example.com/res1'))
         expect(url.lastmod).to be_time(Time.utc(2013, 1, 3, 18))
         md = url.md
-        expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
         expect(md.type).to be_mime_type('text/html')
         expect(md.change).to be(Change::UPDATED)
@@ -880,7 +880,7 @@ module Resync
         expect(ln0.href).to eq(URI('http://example.com/20130103070000/res1'))
         expect(ln0.modified).to be_time(Time.utc(2013, 1, 2, 18))
         expect(ln0.type).to be_mime_type('text/html')
-        expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
         expect(md.type).to be_mime_type('text/html')
         ln1 = lns[1]
@@ -912,7 +912,7 @@ module Resync
         expect(url.loc).to eq(URI('http://example.com/res1'))
         expect(url.lastmod).to be_time(Time.utc(2013, 1, 3, 7))
         md = url.md
-        expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
         expect(md.type).to be_mime_type('text/html')
         expect(md.change).to be(Change::UPDATED)
@@ -943,7 +943,7 @@ module Resync
         expect(url.loc).to eq(URI('http://original.example.com/res1.html'))
         expect(url.lastmod).to be_time(Time.utc(2013, 1, 3, 7))
         md = url.md
-        expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
         expect(md.type).to be_mime_type('text/html')
         expect(md.change).to be(Change::UPDATED)
@@ -969,7 +969,7 @@ module Resync
         expect(url.loc).to eq(URI('http://aggregator1.example.com/res1.html'))
         expect(url.lastmod).to be_time(Time.utc(2013, 1, 3, 20))
         md = url.md
-        expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
         expect(md.type).to be_mime_type('text/html')
         expect(md.change).to be(Change::UPDATED)
@@ -979,7 +979,7 @@ module Resync
         expect(ln.rel).to eq('via')
         expect(ln.href).to eq(URI('http://original.example.com/res1.html'))
         expect(ln.modified).to be_time(Time.utc(2013, 1, 3, 7))
-        expect(ln.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(ln.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(ln.length).to eq(8876)
         expect(ln.type).to be_mime_type('text/html')
       end
@@ -1004,7 +1004,7 @@ module Resync
         expect(url.loc).to eq(URI('http://aggregator2.example.com/res1.html'))
         expect(url.lastmod).to be_time(Time.utc(2013, 1, 4, 9))
         md = url.md
-        expect(md.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(md.length).to eq(8876)
         expect(md.type).to be_mime_type('text/html')
         expect(md.change).to be(Change::UPDATED)
@@ -1014,7 +1014,7 @@ module Resync
         expect(ln.rel).to eq('via')
         expect(ln.href).to eq(URI('http://original.example.com/res1.html'))
         expect(ln.modified).to be_time(Time.utc(2013, 1, 3, 7))
-        expect(ln.hash).to eq('md5:1584abdf8ebdc9802ac0c6a7402c03b6')
+        expect(ln.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
         expect(ln.length).to eq(8876)
         expect(ln.type).to be_mime_type('text/html')
       end
