@@ -16,14 +16,9 @@ module Resync
       numeric_node :length, '@length', default_value: nil
       mime_type_node :type, '@type', default_value: nil
       text_node :encoding, '@encoding', default_value: nil
-      text_node :_hash, '@hash', default_value: nil
+      hash_codes_node :hashes, '@hash', default_value: nil
 
       text_node :path, '@path', default_value: nil
-
-      def hash
-        _hash
-      end
-
     end
   end
 end

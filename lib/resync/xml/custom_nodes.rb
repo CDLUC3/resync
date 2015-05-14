@@ -101,5 +101,27 @@ module Resync
     end
 
     ::XML::Mapping.add_node_class MimeTypeNode
+
+    class HashCodesNode < ::XML::Mapping::SingleAttributeNode
+      def initialize(*args)
+        path, *args = super(*args)
+        @path = ::XML::XXPath.new(path)
+        args
+      end
+
+      def extract_attr_value(xml)
+        hashes = default_when_xpath_err { @path.first(xml).text }
+        return {} unless hashes
+        return hashes if hashes.is_a?(Hash)
+        hashes.split(/[[:space:]]+/).map { |hash| hash.split(':') }.to_h
+      end
+
+      def set_attr_value(xml, value)
+        hash_str = value.map { |k, v| "#{k}:#{v}" }.join(' ')
+        @path.first(xml, ensure_created: true).text = hash_str
+      end
+    end
+
+    ::XML::Mapping.add_node_class HashCodesNode
   end
 end

@@ -49,9 +49,17 @@ module Resync
         expect(md.from).to eq(Time.utc(2013, 1, 3, 9))
       end
 
-      it 'parses @hash' do
-        md = parse('<md hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"/>')
-        expect(md.hash).to eq('md5:1e0d5cb8ef6ba40c99b14c0237be735e')
+      describe 'parses @hash' do
+        it 'parses a single value' do
+          md = parse('<md hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"/>')
+          expect(md.hashes).to eq({'md5' => '1e0d5cb8ef6ba40c99b14c0237be735e'})
+        end
+
+        it 'parses multiple values' do
+          md = parse('<md hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e
+                                sha-256:854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784"/>')
+          expect(md.hashes).to eq({'md5' => '1e0d5cb8ef6ba40c99b14c0237be735e', 'sha-256' => '854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784'})
+        end
       end
 
       it 'parses @length' do
@@ -78,11 +86,6 @@ module Resync
       it 'parses @until' do
         md = parse('<md until="2013-01-03T09:00:00Z"/>')
         expect(md.until).to eq(Time.utc(2013, 1, 3, 9))
-      end
-
-      it 'can\'t be used as a hash key' do
-        md = parse('<md hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"/>')
-        expect { { md => 'md' } }.to raise_error(TypeError)
       end
 
       it 'can round-trip to XML' do

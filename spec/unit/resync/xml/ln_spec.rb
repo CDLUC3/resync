@@ -23,9 +23,17 @@ module Resync
         expect(ln.encoding).to eq('utf-8')
       end
 
-      it 'parses @hash' do
-        ln = parse('<ln hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"/>')
-        expect(ln.hash).to eq('md5:1e0d5cb8ef6ba40c99b14c0237be735e')
+      describe 'parses @hash' do
+        it 'parses a single value' do
+          ln = parse('<ln hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"/>')
+          expect(ln.hashes).to eq({'md5' => '1e0d5cb8ef6ba40c99b14c0237be735e'})
+        end
+
+        it 'parses multiple values' do
+          ln = parse('<ln hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e
+                                sha-256:854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784"/>')
+          expect(ln.hashes).to eq({'md5' => '1e0d5cb8ef6ba40c99b14c0237be735e', 'sha-256' => '854f61290e2e197a11bc91063afce22e43f8ccc655237050ace766adc68dc784'})
+        end
       end
 
       it 'parses @href' do
@@ -61,11 +69,6 @@ module Resync
       it 'parses @type' do
         ln = parse('<ln type="elvis/presley"/>')
         expect(ln.type).to be_mime_type('elvis/presley')
-      end
-
-      it 'can\'t be used as a hash key' do
-        ln = parse('<ln hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"/>')
-        expect { { ln => 'ln' } }.to raise_error(TypeError)
       end
 
       it 'can round-trip to XML' do
