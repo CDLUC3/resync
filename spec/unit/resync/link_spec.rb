@@ -48,7 +48,7 @@ module Resync
 
     end
 
-    describe 'XML conversion' do
+    describe 'converts from XML' do
       describe '#from_xml' do
         it 'parses an XML string' do
           xml = '<ln
