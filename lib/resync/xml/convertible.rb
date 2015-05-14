@@ -1,5 +1,6 @@
 module Resync
   module XML
+    # TODO: Stop having a parallel class hierarchy for the XML mapping
 
     # Adds XML conversions to the classes that include it. To use,
     # +include+ +Resync::XML::Convertible+ and define a constant
