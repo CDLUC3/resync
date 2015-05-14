@@ -16,7 +16,7 @@ module Resync
         expect(md.capability).to eq('resourcelist')
         expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(2)
 
         url0 = urls[0]
@@ -35,7 +35,7 @@ module Resync
         expect(md.capability).to eq('resourcelist')
         expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(2)
 
         url0 = urls[0]
@@ -64,7 +64,7 @@ module Resync
         data = File.read('spec/data/examples/example-3.xml')
         urlset = Parser.parse(data)
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(2)
         url0 = urls[0]
         expect(url0.uri).to eq(URI('http://example.com/res2.pdf'))
@@ -89,7 +89,7 @@ module Resync
         expect(md.capability).to eq('resourcedump')
         expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(1)
 
         url0 = urls[0]
@@ -105,7 +105,7 @@ module Resync
         expect(md.capability).to eq('resourcedump-manifest')
         expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(2)
         url0 = urls[0]
         expect(url0.uri).to eq(URI('http://example.com/res1'))
@@ -138,7 +138,7 @@ module Resync
         md = urlset.metadata
         expect(md.capability).to eq('capabilitylist')
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(3)
 
         url0 = urls[0]
@@ -170,7 +170,7 @@ module Resync
         md = urlset.metadata
         expect(md.capability).to eq('description')
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(1)
 
         url = urls[0]
@@ -218,7 +218,7 @@ module Resync
         md = urlset.metadata
         expect(md.capability).to eq('description')
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(3)
 
         (1..3).each do |i|
@@ -250,7 +250,7 @@ module Resync
         md = urlset.metadata
         expect(md.capability).to eq('capabilitylist')
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(4)
 
         expected_capabilities = %w(resourcelist resourcedump changelist changedump)
@@ -278,7 +278,7 @@ module Resync
         expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
         expect(md.completed_time).to be_time(Time.utc(2013, 1, 3, 9, 1))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(2)
 
         expected_lastmods = [Time.utc(2013, 1, 2, 13), Time.utc(2013, 1, 2, 14)]
@@ -341,7 +341,7 @@ module Resync
         expect(md.capability).to eq('resourcelist')
         expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(2)
 
         expected_lastmods = [Time.utc(2013, 1, 2, 13), Time.utc(2013, 1, 2, 14)]
@@ -375,7 +375,7 @@ module Resync
         expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
         expect(md.completed_time).to be_time(Time.utc(2013, 1, 3, 9, 4))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(3)
 
         expected_lengths = [4765, 9875, 2298]
@@ -414,7 +414,7 @@ module Resync
         expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
         expect(md.completed_time).to be_time(Time.utc(2013, 1, 3, 9, 2))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(2)
 
         expected_lastmods = [Time.utc(2013, 1, 2, 13), Time.utc(2013, 1, 2, 14)]
@@ -448,7 +448,7 @@ module Resync
         expect(md.capability).to eq('changelist')
         expect(md.from_time).to be_time(Time.utc(2013, 1, 3))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(4)
 
         expected_filenames = %w(res1 res2 res3 res2)
@@ -511,7 +511,7 @@ module Resync
         expect(md.from_time).to be_time(Time.utc(2013, 1, 2))
         expect(md.until_time).to be_time(Time.utc(2013, 1, 3))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(4)
 
         expected_filenames = %w(res7 res9 res5 res7)
@@ -547,7 +547,7 @@ module Resync
         expect(md.capability).to eq('changedump')
         expect(md.from_time).to be_time(Time.utc(2013, 1, 1))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(3)
 
         expected_lastmods = [
@@ -591,7 +591,7 @@ module Resync
         expect(md.from_time).to be_time(Time.utc(2013, 1, 2))
         expect(md.until_time).to be_time(Time.utc(2013, 1, 3))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(4)
 
         expected_filenames = %w(res7 res9 res5 res7)
@@ -645,7 +645,7 @@ module Resync
         expect(md.capability).to eq('changelist')
         expect(md.from_time).to be_time(Time.utc(2013, 1, 3))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(1)
 
         url = urls[0]
@@ -686,7 +686,7 @@ module Resync
         expect(md.capability).to eq('changelist')
         expect(md.from_time).to be_time(Time.utc(2013, 1, 3, 11))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(1)
 
         url = urls[0]
@@ -722,7 +722,7 @@ module Resync
         expect(md.capability).to eq('changelist')
         expect(md.from_time).to be_time(Time.utc(2013, 1, 3))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(1)
 
         url = urls[0]
@@ -754,7 +754,7 @@ module Resync
         expect(md.capability).to eq('changelist')
         expect(md.from_time).to be_time(Time.utc(2013, 1, 3))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(2)
 
         url0 = urls[0]
@@ -808,7 +808,7 @@ module Resync
         expect(md.capability).to eq('changelist')
         expect(md.from_time).to be_time(Time.utc(2013, 1, 3))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(2)
 
         url0 = urls[0]
@@ -861,7 +861,7 @@ module Resync
         expect(md.capability).to eq('changelist')
         expect(md.from_time).to be_time(Time.utc(2013, 1, 3))
 
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(1)
 
         url = urls[0]
@@ -905,7 +905,7 @@ module Resync
         md = urlset.metadata
         expect(md.capability).to eq('changelist')
         expect(md.from_time).to be_time(Time.utc(2013, 1, 3))
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(1)
 
         url = urls[0]
@@ -936,7 +936,7 @@ module Resync
         md = urlset.metadata
         expect(md.capability).to eq('changelist')
         expect(md.from_time).to be_time(Time.utc(2013, 1, 3))
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(1)
 
         url = urls[0]
@@ -962,7 +962,7 @@ module Resync
         md = urlset.metadata
         expect(md.capability).to eq('changelist')
         expect(md.from_time).to be_time(Time.utc(2013, 1, 3, 11))
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(1)
 
         url = urls[0]
@@ -997,7 +997,7 @@ module Resync
         md = urlset.metadata
         expect(md.capability).to eq('changelist')
         expect(md.from_time).to be_time(Time.utc(2013, 1, 3, 12))
-        urls = urlset.url
+        urls = urlset.resources
         expect(urls.size).to eq(1)
 
         url = urls[0]

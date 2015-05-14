@@ -5,7 +5,7 @@ module Resync
     class Urlset
       include ::XML::Mapping
 
-      array_node :url, 'url', class: Url, default_value: []
+      array_node :resources, 'url', class: Url, default_value: []
 
       object_node :metadata, 'md', class: Md, default_value: nil
       array_node :links, 'ln', class: Ln, default_value: []

@@ -19,3 +19,11 @@ The [Sitemap](http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd) and [Site
 
 None of these are currently enforced by `resync`, although the restrictions wouldn't be too hard to implement.
 
+### Supported capabilities
+
+- resourcelist
+- changelist
+- resourcedump
+- resourcedump-manifest
+- changedump
+- changedump-manifest
