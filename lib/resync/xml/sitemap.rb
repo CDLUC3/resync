@@ -6,11 +6,11 @@ module Resync
     class Sitemap
       include ::XML::Mapping
 
-      uri_node :loc, 'loc', default_value: nil
-      text_node :lastmod, 'lastmod', default_value: nil
+      uri_node :uri, 'loc', default_value: nil
+      text_node :modified_time, 'lastmod', default_value: nil
 
-      object_node :md, 'md', class: Md, default_value: nil
-      array_node :ln, 'ln', class: Ln, default_value: []
+      object_node :metadata, 'md', class: Md, default_value: nil
+      array_node :links, 'ln', class: Ln, default_value: []
     end
   end
 end
