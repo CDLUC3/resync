@@ -4,14 +4,14 @@ module Resync
   module XMLFactory
 
     ROOT_TYPES = [
-        CapabilityList,
-        ChangeDump,
-        ChangeDumpManifest,
-        ChangeList,
-        ResourceDump,
-        ResourceDumpManifest,
-        ResourceList,
-        SourceDescription
+      CapabilityList,
+      ChangeDump,
+      ChangeDumpManifest,
+      ChangeList,
+      ResourceDump,
+      ResourceDumpManifest,
+      ResourceList,
+      SourceDescription
     ]
 
     CAPABILITY_ATTRIBUTE = "/*/[namespace-uri() = 'http://www.openarchives.org/rs/terms/' and local-name() = 'md']/@capability"

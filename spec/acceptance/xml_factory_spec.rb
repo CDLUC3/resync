@@ -516,10 +516,10 @@ module Resync
       expected_filenames = %w(res7 res9 res5 res7)
       expected_extensions = %w(html pdf tiff html)
       expected_lastmods = [
-          Time.utc(2013, 1, 2, 12),
-          Time.utc(2013, 1, 2, 13),
-          Time.utc(2013, 1, 2, 19),
-          Time.utc(2013, 1, 2, 20)
+        Time.utc(2013, 1, 2, 12),
+        Time.utc(2013, 1, 2, 13),
+        Time.utc(2013, 1, 2, 19),
+        Time.utc(2013, 1, 2, 20)
       ]
 
       expected_changes = [Change::CREATED, Change::UPDATED, Change::DELETED, Change::UPDATED]
@@ -550,9 +550,9 @@ module Resync
       expect(urls.size).to eq(3)
 
       expected_lastmods = [
-          Time.utc(2013, 1, 1, 23, 59, 59),
-          Time.utc(2013, 1, 2, 23, 59, 59),
-          Time.utc(2013, 1, 3, 23, 59, 59)
+        Time.utc(2013, 1, 1, 23, 59, 59),
+        Time.utc(2013, 1, 2, 23, 59, 59),
+        Time.utc(2013, 1, 3, 23, 59, 59)
       ]
       expected_lengths = [3109, 6629, 8124]
 
@@ -596,24 +596,24 @@ module Resync
       expected_filenames = %w(res7 res9 res5 res7)
       expected_extensions = %w(html pdf tiff html)
       expected_lastmods = [
-          Time.utc(2013, 1, 2, 12),
-          Time.utc(2013, 1, 2, 13),
-          Time.utc(2013, 1, 2, 19),
-          Time.utc(2013, 1, 2, 20)
+        Time.utc(2013, 1, 2, 12),
+        Time.utc(2013, 1, 2, 13),
+        Time.utc(2013, 1, 2, 19),
+        Time.utc(2013, 1, 2, 20)
       ]
       expected_changes = [Change::CREATED, Change::UPDATED, Change::DELETED, Change::UPDATED]
       expected_hashes = [
-          { 'md5' => '1c1b0e264fa9b7e1e9aa6f9db8d6362b' },
-          { 'md5' => 'f906610c3d4aa745cb2b986f25b37c5a' },
-          {},
-          { 'md5' => '0988647082c8bc51778894a48ec3b576' }
+        { 'md5' => '1c1b0e264fa9b7e1e9aa6f9db8d6362b' },
+        { 'md5' => 'f906610c3d4aa745cb2b986f25b37c5a' },
+        {},
+        { 'md5' => '0988647082c8bc51778894a48ec3b576' }
       ]
       expected_lengths = [4339, 38_297, nil, 5426]
       expected_types = [
-          'text/html',
-          'application/pdf',
-          nil,
-          'text/html'
+        'text/html',
+        'application/pdf',
+        nil,
+        'text/html'
       ]
       expected_paths = ['/changes/res7.html', '/changes/res9.pdf', nil, '/changes/res7-v2.html']
 
