@@ -3,6 +3,7 @@ require_relative 'xml'
 
 module Resync
   class ResourceDump < BaseResourceList
+    include ::XML::Mapping
     include XML::Convertible
     XML_TYPE = XML::Urlset
     CAPABILITY = 'resourcedump'

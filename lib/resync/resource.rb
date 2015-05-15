@@ -4,6 +4,7 @@ require_relative 'metadata'
 
 module Resync
   class Resource < LinkCollection
+    include ::XML::Mapping
     include XML::Convertible
     XML_TYPE = XML::Url
 
@@ -57,8 +58,9 @@ module Resync
     # ------------------------------
     # Conversions
 
-    # TODO: Share all of these
+    # TODO: Share to_uri
     def to_uri(url)
+      return nil unless url
       (url.is_a? URI) ? url : URI.parse(url)
     end
   end

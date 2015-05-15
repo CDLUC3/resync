@@ -4,6 +4,7 @@ require_relative 'xml'
 module Resync
 
   class Metadata < ResourceDescriptor
+    include ::XML::Mapping
     include XML::Convertible
 
     XML_TYPE = XML::Md

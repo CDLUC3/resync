@@ -4,6 +4,7 @@ require_relative 'xml'
 module Resync
 
   class Link < ResourceDescriptor
+    include ::XML::Mapping
     include XML::Convertible
 
     XML_TYPE = XML::Ln
@@ -44,14 +45,16 @@ module Resync
     # Custom setters
 
     def href=(value)
+      puts "href=(#{value})"
       @href = to_uri(value)
     end
 
     # ------------------------------
     # Conversions
 
-    # TODO: Share all of these
+    # TODO: Share to_uri
     def to_uri(url)
+      return nil unless url
       (url.is_a? URI) ? url : URI.parse(url)
     end
 

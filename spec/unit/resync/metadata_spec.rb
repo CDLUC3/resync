@@ -132,37 +132,6 @@ module Resync
           expect(metadata.mime_type).to be_mime_type('bar/baz')
           expect(metadata.until_time).to be_time(Time.utc(2005, 5, 5, 5))
         end
-
-        it 'parses an Md object' do
-          md = XML::Md.load_from_xml(REXML::Document.new('<md
-                at="2001-01-01T01:00:00Z"
-                capability="resourcelist"
-                change="updated"
-                completed="2002-02-02T02:00:00Z"
-                encoding="utf-16"
-                from="2003-03-03T03:00:00Z"
-                hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"
-                length="54321"
-                modified="2004-04-04T04:00:00Z"
-                path="/foo"
-                type="bar/baz"
-                until="2005-05-05T05:00:00Z"
-            />').root)
-          metadata = Metadata.from_xml(md)
-          expect(metadata).to be_a(Metadata)
-          expect(metadata.at_time).to be_time(Time.utc(2001, 1, 1, 1))
-          expect(metadata.capability).to eq('resourcelist')
-          expect(metadata.change).to eq(Types::Change::UPDATED)
-          expect(metadata.completed_time).to be_time(Time.utc(2002, 2, 2, 2))
-          expect(metadata.encoding).to eq('utf-16')
-          expect(metadata.from_time).to be_time(Time.utc(2003, 3, 3, 3))
-          expect(metadata.hash('md5')).to eq('1e0d5cb8ef6ba40c99b14c0237be735e')
-          expect(metadata.length).to eq(54_321)
-          expect(metadata.modified_time).to be_time(Time.utc(2004, 4, 4, 4))
-          expect(metadata.path).to eq('/foo')
-          expect(metadata.mime_type).to be_mime_type('bar/baz')
-          expect(metadata.until_time).to be_time(Time.utc(2005, 5, 5, 5))
-        end
       end
     end
   end
