@@ -4,6 +4,9 @@ require 'time'
 module Resync
   module XML
 
+    # ------------------------------------------------------------
+    # Time
+
     class TimeNode < ::XML::Mapping::SingleAttributeNode
       def initialize(*args)
         path, *args = super(*args)
@@ -23,6 +26,9 @@ module Resync
 
     ::XML::Mapping.add_node_class TimeNode
 
+    # ------------------------------------------------------------
+    # URI
+
     class UriNode < ::XML::Mapping::SingleAttributeNode
       def initialize(*args)
         path, *args = super(*args)
@@ -40,6 +46,9 @@ module Resync
     end
 
     ::XML::Mapping.add_node_class UriNode
+
+    # ------------------------------------------------------------
+    # Resync::Types::Change
 
     class ChangeNode < ::XML::Mapping::SingleAttributeNode
       def initialize(*args)
@@ -59,6 +68,9 @@ module Resync
 
     ::XML::Mapping.add_node_class ChangeNode
 
+    # ------------------------------------------------------------
+    # Resync::Types::Changefreq
+
     class ChangefreqNode < ::XML::Mapping::SingleAttributeNode
       def initialize(*args)
         path, *args = super(*args)
@@ -76,6 +88,9 @@ module Resync
     end
 
     ::XML::Mapping.add_node_class ChangefreqNode
+
+    # ------------------------------------------------------------
+    # MIME::Type
 
     class MimeTypeNode < ::XML::Mapping::SingleAttributeNode
       def initialize(*args)
@@ -102,6 +117,9 @@ module Resync
 
     ::XML::Mapping.add_node_class MimeTypeNode
 
+    # ------------------------------------------------------------
+    # Whitespace-separated hashcode list
+
     class HashCodesNode < ::XML::Mapping::SingleAttributeNode
       def initialize(*args)
         path, *args = super(*args)
@@ -124,7 +142,9 @@ module Resync
 
     ::XML::Mapping.add_node_class HashCodesNode
 
+    # ------------------------------------------------------------
     # Workaround for https://github.com/multi-io/xml-mapping/issues/4
+
     class XmlPlaceholder < ::XML::Mapping::SingleAttributeNode
       def initialize(*args)
         path, *args = super(args[0], :placeholder, '@placeholder', { default_value: nil })
