@@ -45,7 +45,6 @@ module Resync
     # Custom setters
 
     def href=(value)
-      puts "href=(#{value})"
       @href = to_uri(value)
     end
 
