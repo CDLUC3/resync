@@ -24,11 +24,11 @@ module Resync
     def initialize( # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
         uri:, modified_time: nil, changefreq: nil, priority: nil, links: nil, metadata: nil
     )
+      super(links: links)
       self.uri = uri
       self.modified_time = modified_time
       self.changefreq = changefreq
       self.priority = priority
-      self.links = links
       self.metadata = metadata
     end
 

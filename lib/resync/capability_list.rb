@@ -8,7 +8,14 @@ module Resync
     XML_TYPE = XML::Urlset
     CAPABILITY = 'capabilitylist'
 
+    # ------------------------------------------------------------
+    # Attributes
+
     attr_reader :source_description
+    xml_placeholder # Workaround for https://github.com/multi-io/xml-mapping/issues/4
+
+    # ------------------------------------------------------------
+    # Initializer
 
     def initialize(resources: nil, links: nil, metadata: nil)
       @source_description = source_description_from(links)

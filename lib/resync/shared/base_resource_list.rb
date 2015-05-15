@@ -16,8 +16,8 @@ module Resync
     # Initializer
 
     def initialize(resources: nil, links: nil, metadata: nil)
+      super(links: links)
       self.resources = resources
-      self.links = links
       self.metadata = metadata
     end
 
