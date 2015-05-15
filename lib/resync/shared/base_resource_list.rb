@@ -29,7 +29,7 @@ module Resync
     end
 
     def metadata=(value)
-      @metadata=metadata_with_correct_capability(value)
+      @metadata = metadata_with_correct_capability(value)
     end
 
     # ------------------------------------------------------------
