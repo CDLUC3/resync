@@ -1,16 +1,35 @@
 require_relative 'link_collection'
+require_relative '../resource'
+require_relative '../metadata'
 
 module Resync
-  class BaseResourceList
-    include LinkCollection
+  class BaseResourceList < LinkCollection
+    include ::XML::Mapping
 
-    attr_reader :resources
-    attr_reader :metadata
+    # ------------------------------------------------------------
+    # Attributes
+
+    array_node :resources, 'url', class: Resource, default_value: []
+    object_node :metadata, 'md', class: Metadata, default_value: nil
+
+    # ------------------------------------------------------------
+    # Initializer
 
     def initialize(resources: nil, links: nil, metadata: nil)
-      @resources = resources || []
-      @links = links || []
-      @metadata = metadata_with_correct_capability(metadata)
+      self.resources = resources
+      self.links = links
+      self.metadata = metadata
+    end
+
+    # ------------------------------------------------------------
+    # Custom setters
+
+    def resources=(value)
+      @resources = value || []
+    end
+
+    def metadata=(value)
+      @metadata=metadata_with_correct_capability(value)
     end
 
     # ------------------------------------------------------------

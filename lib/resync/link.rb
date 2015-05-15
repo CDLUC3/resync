@@ -11,9 +11,9 @@ module Resync
     # ------------------------------------------------------------
     # Attributes
 
-    attr_reader :rel
-    attr_reader :href
-    attr_reader :priority
+    text_node :rel, '@rel', default_value: nil
+    uri_node :href, '@href', default_value: nil
+    numeric_node :priority, '@pri', default_value: nil
 
     # ------------------------------------------------------------
     # Initializer
@@ -35,9 +35,16 @@ module Resync
     )
       super(modified_time: modified_time, length: length, mime_type: mime_type, encoding: encoding, hashes: hashes, path: path)
 
-      @rel = rel
-      @href = to_uri(href)
-      @priority = priority
+      self.rel = rel
+      self.href = href
+      self.priority = priority
+    end
+
+    # ------------------------------------------------------------
+    # Custom setters
+
+    def href=(value)
+      @href=to_uri(value)
     end
 
     # ------------------------------

@@ -11,12 +11,12 @@ module Resync
     # ------------------------------------------------------------
     # Attributes
 
-    attr_reader :at_time
-    attr_reader :from_time
-    attr_reader :until_time
-    attr_reader :completed_time
-    attr_reader :change
-    attr_reader :capability
+    time_node :at_time, '@at', default_value: nil
+    time_node :from_time, '@from', default_value: nil
+    time_node :until_time, '@until', default_value: nil
+    time_node :completed_time, '@completed', default_value: nil
+    change_node :change, '@change', default_value: nil
+    text_node :capability, '@capability', default_value: nil
 
     # ------------------------------------------------------------
     # Initializer
@@ -39,14 +39,32 @@ module Resync
     )
       super(modified_time: modified_time, length: length, mime_type: mime_type, encoding: encoding, hashes: hashes, path: path)
 
-      @at_time = time_or_nil(at_time)
-      @from_time = time_or_nil(from_time)
-      @until_time = time_or_nil(until_time)
-      @completed_time = time_or_nil(completed_time)
+      self.at_time = at_time
+      self.from_time = from_time
+      self.until_time = until_time
+      self.completed_time = completed_time
 
-      @change = change
-      @capability = capability
+      self.change = change
+      self.capability = capability
     end
 
+    # ------------------------------------------------------------
+    # Custom setters
+
+    def at_time=(value)
+      @at_time = time_or_nil(value)
+    end
+
+    def from_time=(value)
+      @from_time = time_or_nil(value)
+    end
+
+    def until_time=(value)
+      @until_time = time_or_nil(value)
+    end
+
+    def completed_time=(value)
+      @completed_time = time_or_nil(value)
+    end
   end
 end

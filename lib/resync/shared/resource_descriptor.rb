@@ -1,17 +1,19 @@
 require 'mime/types'
+require_relative '../xml'
 
 module Resync
   class ResourceDescriptor
+    include ::XML::Mapping
 
     # ------------------------------------------------------------
     # Attributes
 
-    attr_reader :modified_time
-    attr_reader :length
-    attr_reader :mime_type
-    attr_reader :encoding
-    attr_reader :hashes
-    attr_reader :path
+    time_node :modified_time, '@modified', default_value: nil
+    numeric_node :length, '@length', default_value: nil
+    mime_type_node :mime_type, '@type', default_value: nil
+    text_node :encoding, '@encoding', default_value: nil
+    hash_codes_node :hashes, '@hash', default_value: nil
+    text_node :path, '@path', default_value: nil
 
     # ------------------------------------------------------------
     # Initializer
@@ -24,12 +26,31 @@ module Resync
         hashes: nil,
         path: nil
     )
-      @modified_time = time_or_nil(modified_time)
-      @length = natural_number_or_nil(length)
-      @mime_type = mime_type_or_nil(mime_type)
-      @encoding = encoding
-      @hashes = ResourceDescriptor.hash_of_hashcodes(hashes)
-      @path = path
+      self.modified_time = modified_time
+      self.length = length
+      self.mime_type = mime_type
+      self.encoding = encoding
+      self.hashes = hashes
+      self.path = path
+    end
+
+    # ------------------------------------------------------------
+    # Custom setters
+
+    def modified_time=(value)
+      @modified_time = time_or_nil(value)
+    end
+
+    def length=(value)
+      @length = natural_number_or_nil(value)
+    end
+
+    def mime_type=(value)
+      @mime_type = mime_type_or_nil(value)
+    end
+
+    def hashes=(value)
+      @hashes = ResourceDescriptor.hash_of_hashcodes(value)
     end
 
     # ------------------------------------------------------------

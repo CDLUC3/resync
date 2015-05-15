@@ -1,20 +1,21 @@
 require_relative 'shared/link_collection'
 require_relative 'xml'
+require_relative 'metadata'
 
 module Resync
-  class Resource
-    include LinkCollection
+  class Resource < LinkCollection
     include XML::Convertible
     XML_TYPE = XML::Url
 
     # ------------------------------------------------------------
     # Attributes
 
-    attr_reader :uri
-    attr_reader :modified_time
-    attr_reader :metadata
-    attr_reader :changefreq
-    attr_reader :priority
+    uri_node :uri, 'loc', default_value: nil
+    time_node :modified_time, 'lastmod', default_value: nil
+    changefreq_node :changefreq, 'changefreq', default_value: nil
+    numeric_node :priority, 'priority', default_value: nil
+    # TODO: is everything with :metadata also a LinkCollection? probably
+    object_node :metadata, 'md', class: Metadata, default_value: nil
 
     # ------------------------------------------------------------
     # Initializer
@@ -22,13 +23,23 @@ module Resync
     def initialize( # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
         uri:, modified_time: nil, changefreq: nil, priority: nil, links: nil, metadata: nil
     )
-      @uri = to_uri(uri)
-      @modified_time = modified_time
-      @changefreq = changefreq
-      @priority = priority
+      self.uri = uri
+      self.modified_time = modified_time
+      self.changefreq = changefreq
+      self.priority = priority
+      self.links = links
+      self.metadata = metadata
+    end
 
-      @links = links || []
-      @metadata = metadata
+    # ------------------------------------------------------------
+    # Custom setters
+
+    def uri=(value)
+      @uri = to_uri(value)
+    end
+
+    def links=(value)
+      @links = value || []
     end
 
     # ------------------------------------------------------------
