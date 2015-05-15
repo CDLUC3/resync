@@ -1,6 +1,7 @@
 # ------------------------------------------------------------
 # SimpleCov setup
 
+# TODO move this out into a separate Rake task
 require 'simplecov'
 require 'simplecov-console'
 
