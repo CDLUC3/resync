@@ -4,6 +4,7 @@ module Resync
   module XMLFactory
 
     ROOT_TYPES = [
+        CapabilityList,
         ChangeDump,
         ChangeDumpManifest,
         ChangeList,

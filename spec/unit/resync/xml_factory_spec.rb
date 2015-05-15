@@ -1,6 +1,4 @@
-require 'rspec_custom_matchers'
-require 'resync'
-#require 'spec_helper'
+require 'spec_helper'
 
 module Resync
   describe XMLFactory do
