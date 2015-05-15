@@ -9,6 +9,7 @@ module Resync
     # ------------------------------------------------------------
     # Attributes
 
+    root_element_name 'urlset'
     array_node :resources, 'url', class: Resource, default_value: []
     object_node :metadata, 'md', class: Metadata, default_value: nil
 
