@@ -39,10 +39,6 @@ module Resync
       @uri = to_uri(value)
     end
 
-    def links=(value)
-      @links = value || []
-    end
-
     # ------------------------------------------------------------
     # Public methods
 
