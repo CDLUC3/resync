@@ -31,6 +31,14 @@ module Resync
           obj
         end
 
+        # def to_xml(options:{ mapping: :_default })
+        #   xml = save_to_xml(options)
+        #   formatter = REXML::Formatters::Pretty.new(2)
+        #   formatter.compact = true
+        #   out = StringIO.new
+        #   formatter.write(xml, out)
+        #   out.string
+        # end
       end
 
       # Defines methods that will become class methods on those

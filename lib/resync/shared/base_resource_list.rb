@@ -20,7 +20,9 @@ module Resync
 
     def self.inherited(base)
       base.use_mapping :_default
+      base.root_element_name 'urlset'
       base.use_mapping :sitemapindex
+      base.root_element_name 'sitemapindex'
     end
 
     # ------------------------------------------------------------

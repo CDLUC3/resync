@@ -81,9 +81,9 @@ module Resync
       describe '#from_xml' do
         it 'parses an XML string' do
           data = File.read('spec/data/examples/example-13.xml')
-          urlset = CapabilityList.from_xml(data)
+          list = CapabilityList.from_xml(data)
 
-          links = urlset.links
+          links = list.links
           expect(links.size).to eq(2)
           ln0 = links[0]
           expect(ln0.rel).to eq('describedby')
@@ -92,10 +92,10 @@ module Resync
           expect(ln1.rel).to eq('up')
           expect(ln1.href).to eq(URI('http://example.com/resourcesync_description.xml'))
 
-          md = urlset.metadata
+          md = list.metadata
           expect(md.capability).to eq('capabilitylist')
 
-          urls = urlset.resources
+          urls = list.resources
           expect(urls.size).to eq(4)
 
           expected_capabilities = %w(resourcelist resourcedump changelist changedump)
@@ -108,6 +108,15 @@ module Resync
           end
         end
       end
+
+      # describe '#save_to_xml' do
+      #   it 'can round-trip to XML' do
+      #     data = File.read('spec/data/examples/example-13.xml')
+      #     list = CapabilityList.from_xml(data)
+      #     xml = list.save_to_xml
+      #     expect(xml).to be_xml(data)
+      #   end
+      # end
     end
   end
 
