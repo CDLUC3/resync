@@ -135,8 +135,10 @@ module Resync
       end
 
       def set_attr_value(xml, value)
-        hash_str = value.map { |k, v| "#{k}:#{v}" }.join(' ')
-        @path.first(xml, ensure_created: true).text = hash_str
+        unless value.empty?
+          hash_str = value.map { |k, v| "#{k}:#{v}" }.join(' ')
+          @path.first(xml, ensure_created: true).text = hash_str
+        end
       end
     end
 
