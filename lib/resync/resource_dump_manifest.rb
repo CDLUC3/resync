@@ -5,7 +5,7 @@ module Resync
   class ResourceDumpManifest < BaseResourceList
     include ::XML::Mapping
     include XML::Convertible
-    XML_TYPE = XML::Urlset
+
     CAPABILITY = 'resourcedump-manifest'
   end
 end

@@ -7,8 +7,6 @@ module Resync
     include ::XML::Mapping
     include XML::Convertible
 
-    XML_TYPE = XML::Md
-
     # ------------------------------------------------------------
     # Attributes
 

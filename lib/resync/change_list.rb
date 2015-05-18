@@ -5,7 +5,7 @@ module Resync
   class ChangeList < SortedResourceList
     include ::XML::Mapping
     include XML::Convertible
-    XML_TYPE = XML::Urlset
+
     CAPABILITY = 'changelist'
   end
 end

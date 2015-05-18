@@ -7,8 +7,6 @@ module Resync
     include ::XML::Mapping
     include XML::Convertible
 
-    XML_TYPE = XML::Ln
-
     # ------------------------------------------------------------
     # Attributes
 
@@ -52,6 +50,7 @@ module Resync
     # Conversions
 
     # TODO: Share to_uri
+    require 'uri'
     def to_uri(url)
       return nil unless url
       (url.is_a? URI) ? url : URI.parse(url)

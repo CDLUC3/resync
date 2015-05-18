@@ -5,7 +5,7 @@ module Resync
   class ResourceList < BaseResourceList
     include ::XML::Mapping
     include XML::Convertible
-    XML_TYPE = XML::Urlset
+
     CAPABILITY = 'resourcelist'
   end
 end
