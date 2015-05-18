@@ -10,6 +10,27 @@ module Resync
 
       def self.included(base)
         base.extend XMLConversions
+
+        # Overrides +::XML::Mapping::ClassMethods.load_from_xml+ in order to
+        # fall back to :_default mapping when an unknown mapping is specified;
+        # this allows alternate mappings to include sub-elements that don't
+        # know anything about the specified alternate mapping
+        def base.load_from_xml(xml, options={ mapping: :_default })
+          mapping = options[:mapping]
+          unless xml_mapping_nodes_hash.has_key?(mapping)
+            raise(::XML::MappingError, "undefined mapping: #{options[:mapping].inspect} for #{self}, and no :_default mapping found") unless xml_mapping_nodes_hash.has_key?(:_default)
+            mapping = :_default
+          end
+          begin
+            obj = self.new
+          rescue ArgumentError
+            obj = self.allocate
+          end
+          obj.initialize_xml_mapping mapping: mapping
+          obj.fill_from_xml xml, mapping: mapping
+          obj
+        end
+
       end
 
       # Defines methods that will become class methods on those
