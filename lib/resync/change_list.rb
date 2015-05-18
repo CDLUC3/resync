@@ -7,7 +7,5 @@ module Resync
     include XML::Convertible
     XML_TYPE = XML::Urlset
     CAPABILITY = 'changelist'
-
-    use_mapping :_default
   end
 end

@@ -12,7 +12,6 @@ module Resync
     # Attributes
 
     attr_reader :source_description
-    use_mapping :_default
 
     # ------------------------------------------------------------
     # Initializer

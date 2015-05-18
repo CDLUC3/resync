@@ -18,6 +18,11 @@ module Resync
     array_node :resources, 'sitemap', class: Resource, default_value: []
     object_node :metadata, 'md', class: Metadata, default_value: nil
 
+    def self.inherited(base)
+      base.use_mapping :_default
+      base.use_mapping :sitemapindex
+    end
+
     # ------------------------------------------------------------
     # Initializer
 

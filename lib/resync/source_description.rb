@@ -6,7 +6,5 @@ module Resync
     include XML::Convertible
     XML_TYPE = XML::Urlset
     CAPABILITY = 'description'
-
-    use_mapping :_default
   end
 end

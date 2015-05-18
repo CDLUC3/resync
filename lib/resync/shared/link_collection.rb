@@ -9,6 +9,9 @@ module Resync
 
     array_node :links, 'ln', class: Link, default_value: []
 
+    use_mapping :sitemapindex
+    array_node :links, 'ln', class: Link, default_value: []
+
     # ------------------------------------------------------------
     # Initializer
 
