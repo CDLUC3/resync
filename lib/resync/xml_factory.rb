@@ -19,8 +19,9 @@ module Resync
     def self.parse(xml:)
       root_element = XML.element(xml)
       capability = REXML::XPath.first(root_element, CAPABILITY_ATTRIBUTE).value
+      mapping = root_element.name == 'sitemapindex' ? :sitemapindex : :_default
       root_type = ROOT_TYPES.find { |t| t::CAPABILITY == capability }
-      root_type.load_from_xml(root_element)
+      root_type.load_from_xml(root_element, mapping: mapping)
     end
 
   end
