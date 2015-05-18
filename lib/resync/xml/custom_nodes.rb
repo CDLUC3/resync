@@ -142,22 +142,5 @@ module Resync
 
     ::XML::Mapping.add_node_class HashCodesNode
 
-    # ------------------------------------------------------------
-    # Workaround for https://github.com/multi-io/xml-mapping/issues/4
-
-    class XmlPlaceholder < ::XML::Mapping::SingleAttributeNode
-      def initialize(*args)
-        path, *args = super(args[0], :placeholder, '@placeholder', { default_value: nil })
-        @path = ::XML::XXPath.new(path)
-        args
-      end
-
-      def extract_attr_value(_xml); end
-
-      def set_attr_value(_xml, _value); end
-    end
-
-    ::XML::Mapping.add_node_class XmlPlaceholder
-
   end
 end

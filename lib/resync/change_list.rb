@@ -8,6 +8,6 @@ module Resync
     XML_TYPE = XML::Urlset
     CAPABILITY = 'changelist'
 
-    xml_placeholder # Workaround for https://github.com/multi-io/xml-mapping/issues/4
+    use_mapping :_default
   end
 end

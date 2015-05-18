@@ -13,6 +13,11 @@ module Resync
     array_node :resources, 'url', class: Resource, default_value: []
     object_node :metadata, 'md', class: Metadata, default_value: nil
 
+    use_mapping :sitemapindex
+    root_element_name 'sitemapindex'
+    array_node :resources, 'sitemap', class: Resource, default_value: []
+    object_node :metadata, 'md', class: Metadata, default_value: nil
+
     # ------------------------------------------------------------
     # Initializer
 

@@ -12,7 +12,7 @@ module Resync
     # Attributes
 
     attr_reader :source_description
-    xml_placeholder # Workaround for https://github.com/multi-io/xml-mapping/issues/4
+    use_mapping :_default
 
     # ------------------------------------------------------------
     # Initializer
