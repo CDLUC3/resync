@@ -21,12 +21,6 @@ module Resync
         end
       end
 
-      module MappingNodeMonkeyPatch
-        class InheritanceAwareFallbackMapping
-
-        end
-      end
-
     end
   end
 end
