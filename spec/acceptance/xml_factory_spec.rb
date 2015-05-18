@@ -192,7 +192,7 @@ module Resync
       expect(md.capability).to eq('resourcelist')
       expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
 
-      sitemap = sitemapindex.sitemap
+      sitemap = sitemapindex.resources
       expect(sitemap.size).to eq(2)
 
       sitemap0 = sitemap[0]
@@ -311,7 +311,7 @@ module Resync
       expect(md.at_time).to be_time(Time.utc(2013, 1, 3, 9))
       expect(md.completed_time).to be_time(Time.utc(2013, 1, 3, 9, 10))
 
-      sitemaps = sitemapindex.sitemap
+      sitemaps = sitemapindex.resources
       expect(sitemaps.size).to eq(3)
 
       expected_times = [Time.utc(2013, 1, 3, 9), Time.utc(2013, 1, 3, 9, 3), Time.utc(2013, 1, 3, 9, 7)]
@@ -478,7 +478,7 @@ module Resync
       expect(md.capability).to eq('changelist')
       expect(md.from_time).to be_time(Time.utc(2013, 1, 1))
 
-      sitemaps = sitemapindex.sitemap
+      sitemaps = sitemapindex.resources
       expect(sitemaps.size).to eq(3)
 
       expected_froms = [Time.utc(2013, 1, 1), Time.utc(2013, 1, 2), Time.utc(2013, 1, 3)]
