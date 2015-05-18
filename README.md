@@ -19,11 +19,6 @@ The [Sitemap](http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd) and [Site
 
 None of these are currently enforced by `resync`, although the restrictions wouldn't be too hard to implement.
 
-### Supported capabilities
+### Read-only
 
-- resourcelist
-- changelist
-- resourcedump
-- resourcedump-manifest
-- changedump
-- changedump-manifest
+The mapping library can parse ResourceSync XML, but writing XML from the mapped objects is buggy -- namespaces are not handled correctly, extra empty attributes may appear, etc.
