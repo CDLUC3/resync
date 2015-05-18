@@ -16,13 +16,11 @@ RSpec::Matchers.define :be_xml do |expected|
     end
   end
 
-  def to_pretty(xml_str)
-    return nil unless xml_str
-    xml = REXML::Document.new(xml_str)
-    formatter = REXML::Formatters::Pretty.new(2)
-    formatter.compact = true
+  def to_pretty(nokogiri)
+    return nil unless nokogiri
     out = StringIO.new
-    formatter.write(xml, out)
+    save_options = Nokogiri::XML::Node::SaveOptions::FORMAT | Nokogiri::XML::Node::SaveOptions::NO_DECLARATION
+    nokogiri.write_xml_to(out, encoding: 'UTF-8', indent: 2, save_with: save_options)
     out.string
   end
 
