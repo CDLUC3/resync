@@ -17,8 +17,12 @@ The [Sitemap](http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd) and [Site
 - URIs have a minimum length of 12 and a max of 2048 characters.
 - Priorities must be in the range 0.0-1.0 (inclusive)
 
-None of these are currently enforced by `resync`, although the restrictions wouldn't be too hard to implement.
+None of these restrictions are currently enforced by `resync`, although they wouldn't be too hard to implement.
 
 ### Element order not preserved
 
 When reading a ResourceSync document from XML and writing it back out, `<rs:ln>` elements will always appear before `<rs:md>` elements, regardless of their order in the original source.
+
+### Namespace weirdness
+
+The [XML::Mapping](https://github.com/multi-io/xml-mapping) library doesn't support namespaces, so namespace handling in `resync` is a bit hacky. In particular, you may see strange behavior when using `<rs:ln>`, `<rs:md>`, `<url>`, or `<sitemap>` tags outside the context of a `<urlset>`/`<sitemapindex>`.
