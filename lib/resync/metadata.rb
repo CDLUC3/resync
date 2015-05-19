@@ -10,6 +10,9 @@ module Resync
     # ------------------------------------------------------------
     # Attributes
 
+    # explicit prefix hacked in b/c XML::Mapping doesn't understand namespaces
+    root_element_name 'rs:md'
+
     time_node :at_time, '@at', default_value: nil
     time_node :from_time, '@from', default_value: nil
     time_node :until_time, '@until', default_value: nil

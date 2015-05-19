@@ -15,7 +15,7 @@ module Resync
     def self.element(xml)
       case xml
       when String # TODO: find a way to handle namespaces without this hack/assumption
-        REXML::Document.new(xml.sub(/^<([a-z]+)>/, "<\\1 xmlns:rs='http://www.openarchives.org/rs/terms/'>")).root
+        REXML::Document.new(xml.sub(/^<([^ \/>]+)/, "<\\1 xmlns:rs='http://www.openarchives.org/rs/terms/'")).root
       when REXML::Document
         xml.root
       when REXML::Element

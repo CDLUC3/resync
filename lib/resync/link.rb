@@ -10,6 +10,9 @@ module Resync
     # ------------------------------------------------------------
     # Attributes
 
+    # explicit prefix hacked in b/c XML::Mapping doesn't understand namespaces
+    root_element_name 'rs:ln'
+
     text_node :rel, '@rel', default_value: nil
     uri_node :href, '@href', default_value: nil
     numeric_node :priority, '@pri', default_value: nil
