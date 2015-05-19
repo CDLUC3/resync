@@ -52,7 +52,7 @@ module Resync
       describe '#save_to_xml' do
         it 'can round-trip to XML' do
           data = File.read('spec/data/examples/example-17.xml')
-          dump = ChangeDump.from_xml(data)
+          dump = ResourceDump.from_xml(data)
           xml = dump.save_to_xml
           expect(xml).to be_xml(data)
         end
