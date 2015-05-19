@@ -89,7 +89,7 @@ module Resync
     describe 'XML conversion' do
       describe '#from_xml' do
         it 'parses an XML string' do
-          xml = '<url>
+          xml = '<url xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:rs="http://www.openarchives.org/rs/terms/">
                     <loc>http://example.com/res1</loc>
                     <lastmod>2013-01-03T18:00:00Z</lastmod>
                     <rs:md change="updated"
@@ -135,14 +135,10 @@ module Resync
       end
 
       it 'can round-trip to XML' do
-        data = '<url>
+        data = '<url xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:rs="http://www.openarchives.org/rs/terms/">
                     <loc>http://example.com/res1</loc>
                     <lastmod>2013-01-03T18:00:00Z</lastmod>
                     <changefreq>daily</changefreq>
-                    <rs:md change="updated"
-                           hash="md5:1584abdf8ebdc9802ac0c6a7402c03b6"
-                           length="8876"
-                           type="text/html"/>
                     <rs:ln rel="duplicate"
                            pri="1"
                            href="http://mirror1.example.com/res1"
@@ -151,35 +147,22 @@ module Resync
                            pri="2"
                            href="http://mirror2.example.com/res1"
                            modified="2013-01-03T18:00:00Z"/>
+                    <rs:md change="updated"
+                           hash="md5:1584abdf8ebdc9802ac0c6a7402c03b6"
+                           length="8876"
+                           type="text/html"/>
                     <rs:ln rel="duplicate"
                            pri="3"
                            href="gsiftp://gridftp.example.com/res1"
                            modified="2013-01-03T18:00:00Z"/>
                 </url>'
         resource = Resource.from_xml(data)
-        xml = resource.save_to_xml
-        expect(xml).to be_xml(data)
-      end
 
-      it 'can handle mixed ln/md elements' do
-        data = '<url>
-                    <loc>http://example.com/res1</loc>
-                    <lastmod>2013-01-03T18:00:00Z</lastmod>
-                    <rs:ln rel="duplicate"
-                           pri="1"
-                           href="http://mirror1.example.com/res1"
-                           modified="2013-01-03T18:00:00Z"/>
-                    <rs:md change="updated"
-                           hash="md5:1584abdf8ebdc9802ac0c6a7402c03b6"
-                           length="8876"
-                           type="text/html"/>
-                    <rs:ln rel="duplicate"
-                           pri="2"
-                           href="http://mirror2.example.com/res1"
-                           modified="2013-01-03T18:00:00Z"/>
-                </url>'
-        resource = Resource.from_xml(data)
+        # Since resource isn't a root element, these won't be hacked in as in BaseResourceList#pre_save()
         xml = resource.save_to_xml
+        xml.add_namespace('http://www.sitemaps.org/schemas/sitemap/0.9')
+        xml.add_namespace('rs', 'http://www.openarchives.org/rs/terms/')
+
         expect(xml).to be_xml(data)
       end
     end
