@@ -1,6 +1,6 @@
 require 'spec_helper'
 require_relative 'shared/uri_field_examples'
-require_relative 'shared/link_collection_examples'
+require_relative 'shared/augmented_examples'
 
 module Resync
   describe Resource do

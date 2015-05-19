@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative 'link_collection_examples'
+require_relative 'augmented_examples'
 
 module Resync
   RSpec.shared_examples BaseResourceList do
