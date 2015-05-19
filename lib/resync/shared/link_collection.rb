@@ -10,7 +10,7 @@ module Resync
     # Constants
 
     # TODO: Clean this up and make it a method or something
-    PREFIXIZER = Proc.new do |obj, xml, default_obj_to_xml|
+    PREFIXIZER = proc do |obj, xml, default_obj_to_xml|
       default_obj_to_xml.call(obj, xml)
       xml.each_element do |e|
         case e.name

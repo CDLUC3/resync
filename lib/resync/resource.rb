@@ -49,10 +49,8 @@ module Resync
     # Overrides
 
     # ResourceSync schema requires '##other' elements to appear last
-    def self.all_xml_mapping_nodes(options={:mapping=>nil,:create=>true})
-      result = []
-      result += xml_mapping_nodes options
-      result += superclass.all_xml_mapping_nodes options
+    def self.all_xml_mapping_nodes(options = { mapping: nil, create: true })
+      xml_mapping_nodes(options) + superclass.all_xml_mapping_nodes(options)
     end
 
     # ------------------------------------------------------------

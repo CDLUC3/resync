@@ -23,7 +23,7 @@ module Resync
       base.root_element_name 'sitemapindex'
     end
 
-    def pre_save(options={mapping: :_default})
+    def pre_save(options = { mapping: :_default })
       xml = super
       xml.add_namespace('http://www.sitemaps.org/schemas/sitemap/0.9')
       xml.add_namespace('rs', 'http://www.openarchives.org/rs/terms/')
