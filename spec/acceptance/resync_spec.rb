@@ -1,4 +1,4 @@
-require 'acceptance/acceptance_helper'
+require_relative 'acceptance_helper'
 
 # TODO: Split 'client' and library functionality
 
