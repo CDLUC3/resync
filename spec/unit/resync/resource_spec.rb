@@ -134,10 +134,11 @@ module Resync
         end
       end
 
-      it 'can round-trip to XML with namespaces' do
+      it 'can round-trip to XML' do
         data = '<url>
                     <loc>http://example.com/res1</loc>
                     <lastmod>2013-01-03T18:00:00Z</lastmod>
+                    <changefreq>daily</changefreq>
                     <rs:md change="updated"
                            hash="md5:1584abdf8ebdc9802ac0c6a7402c03b6"
                            length="8876"
@@ -145,7 +146,7 @@ module Resync
                     <rs:ln rel="duplicate"
                            pri="1"
                            href="http://mirror1.example.com/res1"
-                           modified="2013-01-03T18:00:00Z"/>
+                           modified="2013-01-03T18:00changefreq:00Z"/>
                     <rs:ln rel="duplicate"
                            pri="2"
                            href="http://mirror2.example.com/res1"
