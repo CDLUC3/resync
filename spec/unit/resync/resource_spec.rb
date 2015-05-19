@@ -146,7 +146,7 @@ module Resync
                     <rs:ln rel="duplicate"
                            pri="1"
                            href="http://mirror1.example.com/res1"
-                           modified="2013-01-03T18:00changefreq:00Z"/>
+                           modified="2013-01-03T18:00:00Z"/>
                     <rs:ln rel="duplicate"
                            pri="2"
                            href="http://mirror2.example.com/res1"
