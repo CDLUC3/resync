@@ -148,7 +148,7 @@ module Resync
                 type="bar/baz"
                 until="2005-05-05T05:00:00Z"
             />'
-          md = Metadata.from_xml(data);
+          md = Metadata.from_xml(data)
           xml = md.save_to_xml
           expect(xml).to be_xml(data)
         end

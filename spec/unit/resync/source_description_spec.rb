@@ -30,14 +30,14 @@ module Resync
 
           (0..2).each do |i|
             url = urls[i]
-            expect(url.uri).to eq(URI("http://example.com/capabilitylist#{i+1}.xml"))
+            expect(url.uri).to eq(URI("http://example.com/capabilitylist#{i + 1}.xml"))
             md = url.metadata
             expect(md.capability).to eq('capabilitylist')
             links = url.links
             expect(links.size).to eq(1)
             link = links[0]
             expect(link.rel).to eq('describedby')
-            expect(link.href).to eq(URI("http://example.com/info_about_set#{i+1}_of_resources.xml"))
+            expect(link.href).to eq(URI("http://example.com/info_about_set#{i + 1}_of_resources.xml"))
           end
         end
       end
