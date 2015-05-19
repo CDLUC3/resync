@@ -41,7 +41,7 @@ module Resync
     # ------------------------------------------------------------
     # Initializer
 
-    # Creates a new +Augmented+ with the specified links and metadata.
+    # Creates a new +Augmented+ instance with the specified links and metadata.
     #
     # @param links [Array<Link>] Related links (+<rs:ln>+). (Optional; defaults to an empty array.)
     # @param metadata [Metadata] Metadata about this list. (Optional)

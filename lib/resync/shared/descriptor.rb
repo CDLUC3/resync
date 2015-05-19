@@ -2,6 +2,25 @@ require 'mime/types'
 require_relative '../xml'
 
 module Resync
+  # Base class for ResourceSync-specific elements describing a
+  # resource or link.
+  #
+  # @!attribute [rw] modified_time
+  #   @return [Time] The date and time when the referenced resource was last modified.
+  # @!attribute [rw] length
+  #   @return [Integer] The content length of the referenced resource.
+  # @!attribute [rw] mime_type
+  #   @return [MIME::Type] The media type of the referenced resource.
+  # @!attribute [rw] encoding
+  #   @return [String] Any content encoding (if any) applied to the data in the
+  #     referenced resource (e.g. for compression)
+  # @!attribute [rw] hashes
+  #   @return [Hash<String, String>] Fixity information for the referenced
+  #     resource, as a map from hash algorithm tokens (e.g. +md5+, +sha-256+)
+  #     to hex-encoded digest values.
+  # @!attribute [rw] path
+  #   @return [String] For +ResourceDumpManifests+ and +ChangeDumpManifests+,
+  #     the path to the referenced resource within the dump ZIP file.
   class Descriptor
     include XML::Mapped
 
@@ -18,6 +37,18 @@ module Resync
     # ------------------------------------------------------------
     # Initializer
 
+    # Creates a new +Descriptor+ instance with the specified fields.
+    #    
+    # @param modified_time [Time] The date and time when the referenced resource was last modified.
+    # @param length [Integer] The content length of the referenced resource.
+    # @param mime_type [MIME::Type] The media type of the referenced resource.
+    # @param encoding [String] Any content encoding (if any) applied to the data in the
+    #   referenced resource (e.g. for compression)
+    # @param hashes [Hash<String, String>] Fixity information for the referenced
+    #   resource, as a map from hash algorithm tokens (e.g. +md5+, +sha-256+)
+    #   to hex-encoded digest values.
+    # @param path [String] For +ResourceDumpManifests+ and +ChangeDumpManifests+,
+    #   the path to the referenced resource within the dump ZIP file.
     def initialize( # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
         modified_time: nil,
         length: nil,
