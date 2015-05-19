@@ -26,14 +26,9 @@ module Resync
     def pre_save(options={mapping: :_default})
       xml = super
       xml.add_namespace('http://www.sitemaps.org/schemas/sitemap/0.9')
-      xml.add_namespace('rs', 'http://example.com/dataset1/capabilitylist.xml')
+      xml.add_namespace('rs', 'http://www.openarchives.org/rs/terms/')
       xml
     end
-
-    # ------------------------------------------------------------
-    # Overrides
-
-
 
     # ------------------------------------------------------------
     # Initializer
