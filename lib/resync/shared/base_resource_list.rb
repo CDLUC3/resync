@@ -7,6 +7,9 @@ module Resync
   # (i.e., +<urlset>+ and +<sitemapindex>+ elements). Subclasses
   # must define a +CAPABILITY+ constant identifying the capability
   # they represent (e.g. +resourcelist+, +changelist+).
+  #
+  # @!attribute [rw] resources
+  #   @return [Array] [Array<Resource>] The +<url>+ or +<sitemap>+ elements contained in this list.
   class BaseResourceList < LinkCollection
     include XML::Mapped
 
@@ -24,10 +27,14 @@ module Resync
     # Initializer
 
     # Creates a new +BaseResourceList+.
-    # @param resources [Array] +Resource+ objects (+<url>+ or +<sitemap>+) contained in this list. (Optional)
-    # @param links [Array] Related +Link+s (+<rs:ln>+). (Optional)
-    # @param metadata [Metadata] Metadata about this list. (Optional)
-    def initialize(resources: nil, links: nil, metadata: nil)
+    #
+    # @param resources [Array<Resource>] The +<url>+ or +<sitemap>+ elements contained in this list. (Optional;
+    #   defaults to an empty array.)
+    # @param links [Array<Link>] Related links (+<rs:ln>+). (Optional; defaults to an empty array.)
+    # @param metadata [Metadata] Metadata about this list. The +capability+ of the metadata must match this
+    #   implementation class' +CAPABILITY+ constant. (Optional; defaults to an otherwise empty metadata with
+    #   the correct +capability+ attribute.)
+    def initialize(resources: [], links: [], metadata: nil)
       super(links: links)
       self.resources = resources
       self.metadata = metadata
@@ -42,7 +49,9 @@ module Resync
     end
 
     # Sets the metadata.
-    # @raise [ArgumentError] if the specified metadata does not have the correct +capability+ attribute for this list type.
+    #
+    # @raise [ArgumentError] if the specified metadata does not have the correct +capability+ attribute for
+    #   this list type.
     def metadata=(value)
       @metadata = metadata_with_correct_capability(value)
     end
@@ -50,7 +59,8 @@ module Resync
     # ------------------------------------------------------------
     # Overrides
 
-    # Overrides +::XML::Mapping.pre_save+ to declare the Sitemap and ResourceSync namespaces. Used for writing.
+    # Overrides +::XML::Mapping.pre_save+ to declare the Sitemap and ResourceSync namespaces.
+    # Used for writing.
     def pre_save(options = { mapping: :_default })
       xml = super(options)
       xml.add_namespace('http://www.sitemaps.org/schemas/sitemap/0.9')
@@ -58,7 +68,8 @@ module Resync
       xml
     end
 
-    # Initializes the +:_default+ and +:sitemapindex+ mappings on all subclasses, and sets the corresponding root element names (+<urlset>+ and +<sitemapindex>+)
+    # Initializes the +:_default+ and +:sitemapindex+ mappings on all subclasses, and sets the corresponding
+    # root element names (+<urlset>+ and +<sitemapindex>+)
     def self.inherited(base)
       base.use_mapping :_default
       base.root_element_name 'urlset'
