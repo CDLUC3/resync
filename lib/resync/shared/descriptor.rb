@@ -38,7 +38,7 @@ module Resync
     # Initializer
 
     # Creates a new +Descriptor+ instance with the specified fields.
-    #    
+    #
     # @param modified_time [Time] The date and time when the referenced resource was last modified.
     # @param length [Integer] The content length of the referenced resource.
     # @param mime_type [MIME::Type] The media type of the referenced resource.
@@ -87,6 +87,10 @@ module Resync
     # ------------------------------------------------------------
     # Public methods
 
+    # Gets the hash value for the specified algorithm.
+    #
+    # @param algorithm [String] The token (e.g. +md5+, +sha-256+) for the hash algorithm.
+    # @return [String] The hex-encoded digest value.
     def hash(algorithm)
       hashes[algorithm]
     end
