@@ -8,7 +8,7 @@ module Resync
       it_behaves_like LinkCollection
     end
 
-    describe 'converts from XML' do
+    describe 'XML conversion' do
       describe '#from_xml' do
         it 'parses an XML string' do
           xml = File.read('spec/data/examples/example-16.xml')
@@ -42,6 +42,15 @@ module Resync
             expect(md.hashes).to eq(expected_hashes[i])
             expect(md.length).to eq(expected_lengths[i])
             expect(md.mime_type).to be_mime_type(expected_types[i])
+          end
+        end
+
+        describe '#save_to_xml' do
+          it 'can round-trip to XML' do
+            data = File.read('spec/data/examples/example-16.xml')
+            list = ResourceList.from_xml(data)
+            xml = list.save_to_xml
+            expect(xml).to be_xml(data)
           end
         end
       end

@@ -48,7 +48,7 @@ module Resync
 
     end
 
-    describe 'converts from XML' do
+    describe 'XML conversion' do
       describe '#from_xml' do
         it 'parses an XML string' do
           xml = '<ln
@@ -73,6 +73,23 @@ module Resync
           expect(link.hash('md5')).to eq('1e0d5cb8ef6ba40c99b14c0237be735e')
           expect(link.path).to eq('/foo/')
         end
+      end
+
+      it 'can round-trip to XML with namespaces' do
+        data = '<rs:ln
+                encoding="utf-8"
+                hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"
+                href="http://example.org/"
+                length="12345"
+                modified="2013-01-03T09:00:00Z"
+                path="/foo/"
+                pri="3.14159"
+                rel="bar"
+                type="baz/qux"
+            />'
+        link = Link.from_xml(data)
+        xml = link.save_to_xml
+        expect(xml).to be_xml(data)
       end
     end
   end

@@ -100,7 +100,7 @@ module Resync
       end
     end
 
-    describe 'converts from XML' do
+    describe 'XML conversion' do
       describe '#from_xml' do
         it 'parses an XML string' do
           xml = '<md
@@ -131,6 +131,26 @@ module Resync
           expect(metadata.path).to eq('/foo')
           expect(metadata.mime_type).to be_mime_type('bar/baz')
           expect(metadata.until_time).to be_time(Time.utc(2005, 5, 5, 5))
+        end
+
+        it 'can round-trip to XML with namespaces' do
+          data = '<rs:md
+                at="2001-01-01T01:00:00Z"
+                capability="resourcelist"
+                change="updated"
+                completed="2002-02-02T02:00:00Z"
+                encoding="utf-16"
+                from="2003-03-03T03:00:00Z"
+                hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"
+                length="54321"
+                modified="2004-04-04T04:00:00Z"
+                path="/foo"
+                type="bar/baz"
+                until="2005-05-05T05:00:00Z"
+            />'
+          md = Metadata.from_xml(data)
+          xml = md.save_to_xml
+          expect(xml).to be_xml(data)
         end
       end
     end

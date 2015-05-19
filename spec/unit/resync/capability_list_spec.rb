@@ -77,7 +77,7 @@ module Resync
       end
     end
 
-    describe 'converts from XML' do
+    describe 'XML conversion' do
       describe '#from_xml' do
         it 'parses an XML string' do
           data = File.read('spec/data/examples/example-13.xml')
@@ -109,14 +109,14 @@ module Resync
         end
       end
 
-      # describe '#save_to_xml' do
-      #   it 'can round-trip to XML' do
-      #     data = File.read('spec/data/examples/example-13.xml')
-      #     list = CapabilityList.from_xml(data)
-      #     xml = list.save_to_xml
-      #     expect(xml).to be_xml(data)
-      #   end
-      # end
+      describe '#save_to_xml' do
+        it 'can round-trip to XML' do
+          data = File.read('spec/data/examples/example-13.xml')
+          list = CapabilityList.from_xml(data)
+          xml = list.save_to_xml
+          expect(xml).to be_xml(data)
+        end
+      end
     end
   end
 

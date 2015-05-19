@@ -4,7 +4,7 @@ module Resync
   describe ChangeList do
     it_behaves_like SortedResourceList
 
-    describe 'converts from XML' do
+    describe 'XML conversion' do
       describe '#from_xml' do
         it 'parses an XML string' do
           Change = Types::Change
@@ -62,7 +62,15 @@ module Resync
           expect(ln1.mime_type).to(be_mime_type('application/x-tiff-diff'))
         end
       end
-    end
 
+      describe '#save_to_xml' do
+        it 'can round-trip to XML' do
+          data = File.read('spec/data/examples/example-27.xml')
+          list = ChangeList.from_xml(data)
+          xml = list.save_to_xml
+          expect(xml).to be_xml(data)
+        end
+      end
+    end
   end
 end

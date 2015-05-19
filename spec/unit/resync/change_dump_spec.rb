@@ -4,7 +4,7 @@ module Resync
   describe ChangeDump do
     it_behaves_like SortedResourceList
 
-    describe 'converts from XML' do
+    describe 'XML conversion' do
       describe '#from_xml' do
         it 'parses an XML string' do
           xml = File.read('spec/data/examples/example-22.xml')
@@ -45,6 +45,15 @@ module Resync
             expect(ln.href).to eq(URI("http://example.com/2013010#{i + 1}-changedump-manifest.xml"))
             expect(ln.mime_type).to be_mime_type('application/xml')
           end
+        end
+      end
+
+      describe '#save_to_xml' do
+        it 'can round-trip to XML' do
+          data = File.read('spec/data/examples/example-22.xml')
+          dump = ChangeDump.from_xml(data)
+          xml = dump.save_to_xml
+          expect(xml).to be_xml(data)
         end
       end
     end

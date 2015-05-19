@@ -80,7 +80,7 @@ module Resync
       end
     end
 
-    describe 'converts from XML' do
+    describe 'XML conversion' do
       describe '#from_xml' do
         it 'parses an XML string' do
           xml = '<url>
@@ -126,6 +126,32 @@ module Resync
             expect(ln.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
           end
         end
+      end
+
+      it 'can round-trip to XML with namespaces' do
+        data = '<url>
+                    <loc>http://example.com/res1</loc>
+                    <lastmod>2013-01-03T18:00:00Z</lastmod>
+                    <rs:md change="updated"
+                           hash="md5:1584abdf8ebdc9802ac0c6a7402c03b6"
+                           length="8876"
+                           type="text/html"/>
+                    <rs:ln rel="duplicate"
+                           pri="1"
+                           href="http://mirror1.example.com/res1"
+                           modified="2013-01-03T18:00:00Z"/>
+                    <rs:ln rel="duplicate"
+                           pri="2"
+                           href="http://mirror2.example.com/res1"
+                           modified="2013-01-03T18:00:00Z"/>
+                    <rs:ln rel="duplicate"
+                           pri="3"
+                           href="gsiftp://gridftp.example.com/res1"
+                           modified="2013-01-03T18:00:00Z"/>
+                </url>'
+        resource = Resource.from_xml(data)
+        xml = resource.save_to_xml
+        expect(xml).to be_xml(data)
       end
     end
   end

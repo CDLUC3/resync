@@ -3,7 +3,7 @@ require_relative 'shared/sorted_list_examples'
 module Resync
   describe ChangeDumpManifest do
     it_behaves_like SortedResourceList
-    describe 'converts from XML' do
+    describe 'XML conversion' do
       describe '#from_xml' do
         it 'parses an XML string' do
 
@@ -61,6 +61,15 @@ module Resync
             expect(md.mime_type).to be_mime_type(expected_types[i])
             expect(md.path).to eq(expected_paths[i])
           end
+        end
+      end
+
+      describe '#save_to_xml' do
+        it 'can round-trip to XML' do
+          data = File.read('spec/data/examples/example-23.xml')
+          manifest = ChangeDumpManifest.from_xml(data)
+          xml = manifest.save_to_xml
+          expect(xml).to be_xml(data)
         end
       end
     end
