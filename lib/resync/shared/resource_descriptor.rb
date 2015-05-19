@@ -3,7 +3,7 @@ require_relative '../xml'
 
 module Resync
   class ResourceDescriptor
-    include ::XML::Mapping
+    include XML::Mapped
 
     # ------------------------------------------------------------
     # Attributes

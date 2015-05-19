@@ -4,7 +4,7 @@ require_relative '../metadata'
 
 module Resync
   class BaseResourceList < LinkCollection
-    include ::XML::Mapping
+    include XML::Mapped
 
     # ------------------------------------------------------------
     # Attributes
@@ -15,20 +15,6 @@ module Resync
     use_mapping :sitemapindex
     root_element_name 'sitemapindex'
     array_node :resources, 'sitemap', class: Resource, default_value: []
-
-    def self.inherited(base)
-      base.use_mapping :_default
-      base.root_element_name 'urlset'
-      base.use_mapping :sitemapindex
-      base.root_element_name 'sitemapindex'
-    end
-
-    def pre_save(options = { mapping: :_default })
-      xml = super
-      xml.add_namespace('http://www.sitemaps.org/schemas/sitemap/0.9')
-      xml.add_namespace('rs', 'http://www.openarchives.org/rs/terms/')
-      xml
-    end
 
     # ------------------------------------------------------------
     # Initializer
@@ -51,6 +37,26 @@ module Resync
     end
 
     # ------------------------------------------------------------
+    # Overrides
+
+    # Since +::XML::Mapping+ doesn't know about namespaces, we have to hack them in here.
+    # Overrides +::XML::Mapping.pre_save+.
+    def pre_save(options = { mapping: :_default })
+      xml = super(options)
+      xml.add_namespace('http://www.sitemaps.org/schemas/sitemap/0.9')
+      xml.add_namespace('rs', 'http://www.openarchives.org/rs/terms/')
+      xml
+    end
+
+    # Make sure subclasses also get the +sitemapindex+ mapping.
+    def self.inherited(base)
+      base.use_mapping :_default
+      base.root_element_name 'urlset'
+      base.use_mapping :sitemapindex
+      base.root_element_name 'sitemapindex'
+    end
+
+    # ------------------------------------------------------------
     # Private methods
 
     private
@@ -65,5 +71,6 @@ module Resync
       fail ArgumentError, "Wrong capability for #{self.class.name} metadata; expected '#{capability}', was '#{metadata.capability}'" unless metadata.capability == capability
       metadata
     end
+
   end
 end

@@ -3,8 +3,7 @@ require_relative 'xml'
 
 module Resync
   class ResourceList < BaseResourceList
-    include ::XML::Mapping
-    include XML::Convertible
+    include XML::Mapped
 
     CAPABILITY = 'resourcelist'
   end

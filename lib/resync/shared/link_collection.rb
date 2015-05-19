@@ -4,7 +4,7 @@ require_relative '../metadata'
 module Resync
 
   class LinkCollection
-    include ::XML::Mapping
+    include XML::Mapped
 
     # ------------------------------------------------------------
     # Constants

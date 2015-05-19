@@ -4,8 +4,7 @@ require_relative 'xml'
 module Resync
 
   class Metadata < ResourceDescriptor
-    include ::XML::Mapping
-    include XML::Convertible
+    include XML::Mapped
 
     # ------------------------------------------------------------
     # Attributes

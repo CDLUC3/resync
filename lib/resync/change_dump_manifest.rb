@@ -3,8 +3,7 @@ require_relative 'xml'
 
 module Resync
   class ChangeDumpManifest < SortedResourceList
-    include ::XML::Mapping
-    include XML::Convertible
+    include XML::Mapped
 
     CAPABILITY = 'changedump-manifest'
   end

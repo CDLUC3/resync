@@ -3,8 +3,7 @@ require_relative 'xml'
 
 module Resync
   class ResourceDumpManifest < BaseResourceList
-    include ::XML::Mapping
-    include XML::Convertible
+    include XML::Mapped
 
     CAPABILITY = 'resourcedump-manifest'
   end

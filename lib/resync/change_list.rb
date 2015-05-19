@@ -3,8 +3,7 @@ require_relative 'xml'
 
 module Resync
   class ChangeList < SortedResourceList
-    include ::XML::Mapping
-    include XML::Convertible
+    include XML::Mapped
 
     CAPABILITY = 'changelist'
   end

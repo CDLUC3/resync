@@ -1,29 +1,36 @@
+require 'uri'
+require 'xml/mapping'
+
 module Resync
   module XML
-
-    module Convertible
+    module Mapped
 
       def self.included(base)
-        base.extend XMLConversions
+        base.include ::XML::Mapping
+        base.extend ClassMethods
+      end
+
+      def to_uri(url)
+        return nil unless url
+        (url.is_a? URI) ? url : URI.parse(url)
       end
 
       # Defines methods that will become class methods on those
-      # classes that include +Resync+XML::Convertible+
-      module XMLConversions
+      # classes that include +Resync::XML::Mapped+
+      module ClassMethods
+
         def from_xml(xml)
           xml = ::Resync::XML.element(xml)
           load_from_xml(xml)
         end
 
-        # Overrides +::XML::Mapping::ClassMethods.load_from_xml+ in order to
-        # fall back to :_default mapping when an unknown mapping is specified;
-        # this allows alternate mappings to include sub-elements that don't
-        # know anything about the specified alternate mapping
+        # Fall back to +:_default_+ mapping when an unknown mapping is specified.
+        # Overrides +::XML::Mapping::ClassMethods.load_from_xml+.
         def load_from_xml(xml, options = { mapping: :_default })
           mapping = valid_mapping(options[:mapping])
           begin
             obj = new
-          rescue ArgumentError
+          rescue ArgumentError # for initializers with required arguments
             obj = allocate
           end
           obj.initialize_xml_mapping mapping: mapping
