@@ -30,7 +30,7 @@ module Resync
         def required_arguments
           { uri: 'http://example.org' }
         end
-        it_behaves_like LinkCollection
+        it_behaves_like Augmented
       end
 
       describe 'metadata' do

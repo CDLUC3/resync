@@ -1,9 +1,9 @@
-require_relative 'shared/link_collection'
+require_relative 'shared/augmented'
 require_relative 'xml'
 require_relative 'metadata'
 
 module Resync
-  class Resource < LinkCollection
+  class Resource < Augmented
     include XML::Mapped
 
     # ------------------------------------------------------------

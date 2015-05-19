@@ -1,7 +1,7 @@
 module Resync
   # TODO: Figure out if 'up' is mandatory for all resource lists, or just CapabilityList
   # TODO: Consider requiring this in base_resource_list_examples again, if 'up' is mandatory
-  RSpec.shared_examples LinkCollection do
+  RSpec.shared_examples Augmented do
 
     # TODO: Find a better way to express this
     def new_instance(**args)

@@ -7,7 +7,7 @@ module Resync
     it_behaves_like BaseResourceList
 
     describe 'links' do
-      it_behaves_like LinkCollection
+      it_behaves_like Augmented
     end
 
     describe 'XML conversion' do

@@ -1,4 +1,4 @@
-require_relative 'link_collection'
+require_relative 'augmented'
 require_relative '../resource'
 require_relative '../metadata'
 
@@ -10,7 +10,7 @@ module Resync
   #
   # @!attribute [rw] resources
   #   @return [Array] [Array<Resource>] The +<url>+ or +<sitemap>+ elements contained in this list.
-  class BaseResourceList < LinkCollection
+  class BaseResourceList < Augmented
     include XML::Mapped
 
     # ------------------------------------------------------------

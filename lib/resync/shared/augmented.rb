@@ -9,7 +9,7 @@ module Resync
   #   @return [Array<Link>] Related links. (Optional; defaults to an empty array.)
   # @!attribute [rw] metadata
   #   @return [Metadata] Metadata about this object. (Optional)
-  class LinkCollection
+  class Augmented
     include XML::Mapped
 
     # ------------------------------------------------------------
@@ -41,7 +41,7 @@ module Resync
     # ------------------------------------------------------------
     # Initializer
 
-    # Creates a new +LinkCollection+ with the specified links and metadata.
+    # Creates a new +Augmented+ with the specified links and metadata.
     #
     # @param links [Array<Link>] Related links (+<rs:ln>+). (Optional; defaults to an empty array.)
     # @param metadata [Metadata] Metadata about this list. (Optional)
