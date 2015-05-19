@@ -1,4 +1,5 @@
 require_relative '../link'
+require_relative '../metadata'
 
 module Resync
   class LinkCollection
@@ -8,9 +9,11 @@ module Resync
     # Attributes
 
     array_node :links, 'ln', class: Link, default_value: []
+    object_node :metadata, 'md', class: Metadata, default_value: nil
 
     use_mapping :sitemapindex
     array_node :links, 'ln', class: Link, default_value: []
+    object_node :metadata, 'md', class: Metadata, default_value: nil
 
     # ------------------------------------------------------------
     # Initializer

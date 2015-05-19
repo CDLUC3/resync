@@ -14,8 +14,6 @@ module Resync
     time_node :modified_time, 'lastmod', default_value: nil
     changefreq_node :changefreq, 'changefreq', default_value: nil
     numeric_node :priority, 'priority', default_value: nil
-    # TODO: is everything with :metadata also a LinkCollection? probably
-    object_node :metadata, 'md', class: Metadata, default_value: nil
 
     # ------------------------------------------------------------
     # Initializer
