@@ -28,11 +28,7 @@ module Resync
         # Overrides +::XML::Mapping::ClassMethods.load_from_xml+.
         def load_from_xml(xml, options = { mapping: :_default })
           mapping = valid_mapping(options[:mapping])
-          begin
-            obj = new
-          rescue ArgumentError # for initializers with required arguments
-            obj = allocate
-          end
+          obj = allocate # bypass initializers with required arguments
           obj.initialize_xml_mapping mapping: mapping
           obj.fill_from_xml xml, mapping: mapping
           obj
