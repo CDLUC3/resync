@@ -53,7 +53,10 @@ module Resync
           expect(resource.changefreq).to eq(cf)
         end
 
-        it 'defaults to nil if no change frequency specified'
+        it 'defaults to nil if no change frequency specified' do
+          resource = Resource.new(uri: 'http://example.org')
+          expect(resource.changefreq).to be_nil
+        end
       end
 
       describe 'priority' do
@@ -63,7 +66,10 @@ module Resync
           expect(resource.priority).to eq(priority)
         end
 
-        it 'defaults to nil if no priority specified'
+        it 'defaults to nil if no priority specified' do
+          resource = Resource.new(uri: 'http://example.org')
+          expect(resource.priority).to be_nil
+        end
       end
     end
 
