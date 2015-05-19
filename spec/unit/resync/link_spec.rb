@@ -75,8 +75,8 @@ module Resync
         end
       end
 
-      it 'can round-trip to XML with namespaces' do
-        data = '<rs:ln
+      it 'can round-trip to XML' do
+        data = '<ln
                 encoding="utf-8"
                 hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"
                 href="http://example.org/"

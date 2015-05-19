@@ -10,6 +10,8 @@ module Resync
     # ------------------------------------------------------------
     # Attributes
 
+    root_element_name 'url'
+
     uri_node :uri, 'loc', default_value: nil
     time_node :modified_time, 'lastmod', default_value: nil
     changefreq_node :changefreq, 'changefreq', default_value: nil

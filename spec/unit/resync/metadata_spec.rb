@@ -133,8 +133,8 @@ module Resync
           expect(metadata.until_time).to be_time(Time.utc(2005, 5, 5, 5))
         end
 
-        it 'can round-trip to XML with namespaces' do
-          data = '<rs:md
+        it 'can round-trip to XML' do
+          data = '<md
                 at="2001-01-01T01:00:00Z"
                 capability="resourcelist"
                 change="updated"
@@ -148,7 +148,7 @@ module Resync
                 type="bar/baz"
                 until="2005-05-05T05:00:00Z"
             />'
-          md = Metadata.from_xml(data)
+          md = Metadata.from_xml(data);
           xml = md.save_to_xml
           expect(xml).to be_xml(data)
         end

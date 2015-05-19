@@ -19,6 +19,6 @@ The [Sitemap](http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd) and [Site
 
 None of these are currently enforced by `resync`, although the restrictions wouldn't be too hard to implement.
 
-### Read-only
+### Element order not preserved
 
-The mapping library can parse ResourceSync XML, but writing XML from the mapped objects is buggy -- namespaces are not handled correctly, extra empty attributes may appear, etc.
+When reading a ResourceSync document from XML and writing it back out, `<rs:ln>` elements will always appear before `<rs:md>` elements, regardless of their order in the original source.

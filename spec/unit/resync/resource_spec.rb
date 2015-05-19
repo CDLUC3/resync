@@ -153,6 +153,28 @@ module Resync
         xml = resource.save_to_xml
         expect(xml).to be_xml(data)
       end
+
+      it 'can handle mixed ln/md elements' do
+        data = '<url>
+                    <loc>http://example.com/res1</loc>
+                    <lastmod>2013-01-03T18:00:00Z</lastmod>
+                    <rs:ln rel="duplicate"
+                           pri="1"
+                           href="http://mirror1.example.com/res1"
+                           modified="2013-01-03T18:00:00Z"/>
+                    <rs:md change="updated"
+                           hash="md5:1584abdf8ebdc9802ac0c6a7402c03b6"
+                           length="8876"
+                           type="text/html"/>
+                    <rs:ln rel="duplicate"
+                           pri="2"
+                           href="http://mirror2.example.com/res1"
+                           modified="2013-01-03T18:00:00Z"/>
+                </url>'
+        resource = Resource.from_xml(data)
+        xml = resource.save_to_xml
+        expect(xml).to be_xml(data)
+      end
     end
   end
 end
