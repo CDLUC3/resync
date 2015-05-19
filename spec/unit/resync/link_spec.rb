@@ -1,6 +1,6 @@
 require 'spec_helper'
 require_relative 'shared/uri_field_examples'
-require_relative 'shared/resource_descriptor_examples'
+require_relative 'shared/descriptor_examples'
 
 module Resync
   describe Link do
@@ -9,7 +9,7 @@ module Resync
       { rel: 'describedby', href: 'http://example.org' }
     end
 
-    it_behaves_like ResourceDescriptor
+    it_behaves_like Descriptor
 
     describe '#new' do
 

@@ -2,7 +2,7 @@ require 'mime/types'
 require_relative '../xml'
 
 module Resync
-  class ResourceDescriptor
+  class Descriptor
     include XML::Mapped
 
     # ------------------------------------------------------------
@@ -50,7 +50,7 @@ module Resync
     end
 
     def hashes=(value)
-      @hashes = ResourceDescriptor.hash_of_hashcodes(value)
+      @hashes = Descriptor.hash_of_hashcodes(value)
     end
 
     # ------------------------------------------------------------

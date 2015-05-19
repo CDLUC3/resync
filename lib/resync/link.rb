@@ -1,9 +1,9 @@
-require_relative 'shared/resource_descriptor'
+require_relative 'shared/descriptor'
 require_relative 'xml'
 
 module Resync
 
-  class Link < ResourceDescriptor
+  class Link < Descriptor
     include XML::Mapped
 
     # ------------------------------------------------------------

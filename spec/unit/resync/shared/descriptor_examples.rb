@@ -1,5 +1,5 @@
 module Resync
-  RSpec.shared_examples ResourceDescriptor do
+  RSpec.shared_examples Descriptor do
 
     # TODO: Find a better way to express this
     def new_instance(**args)

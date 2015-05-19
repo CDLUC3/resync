@@ -1,10 +1,10 @@
 require 'spec_helper'
-require_relative 'shared/resource_descriptor_examples'
+require_relative 'shared/descriptor_examples'
 
 module Resync
   describe Metadata do
 
-    it_behaves_like ResourceDescriptor
+    it_behaves_like Descriptor
 
     describe '#new' do
 
