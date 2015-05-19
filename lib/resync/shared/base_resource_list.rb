@@ -23,6 +23,18 @@ module Resync
       base.root_element_name 'sitemapindex'
     end
 
+    def pre_save(options={mapping: :_default})
+      xml = super
+      xml.add_namespace('http://www.sitemaps.org/schemas/sitemap/0.9')
+      xml.add_namespace('rs', 'http://example.com/dataset1/capabilitylist.xml')
+      xml
+    end
+
+    # ------------------------------------------------------------
+    # Overrides
+
+
+
     # ------------------------------------------------------------
     # Initializer
 
