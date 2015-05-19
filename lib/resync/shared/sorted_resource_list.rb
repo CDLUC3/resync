@@ -1,11 +1,16 @@
 require_relative 'base_resource_list'
 
 module Resync
+  # An extension to +BaseResourceList+ for resource lists that
+  # should be sorted by modification time.
   class SortedResourceList < BaseResourceList
 
     # ------------------------------------------------------------
     # Custom setters
 
+    # Sets the +resources+ list, sorting the resources by modification
+    # time. (Resources without modification times will be sorted to
+    # the end.) +nil+ is treated as an empty list.
     def resources=(value)
       @resources = sorted(value)
     end
