@@ -9,7 +9,7 @@ module Resync
   # they represent (e.g. +resourcelist+, +changelist+).
   #
   # @!attribute [rw] resources
-  #   @return [Array] [Array<Resource>] The +<url>+ or +<sitemap>+ elements contained in this list.
+  #   @return [Array<Resource>] The +<url>+ or +<sitemap>+ elements contained in this list.
   class BaseResourceList < Augmented
     include XML::Mapped
 
