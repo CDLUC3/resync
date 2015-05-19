@@ -28,7 +28,7 @@ RSpec::Matchers.define :be_xml do |expected|
     expected_xml = to_nokogiri(expected) || fail("expected value #{expected} does not appear to be XML")
     actual_xml = to_nokogiri(actual)
 
-    EquivalentXml.equivalent?(expected_xml, actual_xml, element_order: true, normalize_whitespace: true)
+    EquivalentXml.equivalent?(expected_xml, actual_xml, element_order: false, normalize_whitespace: true)
   end
 
   failure_message do |actual|
