@@ -69,7 +69,7 @@ module Resync
     describe 'resource_for' do
       it 'maps resources by capability' do
         resources = valid_resources
-        capability_list = CapabilityList.new(resources: resources)
+        capability_list = CapabilityList.new(resources: resources, links: [Link.new(rel: 'up', href: 'http://example.org/')])
         expect(capability_list.resource_for(capability: 'resourcelist')).to eq(resources[0])
         expect(capability_list.resource_for(capability: 'resourcedump')).to eq(resources[1])
         expect(capability_list.resource_for(capability: 'changelist')).to eq(resources[2])
