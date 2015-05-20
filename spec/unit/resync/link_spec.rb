@@ -91,6 +91,25 @@ module Resync
         xml = link.save_to_xml
         expect(xml).to be_xml(data)
       end
+
+      it 'can round-trip to XML with the :sitemapindex mapping' do
+        xml = ::Resync::XML.element('<ln
+                encoding="utf-8"
+                hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"
+                href="http://example.org/"
+                length="12345"
+                modified="2013-01-03T09:00:00Z"
+                path="/foo/"
+                pri="3.14159"
+                rel="bar"
+                type="baz/qux"
+            />')
+        options = { mapping: :sitemapindex }
+        link = Link.load_from_xml(xml, options)
+        xml = link.save_to_xml(options)
+        expect(xml).to be_xml(xml)
+      end
+
     end
   end
 end
