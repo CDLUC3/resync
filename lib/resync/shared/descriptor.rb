@@ -6,20 +6,20 @@ module Resync
   # resource or link.
   #
   # @!attribute [rw] modified_time
-  #   @return [Time] The date and time when the referenced resource was last modified.
+  #   @return [Time] the date and time when the referenced resource was last modified.
   # @!attribute [rw] length
-  #   @return [Integer] The content length of the referenced resource.
+  #   @return [Integer] the content length of the referenced resource.
   # @!attribute [rw] mime_type
-  #   @return [MIME::Type] The media type of the referenced resource.
+  #   @return [MIME::Type] the media type of the referenced resource.
   # @!attribute [rw] encoding
-  #   @return [String] Any content encoding (if any) applied to the data in the
+  #   @return [String] the content encoding (if any) applied to the data in the
   #     referenced resource (e.g. for compression)
   # @!attribute [rw] hashes
-  #   @return [Hash<String, String>] Fixity information for the referenced
+  #   @return [Hash<String, String>] fixity information for the referenced
   #     resource, as a map from hash algorithm tokens (e.g. +md5+, +sha-256+)
   #     to hex-encoded digest values.
   # @!attribute [rw] path
-  #   @return [String] For +ResourceDumpManifests+ and +ChangeDumpManifests+,
+  #   @return [String] for +ResourceDumpManifests+ and +ChangeDumpManifests+,
   #     the path to the referenced resource within the dump ZIP file.
   class Descriptor
     include XML::Mapped

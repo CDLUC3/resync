@@ -9,7 +9,7 @@ module Resync
   # they represent (e.g. +resourcelist+, +changelist+).
   #
   # @!attribute [rw] resources
-  #   @return [Array<Resource>] The +<url>+ or +<sitemap>+ elements contained in this list.
+  #   @return [Array<Resource>] the +<url>+ or +<sitemap>+ elements contained in this list.
   class BaseResourceList < Augmented
     include XML::Mapped
 
@@ -34,6 +34,7 @@ module Resync
     # @param metadata [Metadata] Metadata about this list. The +capability+ of the metadata must match this
     #   implementation class' +CAPABILITY+ constant. (Optional; defaults to an otherwise empty metadata with
     #   the correct +capability+ attribute.)
+    # @raise [ArgumentError] if the specified metadata does not have the correct +capability+ attribute for this list type.
     def initialize(resources: [], links: [], metadata: nil)
       super(links: links)
       self.resources = resources
