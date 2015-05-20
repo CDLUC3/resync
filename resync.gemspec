@@ -7,7 +7,7 @@ require 'uri'
 
 Gem::Specification.new do |spec|
   spec.name = 'resync'
-  spec.version = ResyncClient::VERSION
+  spec.version = Resync::VERSION
   spec.authors = ['David Moles']
   spec.email = ['david.moles@ucop.edu']
   spec.summary = 'Utility library for ResourceSync'
