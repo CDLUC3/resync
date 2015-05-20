@@ -3,8 +3,14 @@ require 'xml/mapping'
 
 module Resync
   module XML
+    # Mixin for XML-mapped objects, based on +::XML::Mapping+ with some
+    # adjustments and extensions.
     module Mapped
 
+      # Ensures that the provided value is a +URI+, parsing it if necessary.
+      #
+      # @param url [URI, String] the URI.
+      # @raise [URI::InvalidURIError] if +url+ cannot be converted to a URI.
       def to_uri(url)
         return nil unless url
         (url.is_a? URI) ? url : URI.parse(url)
@@ -20,6 +26,12 @@ module Resync
       # classes that include +Resync::XML::Mapped+
       module ClassMethods
 
+        # Ensures that the provided value is a +REXML::Element+, parsing it or extracting
+        # it from a document if necessary.
+        #
+        # @param xml [String, REXML::Document, REXML::Element] An XML element, in
+        #   the form of a string or a parsed document/element
+        # @return [REXML::Element] the parsed XML element, or the root element of the document
         def from_xml(xml)
           xml = ::Resync::XML.element(xml)
           load_from_xml(xml)

@@ -50,6 +50,7 @@ module Resync
     #   to hex-encoded digest values.
     # @param path [String] For +ResourceDumpManifests+ and +ChangeDumpManifests+,
     #   the path to the referenced resource within the dump ZIP file.
+    # @raise [URI::InvalidURIError] if +href+ cannot be converted to a URI.
     def initialize( # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
         rel:,
         href:,
