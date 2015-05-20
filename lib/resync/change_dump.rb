@@ -8,6 +8,8 @@ module Resync
   class ChangeDump < SortedResourceList
     include XML::Mapped
 
+    # The capability provided by this type.
     CAPABILITY = 'changedump'
+
   end
 end

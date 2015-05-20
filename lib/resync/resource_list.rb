@@ -8,6 +8,8 @@ module Resync
   class ResourceList < BaseResourceList
     include XML::Mapped
 
+    # The capability provided by this type.
     CAPABILITY = 'resourcelist'
+
   end
 end

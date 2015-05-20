@@ -7,6 +7,8 @@ module Resync
   class SourceDescription < BaseResourceList
     include XML::Mapped
 
+    # The capability provided by this type.
     CAPABILITY = 'description'
+
   end
 end

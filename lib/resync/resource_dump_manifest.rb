@@ -8,6 +8,8 @@ module Resync
   class ResourceDumpManifest < BaseResourceList
     include XML::Mapped
 
+    # The capability provided by this type.
     CAPABILITY = 'resourcedump-manifest'
+
   end
 end

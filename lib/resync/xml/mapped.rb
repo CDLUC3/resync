@@ -5,15 +5,16 @@ module Resync
   module XML
     module Mapped
 
-      def self.included(base)
-        base.include ::XML::Mapping
-        base.extend ClassMethods
-      end
-
       def to_uri(url)
         return nil unless url
         (url.is_a? URI) ? url : URI.parse(url)
       end
+
+      def self.included(base)
+        base.include ::XML::Mapping
+        base.extend ClassMethods
+      end
+      private_class_method :included
 
       # Defines methods that will become class methods on those
       # classes that include +Resync::XML::Mapped+
@@ -33,6 +34,8 @@ module Resync
           obj.fill_from_xml xml, mapping: mapping
           obj
         end
+
+        private
 
         def valid_mapping(mapping)
           return mapping if xml_mapping_nodes_hash.key?(mapping)

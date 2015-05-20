@@ -1,8 +1,7 @@
-require_relative 'xml'
-
 module Resync
+
   # Parses ResourceSync XML documents and returns appropriate objects.
-  module Parser
+  module XMLParser
 
     # The list of parseable types.
     ROOT_TYPES = [
@@ -15,9 +14,10 @@ module Resync
       ResourceList,
       SourceDescription
     ]
+    private_constant :ROOT_TYPES
 
-    # XPath to find the +capability+ attribute of the root element's metadata (i.e. +<rs:md>+).
     CAPABILITY_ATTRIBUTE = "/*/[namespace-uri() = 'http://www.openarchives.org/rs/terms/' and local-name() = 'md']/@capability"
+    private_constant :CAPABILITY_ATTRIBUTE
 
     # Parses the specified ResourceSync document and returns the appropriate object
     # based on the +capability+ attribute of the root element's metadata (i.e. +<rs:md>+).
@@ -37,6 +37,7 @@ module Resync
       fail ArgumentError, "no mapped type for capability '#{capability}'" unless root_type
       root_type
     end
+
     private_class_method :root_type_for
 
     def self.capability_for(root_element)
@@ -44,6 +45,7 @@ module Resync
       fail ArgumentError, "unable to identify capability of root element in #{root_element}" unless capability
       capability
     end
+
     private_class_method :capability_for
 
     def self.capability_attribute_for(root_element)
@@ -51,7 +53,7 @@ module Resync
       fail ArgumentError, "unable to identify capability of root element in #{root_element}" unless capability_attr
       capability_attr
     end
-    private_class_method :capability_attribute_for
 
+    private_class_method :capability_attribute_for
   end
 end

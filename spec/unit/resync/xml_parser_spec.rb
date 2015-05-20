@@ -1,33 +1,33 @@
 require 'spec_helper'
 
 module Resync
-  describe Parser do
+  describe XMLParser do
 
     describe '#parse' do
       it 'parses an XML document' do
         data = File.read('spec/data/examples/example-1.xml')
         doc = REXML::Document.new(data)
-        urlset = Parser.parse(xml: doc)
+        urlset = XMLParser.parse(xml: doc)
         expect(urlset).to be_a(ResourceList)
       end
 
       it 'parses a urlset' do
         data = File.read('spec/data/examples/example-1.xml')
         root = REXML::Document.new(data).root
-        urlset = Parser.parse(xml: root)
+        urlset = XMLParser.parse(xml: root)
         expect(urlset).to be_a(ResourceList)
       end
 
       it 'parses a sitemapindex' do
         data = File.read('spec/data/examples/example-8.xml')
         root = REXML::Document.new(data).root
-        sitemapindex = Parser.parse(xml: root)
+        sitemapindex = XMLParser.parse(xml: root)
         expect(sitemapindex).to be_a(ResourceList)
       end
 
       it 'parses a String' do
         data = File.read('spec/data/examples/example-1.xml')
-        urlset = Parser.parse(xml: data)
+        urlset = XMLParser.parse(xml: data)
         expect(urlset).to be_a(ResourceList)
       end
 
@@ -36,7 +36,7 @@ module Resync
                   <rs:md capability="resourcelist" at="2013-01-03T09:00:00Z"/>
                   <url><loc>http://example.com/res1</loc></url>
                 </urlset>'
-        urlset = Parser.parse(xml: data)
+        urlset = XMLParser.parse(xml: data)
         expect(urlset).to be_a(ResourceList)
       end
 
@@ -45,7 +45,7 @@ module Resync
                 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:rs="http://www.openarchives.org/rs/terms/">
                   <url><loc>http://example.com/res1</loc></url>
                 </urlset>'
-        expect { Parser.parse(xml: data) }.to raise_error(ArgumentError)
+        expect { XMLParser.parse(xml: data) }.to raise_error(ArgumentError)
       end
 
       it 'fails if the root element\'s metadata has no capability attribute' do
@@ -54,7 +54,7 @@ module Resync
                   <rs:md at="2013-01-03T09:00:00Z"/>
                   <url><loc>http://example.com/res1</loc></url>
                 </urlset>'
-        expect { Parser.parse(xml: data) }.to raise_error(ArgumentError)
+        expect { XMLParser.parse(xml: data) }.to raise_error(ArgumentError)
       end
 
       it 'fails if the root element\'s metadata has an unknown capability attribute' do
@@ -63,17 +63,17 @@ module Resync
                   <rs:md capability="NOT A CAPABILITY" at="2013-01-03T09:00:00Z"/>
                   <url><loc>http://example.com/res1</loc></url>
                 </urlset>'
-        expect { Parser.parse(xml: data) }.to raise_error(ArgumentError)
+        expect { XMLParser.parse(xml: data) }.to raise_error(ArgumentError)
       end
 
       it 'fails when it gets something other than a <urlset/> or <sitemapindex/>' do
         data = '<loc>http://example.com/resourcelist-part1.xml</loc>'
-        expect { Parser.parse(xml: data) }.to raise_error(ArgumentError)
+        expect { XMLParser.parse(xml: data) }.to raise_error(ArgumentError)
       end
 
       it 'fails when it gets something other than XML' do
         data = 12_345
-        expect { Parser.parse(xml: data) }.to raise_error(ArgumentError)
+        expect { XMLParser.parse(xml: data) }.to raise_error(ArgumentError)
       end
 
     end

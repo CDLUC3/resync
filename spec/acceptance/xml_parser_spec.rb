@@ -4,11 +4,11 @@ module Resync
 
   Change = Types::Change
 
-  describe Parser do
+  describe XMLParser do
 
     it 'parses example 1' do
       data = File.read('spec/data/examples/example-1.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       md = urlset.metadata
       expect(md).not_to be_nil
@@ -27,7 +27,7 @@ module Resync
 
     it 'parses example 2' do
       data = File.read('spec/data/examples/example-2.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       md = urlset.metadata
       expect(md).not_to be_nil
@@ -61,7 +61,7 @@ module Resync
 
     it 'parses example 3' do
       data = File.read('spec/data/examples/example-3.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       urls = urlset.resources
       expect(urls.size).to eq(2)
@@ -82,7 +82,7 @@ module Resync
 
     it 'parses example 4' do
       data = File.read('spec/data/examples/example-4.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       md = urlset.metadata
       expect(md.capability).to eq('resourcedump')
@@ -98,7 +98,7 @@ module Resync
 
     it 'parses example 5' do
       data = File.read('spec/data/examples/example-5.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       md = urlset.metadata
       expect(md.capability).to eq('resourcedump-manifest')
@@ -123,7 +123,7 @@ module Resync
 
     it 'parses example 6' do
       data = File.read('spec/data/examples/example-6.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(2)
@@ -158,7 +158,7 @@ module Resync
 
     it 'parses example 7' do
       data = File.read('spec/data/examples/example-7.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -186,7 +186,7 @@ module Resync
 
     it 'parses example 8' do
       data = File.read('spec/data/examples/example-8.xml')
-      sitemapindex = Parser.parse(xml: data)
+      sitemapindex = XMLParser.parse(xml: data)
 
       md = sitemapindex.metadata
       expect(md.capability).to eq('resourcelist')
@@ -206,7 +206,7 @@ module Resync
 
     it 'parses example 12' do
       data = File.read('spec/data/examples/example-12.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -235,7 +235,7 @@ module Resync
 
     it 'parses example 13' do
       data = File.read('spec/data/examples/example-13.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(2)
@@ -264,7 +264,7 @@ module Resync
 
     it 'parses example 14' do
       data = File.read('spec/data/examples/example-14.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -298,7 +298,7 @@ module Resync
 
     it 'parses example 15' do
       data = File.read('spec/data/examples/example-15.xml')
-      sitemapindex = Parser.parse(xml: data)
+      sitemapindex = XMLParser.parse(xml: data)
 
       links = sitemapindex.links
       expect(links.size).to eq(1)
@@ -325,7 +325,7 @@ module Resync
 
     it 'parses example 16' do
       data = File.read('spec/data/examples/example-16.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(2)
@@ -361,7 +361,7 @@ module Resync
 
     it 'parses example 17' do
       data = File.read('spec/data/examples/example-17.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -400,7 +400,7 @@ module Resync
 
     it 'parses example 18' do
       data = File.read('spec/data/examples/example-18.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -435,7 +435,7 @@ module Resync
 
     it 'parses example 19' do
       data = File.read('spec/data/examples/example-19.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -466,7 +466,7 @@ module Resync
 
     it 'parses example 20' do
       data = File.read('spec/data/examples/example-20.xml')
-      sitemapindex = Parser.parse(xml: data)
+      sitemapindex = XMLParser.parse(xml: data)
 
       links = sitemapindex.links
       expect(links.size).to eq(1)
@@ -494,7 +494,7 @@ module Resync
 
     it 'parses example 21' do
       data = File.read('spec/data/examples/example-21.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(2)
@@ -534,7 +534,7 @@ module Resync
 
     it 'parses example 22' do
       data = File.read('spec/data/examples/example-22.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -577,7 +577,7 @@ module Resync
 
     it 'parses example 23' do
       data = File.read('spec/data/examples/example-23.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -632,7 +632,7 @@ module Resync
 
     it 'parses example 24' do
       data = File.read('spec/data/examples/example-24.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -673,7 +673,7 @@ module Resync
 
     it 'parses example 25' do
       data = File.read('spec/data/examples/example-25.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -709,7 +709,7 @@ module Resync
 
     it 'parses example 26' do
       data = File.read('spec/data/examples/example-26.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -741,7 +741,7 @@ module Resync
 
     it 'parses example 27' do
       data = File.read('spec/data/examples/example-27.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -795,7 +795,7 @@ module Resync
 
     it 'parses example 28' do
       data = File.read('spec/data/examples/example-28.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -848,7 +848,7 @@ module Resync
 
     it 'parses example 29' do
       data = File.read('spec/data/examples/example-29.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -893,7 +893,7 @@ module Resync
 
     it 'parses example 30' do
       data = File.read('spec/data/examples/example-30.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -924,7 +924,7 @@ module Resync
 
     it 'parses example 31' do
       data = File.read('spec/data/examples/example-31.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -950,7 +950,7 @@ module Resync
 
     it 'parses example 32' do
       data = File.read('spec/data/examples/example-32.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)
@@ -985,7 +985,7 @@ module Resync
 
     it 'parses example 33' do
       data = File.read('spec/data/examples/example-33.xml')
-      urlset = Parser.parse(xml: data)
+      urlset = XMLParser.parse(xml: data)
 
       links = urlset.links
       expect(links.size).to eq(1)

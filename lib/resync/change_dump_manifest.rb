@@ -8,6 +8,8 @@ module Resync
   class ChangeDumpManifest < SortedResourceList
     include XML::Mapped
 
+    # The capability provided by this type.
     CAPABILITY = 'changedump-manifest'
+
   end
 end
