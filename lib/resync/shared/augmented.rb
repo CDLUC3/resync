@@ -6,9 +6,9 @@ module Resync
   # Base class for elements augmented with ResourceSync-specific child elements.
   #
   # @!attribute [rw] links
-  #   @return [Array<Link>] related links. (Optional; defaults to an empty array.)
+  #   @return [Array<Link>] related links.
   # @!attribute [rw] metadata
-  #   @return [Metadata] metadata about this object. (Optional)
+  #   @return [Metadata] metadata about this object.
   class Augmented
     include XML::Mapped
 
@@ -43,8 +43,8 @@ module Resync
 
     # Creates a new +Augmented+ instance with the specified links and metadata.
     #
-    # @param links [Array<Link>] related links (i.e. +<rs:ln>+). (Optional; defaults to an empty array.)
-    # @param metadata [Metadata] metadata about this list. (Optional)
+    # @param links [Array<Link>] related links (i.e. +<rs:ln>+).
+    # @param metadata [Metadata] metadata about this resource.
     def initialize(links: [], metadata: nil)
       self.links = links
       self.metadata = metadata

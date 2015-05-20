@@ -3,6 +3,21 @@ require_relative 'xml'
 
 module Resync
 
+  # A link to a related resource. See "Linking to Related Resources"
+  # under section 5.1,
+  # {http://www.openarchives.org/rs/1.0/resourcesync#SourcePers Synchronization Processes: Source Perspective}
+  # in the ResourceSync specification.
+  #
+  # @!attribute [rw] rel
+  #   @return [String] the relationship of the linked resource to the original
+  #     resource. See {http://tools.ietf.org/html/rfc5988 RFC 5988}, "Web Linking".
+  #     for information on link relation types.
+  # @!attribute [rw] href
+  #   @return [URI] the URI of the linked resource.
+  # @!attribute [rw] priority
+  #   @return [Integer] the priority of the linked resource among links with the
+  #     same relation type. Values should be in the range 1-999,999 (inclusive).
+  #     Lower values indicate higher priorities.
   class Link < Descriptor
     include XML::Mapped
 
@@ -18,6 +33,23 @@ module Resync
     # ------------------------------------------------------------
     # Initializer
 
+    # @param rel [String] the relationship of the linked resource to the
+    #   original resource. See {http://tools.ietf.org/html/rfc5988 RFC 5988},
+    #   "Web Linking". for information on link relation types.
+    # @param href [URI] the URI of the linked resource.
+    # @param priority [Integer] the priority of the linked resource among links
+    #   with the same relation type. Values should be in the range
+    #   1-999,999 (inclusive). Lower values indicate higher priorities.
+    # @param modified_time [Time] The date and time when the referenced resource was last modified.
+    # @param length [Integer] The content length of the referenced resource.
+    # @param mime_type [MIME::Type] The media type of the referenced resource.
+    # @param encoding [String] Any content encoding (if any) applied to the data in the
+    #   referenced resource (e.g. for compression)
+    # @param hashes [Hash<String, String>] Fixity information for the referenced
+    #   resource, as a map from hash algorithm tokens (e.g. +md5+, +sha-256+)
+    #   to hex-encoded digest values.
+    # @param path [String] For +ResourceDumpManifests+ and +ChangeDumpManifests+,
+    #   the path to the referenced resource within the dump ZIP file.
     def initialize( # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
         rel:,
         href:,
@@ -29,7 +61,7 @@ module Resync
         length: nil,
         mime_type: nil,
         encoding: nil,
-        hashes: nil,
+        hashes: {},
 
         path: nil
     )
@@ -43,6 +75,9 @@ module Resync
     # ------------------------------------------------------------
     # Custom setters
 
+    # Sets the URI of the linked resource. Strings will be converted to +URI+ objects.
+    # @param value [URI, String] the URI.
+    # @raise [URI::InvalidURIError] if +value+ cannot be converted to a URI.
     def href=(value)
       @href = to_uri(value)
     end

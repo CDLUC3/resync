@@ -28,12 +28,10 @@ module Resync
 
     # Creates a new +BaseResourceList+.
     #
-    # @param resources [Array<Resource>] The +<url>+ or +<sitemap>+ elements contained in this list. (Optional;
-    #   defaults to an empty array.)
-    # @param links [Array<Link>] Related links (+<rs:ln>+). (Optional; defaults to an empty array.)
+    # @param resources [Array<Resource>] The +<url>+ or +<sitemap>+ elements contained in this list.
+    # @param links [Array<Link>] Related links (+<rs:ln>+).
     # @param metadata [Metadata] Metadata about this list. The +capability+ of the metadata must match this
-    #   implementation class' +CAPABILITY+ constant. (Optional; defaults to an otherwise empty metadata with
-    #   the correct +capability+ attribute.)
+    #   implementation class' +CAPABILITY+ constant.
     # @raise [ArgumentError] if the specified metadata does not have the correct +capability+ attribute for this list type.
     def initialize(resources: [], links: [], metadata: nil)
       super(links: links)
