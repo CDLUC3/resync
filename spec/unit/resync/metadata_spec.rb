@@ -132,7 +132,9 @@ module Resync
           expect(metadata.mime_type).to be_mime_type('bar/baz')
           expect(metadata.until_time).to be_time(Time.utc(2005, 5, 5, 5))
         end
+      end
 
+      describe '#save_to_xml' do
         it 'can round-trip to XML' do
           data = '<md
                 at="2001-01-01T01:00:00Z"
@@ -151,6 +153,27 @@ module Resync
           md = Metadata.from_xml(data)
           xml = md.save_to_xml
           expect(xml).to be_xml(data)
+        end
+
+        it 'can round-trip to XML with the :sitemapindex mapping' do
+          xml = ::Resync::XML.element('<md
+                at="2001-01-01T01:00:00Z"
+                capability="resourcelist"
+                change="updated"
+                completed="2002-02-02T02:00:00Z"
+                encoding="utf-16"
+                from="2003-03-03T03:00:00Z"
+                hash="md5:1e0d5cb8ef6ba40c99b14c0237be735e"
+                length="54321"
+                modified="2004-04-04T04:00:00Z"
+                path="/foo"
+                type="bar/baz"
+                until="2005-05-05T05:00:00Z"
+            />')
+          options = {mapping: :sitemapindex}
+          md = Metadata.load_from_xml(xml, options)
+          xml = md.save_to_xml(options)
+          expect(xml).to be_xml(xml)
         end
       end
     end
