@@ -2,7 +2,7 @@ require_relative 'xml'
 
 module Resync
   # Parses ResourceSync XML documents and returns appropriate objects.
-  module XMLFactory
+  module Parser
 
     ROOT_TYPES = [
       CapabilityList,
