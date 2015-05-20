@@ -4,6 +4,7 @@ module Resync
   # Parses ResourceSync XML documents and returns appropriate objects.
   module Parser
 
+    # The list of parseable types.
     ROOT_TYPES = [
       CapabilityList,
       ChangeDump,
@@ -15,6 +16,7 @@ module Resync
       SourceDescription
     ]
 
+    # XPath to find the +capability+ attribute of the root element's metadata (i.e. +<rs:md>+).
     CAPABILITY_ATTRIBUTE = "/*/[namespace-uri() = 'http://www.openarchives.org/rs/terms/' and local-name() = 'md']/@capability"
 
     # Parses the specified ResourceSync document and returns the appropriate object
