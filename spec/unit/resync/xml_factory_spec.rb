@@ -31,14 +31,49 @@ module Resync
         expect(urlset).to be_a(ResourceList)
       end
 
+      it 'parses an XML fragment' do
+        data = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:rs="http://www.openarchives.org/rs/terms/">
+                  <rs:md capability="resourcelist" at="2013-01-03T09:00:00Z"/>
+                  <url><loc>http://example.com/res1</loc></url>
+                </urlset>'
+        urlset = XMLFactory.parse(xml: data)
+        expect(urlset).to be_a(ResourceList)
+      end
+
+      it 'fails if the root element has no metadata' do
+        data = '<?xml version="1.0" encoding="UTF-8"?>
+                <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:rs="http://www.openarchives.org/rs/terms/">
+                  <url><loc>http://example.com/res1</loc></url>
+                </urlset>'
+        expect { XMLFactory.parse(xml: data) }.to raise_error(ArgumentError)
+      end
+
+      it 'fails if the root element\'s metadata has no capability attribute' do
+        data = '<?xml version="1.0" encoding="UTF-8"?>
+                <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:rs="http://www.openarchives.org/rs/terms/">
+                  <rs:md at="2013-01-03T09:00:00Z"/>
+                  <url><loc>http://example.com/res1</loc></url>
+                </urlset>'
+        expect { XMLFactory.parse(xml: data) }.to raise_error(ArgumentError)
+      end
+
+      it 'fails if the root element\'s metadata has an unknown capability attribute' do
+        data = '<?xml version="1.0" encoding="UTF-8"?>
+                <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:rs="http://www.openarchives.org/rs/terms/">
+                  <rs:md capability="NOT A CAPABILITY" at="2013-01-03T09:00:00Z"/>
+                  <url><loc>http://example.com/res1</loc></url>
+                </urlset>'
+        expect { XMLFactory.parse(xml: data) }.to raise_error(ArgumentError)
+      end
+
       it 'fails when it gets something other than a <urlset/> or <sitemapindex/>' do
         data = '<loc>http://example.com/resourcelist-part1.xml</loc>'
-        expect { XMLFactory.parse(xml: data) }.to raise_exception
+        expect { XMLFactory.parse(xml: data) }.to raise_error(ArgumentError)
       end
 
       it 'fails when it gets something other than XML' do
         data = 12_345
-        expect { XMLFactory.parse(xml: data) }.to raise_exception
+        expect { XMLFactory.parse(xml: data) }.to raise_error(ArgumentError)
       end
 
     end

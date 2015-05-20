@@ -1,5 +1,6 @@
 
 module Resync
+  # Helper methods and modules related to reading and writing XML.
   module XML
 
     # ------------------------------------------------------
@@ -21,7 +22,7 @@ module Resync
       when REXML::Element
         xml
       else
-        fail "Unexpected argument type; expected XML document, was #{xml.class}"
+        fail ArgumentError, "Unexpected argument type; expected XML document, was #{xml.class}"
       end
     end
 
