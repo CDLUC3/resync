@@ -2,6 +2,7 @@ require 'ruby-enum'
 
 module Resync
   module Types
+    # The type of change indicated by a reference in a +ChangeList+, +ChangeDump+, etc.
     class Change
       include Ruby::Enum
 

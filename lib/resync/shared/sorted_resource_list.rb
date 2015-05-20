@@ -9,8 +9,8 @@ module Resync
     # Custom setters
 
     # Sets the +resources+ list, sorting the resources by modification
-    # time. (Resources without modification times will be sorted to
-    # the end.) +nil+ is treated as an empty list.
+    # time. (+nil+ is treated as an empty list.) Resources without
+    # modification times will be sorted to the end.
     def resources=(value)
       @resources = sorted(value)
     end

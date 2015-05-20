@@ -7,6 +7,7 @@ module Resync
     # ------------------------------------------------------------
     # Time
 
+    # Maps +Time+ objects.
     class TimeNode < ::XML::Mapping::SingleAttributeNode
       def initialize(*args)
         path, *args = super(*args)
@@ -14,11 +15,13 @@ module Resync
         args
       end
 
+      # Implements +::XML::Mapping::SingleAttributeNode#extract_attr_value+.
       def extract_attr_value(xml)
         value = default_when_xpath_err { @path.first(xml).text }
         value ? Time.iso8601(value).utc : nil
       end
 
+      # Implements +::XML::Mapping::SingleAttributeNode#set_attr_value+.
       def set_attr_value(xml, value)
         @path.first(xml, ensure_created: true).text = value.iso8601
       end
@@ -29,6 +32,7 @@ module Resync
     # ------------------------------------------------------------
     # URI
 
+    # Maps +URI+ objects.
     class UriNode < ::XML::Mapping::SingleAttributeNode
       def initialize(*args)
         path, *args = super(*args)
@@ -36,10 +40,12 @@ module Resync
         args
       end
 
+      # Implements +::XML::Mapping::SingleAttributeNode#extract_attr_value+.
       def extract_attr_value(xml)
         URI(default_when_xpath_err { @path.first(xml).text })
       end
 
+      # Implements +::XML::Mapping::SingleAttributeNode#set_attr_value+.
       def set_attr_value(xml, value)
         @path.first(xml, ensure_created: true).text = value.to_s
       end
@@ -50,6 +56,7 @@ module Resync
     # ------------------------------------------------------------
     # Resync::Types::Change
 
+    # Maps +Resync::Types::Change+ values.
     class ChangeNode < ::XML::Mapping::SingleAttributeNode
       def initialize(*args)
         path, *args = super(*args)
@@ -57,10 +64,12 @@ module Resync
         args
       end
 
+      # Implements +::XML::Mapping::SingleAttributeNode#extract_attr_value+.
       def extract_attr_value(xml)
         Resync::Types::Change.parse(default_when_xpath_err { @path.first(xml).text })
       end
 
+      # Implements +::XML::Mapping::SingleAttributeNode#set_attr_value+.
       def set_attr_value(xml, value)
         @path.first(xml, ensure_created: true).text = value.to_s
       end
@@ -71,6 +80,7 @@ module Resync
     # ------------------------------------------------------------
     # Resync::Types::Changefreq
 
+    # Maps +Resync::Types::Changefreq+ values.
     class ChangefreqNode < ::XML::Mapping::SingleAttributeNode
       def initialize(*args)
         path, *args = super(*args)
@@ -78,10 +88,12 @@ module Resync
         args
       end
 
+      # Implements +::XML::Mapping::SingleAttributeNode#extract_attr_value+.
       def extract_attr_value(xml)
         Resync::Types::ChangeFrequency.parse(default_when_xpath_err { @path.first(xml).text })
       end
 
+      # Implements +::XML::Mapping::SingleAttributeNode#set_attr_value+.
       def set_attr_value(xml, value)
         @path.first(xml, ensure_created: true).text = value.to_s
       end
@@ -92,6 +104,7 @@ module Resync
     # ------------------------------------------------------------
     # MIME::Type
 
+    # Maps +MIME::Type+ values.
     class MimeTypeNode < ::XML::Mapping::SingleAttributeNode
       def initialize(*args)
         path, *args = super(*args)
@@ -99,6 +112,7 @@ module Resync
         args
       end
 
+      # Implements +::XML::Mapping::SingleAttributeNode#extract_attr_value+.
       def extract_attr_value(xml)
         mime_type = default_when_xpath_err { @path.first(xml).text }
         return nil unless mime_type
@@ -110,6 +124,7 @@ module Resync
         MIME::Type.new(mime_type)
       end
 
+      # Implements +::XML::Mapping::SingleAttributeNode#set_attr_value+.
       def set_attr_value(xml, value)
         @path.first(xml, ensure_created: true).text = value.to_s
       end
@@ -120,6 +135,9 @@ module Resync
     # ------------------------------------------------------------
     # Whitespace-separated hashcode list
 
+    # Maps the whitespace-separated list of hash codes in a +<rs:ln>+
+    # or +<rs:md>+ tag to a hash of digest values keyed by hash algorithm.
+    # (See {Resync::Descriptor#hashes}.)
     class HashCodesNode < ::XML::Mapping::SingleAttributeNode
       def initialize(*args)
         path, *args = super(*args)
@@ -127,6 +145,7 @@ module Resync
         args
       end
 
+      # Implements +::XML::Mapping::SingleAttributeNode#extract_attr_value+.
       def extract_attr_value(xml)
         hashes = default_when_xpath_err { @path.first(xml).text }
         return {} unless hashes
@@ -134,6 +153,7 @@ module Resync
         hashes.split(/[[:space:]]+/).map { |hash| hash.split(':') }.to_h
       end
 
+      # Implements +::XML::Mapping::SingleAttributeNode#set_attr_value+.
       def set_attr_value(xml, value)
         return if value.empty?
         hash_str = value.map { |k, v| "#{k}:#{v}" }.join(' ')

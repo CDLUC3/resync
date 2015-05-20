@@ -2,6 +2,7 @@ require 'ruby-enum'
 
 module Resync
   module Types
+    # The frequency of changes to a resource.
     class ChangeFrequency
       include Ruby::Enum
 
