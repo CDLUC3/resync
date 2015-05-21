@@ -37,10 +37,6 @@ module Resync
         end
       end
 
-      # TODO: Figure out what concrete types this was intended for, and test it
-      describe 'metadata' do
-        it 'requires from and until times (?)'
-      end
     end
 
   end

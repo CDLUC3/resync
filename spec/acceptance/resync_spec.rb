@@ -91,5 +91,8 @@ describe Resync do
     it 'handles user/`developer errors gracefully'
     it 'handles server errors gracefully'
   end
+
   it 'does something clever for mirrors, alternate representations, and related resources'
+
+  it 'enforces the required/forbidden time attribute table in appendix a of the spec'
 end
