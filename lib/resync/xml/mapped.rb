@@ -47,6 +47,24 @@ module Resync
           obj
         end
 
+        # Fall back to +:_default_+ mapping when an unknown mapping is specified.
+        # Overrides +::XML::Mapping::ClassMethods.xml_mapping_nodes+.
+        def xml_mapping_nodes(mapping: nil, create: true)
+          nodes = super(mapping: mapping, create: create)
+          unless mapping == :_default
+            nodes_by_name = nodes.map { |n| [n.instance_variable_get('@attrname'), n]}.to_h
+            default_nodes = super(mapping: :_default, create: create)
+            default_nodes.each do |n|
+              name = n.instance_variable_get('@attrname')
+              unless nodes_by_name.has_key?(name)
+                nodes_by_name[name] = n
+                nodes << n
+              end
+            end
+          end
+          nodes
+        end
+
         private
 
         def valid_mapping(mapping)
