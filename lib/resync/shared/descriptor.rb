@@ -22,7 +22,7 @@ module Resync
   #   @return [String] for +ResourceDumpManifests+ and +ChangeDumpManifests+,
   #     the path to the referenced resource within the dump ZIP file.
   class Descriptor
-    include XML::Mapped
+    include ::XML::Mapping
 
     # ------------------------------------------------------------
     # Attributes

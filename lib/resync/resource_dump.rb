@@ -6,7 +6,7 @@ module Resync
   # "{http://www.openarchives.org/rs/1.0/resourcesync#ResourceDump Resource Dump}",
   # in the ResourceSync specification.
   class ResourceDump < BaseResourceList
-    include XML::Mapped
+    include ::XML::Mapping
 
     # The capability provided by this type.
     CAPABILITY = 'resourcedump'

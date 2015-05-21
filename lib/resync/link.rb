@@ -19,7 +19,7 @@ module Resync
   #     same relation type. Values should be in the range 1-999,999 (inclusive).
   #     Lower values indicate higher priorities.
   class Link < Descriptor
-    include XML::Mapped
+    include ::XML::Mapping
 
     # ------------------------------------------------------------
     # Attributes
@@ -80,7 +80,7 @@ module Resync
     # @param value [URI, String] the URI.
     # @raise [URI::InvalidURIError] if +value+ cannot be converted to a URI.
     def href=(value)
-      @href = to_uri(value)
+      @href = XML.to_uri(value)
     end
 
   end

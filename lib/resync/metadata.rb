@@ -25,7 +25,7 @@ module Resync
   # @!attribute [rw] capability
   #   @return [String] identifies the type of a ResourceSync document.
   class Metadata < Descriptor
-    include XML::Mapped
+    include ::XML::Mapping
 
     # ------------------------------------------------------------
     # Attributes

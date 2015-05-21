@@ -6,7 +6,7 @@ module Resync
   # "{http://www.openarchives.org/rs/1.0/resourcesync#ResourceList Resource List}",
   # in the ResourceSync specification.
   class ResourceList < BaseResourceList
-    include XML::Mapped
+    include ::XML::Mapping
 
     # The capability provided by this type.
     CAPABILITY = 'resourcelist'

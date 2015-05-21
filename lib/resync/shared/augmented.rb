@@ -10,7 +10,7 @@ module Resync
   # @!attribute [rw] metadata
   #   @return [Metadata] metadata about this object.
   class Augmented
-    include XML::Mapped
+    include ::XML::Mapping
 
     # ------------------------------------------------------------
     # Class methods

@@ -4,7 +4,7 @@ module Resync
   module XML
 
     class Elem
-      include XML::Mapped
+      include ::XML::Mapping
       time_node :time, '@time', default_value: nil
 
       def self.from_str(time_str)

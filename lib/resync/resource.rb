@@ -8,7 +8,7 @@ module Resync
   # in the ResourceSync specification.
   #
   class Resource < Augmented
-    include XML::Mapped
+    include ::XML::Mapping
 
     # ------------------------------------------------------------
     # Attributes
@@ -51,7 +51,7 @@ module Resync
     # Custom setters
 
     def uri=(value)
-      @uri = to_uri(value)
+      @uri = XML.to_uri(value)
     end
 
     # ------------------------------------------------------------

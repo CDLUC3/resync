@@ -11,7 +11,7 @@ module Resync
   # @!attribute [rw] resources
   #   @return [Array<Resource>] the +<url>+ or +<sitemap>+ elements contained in this list.
   class BaseResourceList < Augmented
-    include XML::Mapped
+    include ::XML::Mapping
 
     # ------------------------------------------------------------
     # Attributes

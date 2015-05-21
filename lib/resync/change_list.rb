@@ -6,7 +6,7 @@ module Resync
   # "{http://www.openarchives.org/rs/1.0/resourcesync#ChangeList Change List}",
   # in the ResourceSync specification.
   class ChangeList < SortedResourceList
-    include XML::Mapped
+    include ::XML::Mapping
 
     # The capability provided by this type.
     CAPABILITY = 'changelist'
