@@ -2,8 +2,6 @@ require_relative 'acceptance_helper'
 
 module Resync
 
-  Change = Types::Change
-
   describe XMLParser do
 
     it 'parses example 1' do
@@ -469,7 +467,7 @@ module Resync
       expected_extensions = %w(html pdf tiff pdf)
       expected_lastmods = [Time.utc(2013, 1, 3, 11), Time.utc(2013, 1, 3, 13), Time.utc(2013, 1, 3, 18), Time.utc(2013, 1, 3, 21)]
 
-      expected_changes = [Change::CREATED, Change::UPDATED, Change::DELETED, Change::UPDATED]
+      expected_changes = [Types::Change::CREATED, Types::Change::UPDATED, Types::Change::DELETED, Types::Change::UPDATED]
 
       (0..3).each do |i|
         url = urls[i]
@@ -538,7 +536,7 @@ module Resync
         Time.utc(2013, 1, 2, 20)
       ]
 
-      expected_changes = [Change::CREATED, Change::UPDATED, Change::DELETED, Change::UPDATED]
+      expected_changes = [Types::Change::CREATED, Types::Change::UPDATED, Types::Change::DELETED, Types::Change::UPDATED]
 
       (0..3).each do |i|
         url = urls[i]
@@ -619,7 +617,7 @@ module Resync
         Time.utc(2013, 1, 2, 19),
         Time.utc(2013, 1, 2, 20)
       ]
-      expected_changes = [Change::CREATED, Change::UPDATED, Change::DELETED, Change::UPDATED]
+      expected_changes = [Types::Change::CREATED, Types::Change::UPDATED, Types::Change::DELETED, Types::Change::UPDATED]
       expected_hashes = [
         { 'md5' => '1c1b0e264fa9b7e1e9aa6f9db8d6362b' },
         { 'md5' => 'f906610c3d4aa745cb2b986f25b37c5a' },
@@ -670,7 +668,7 @@ module Resync
       expect(url.uri).to eq(URI('http://example.com/res1'))
       expect(url.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
       md = url.metadata
-      expect(md.change).to be(Change::UPDATED)
+      expect(md.change).to be(Types::Change::UPDATED)
       expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
       expect(md.length).to eq(8876)
       expect(md.mime_type).to be_mime_type('text/html')
@@ -712,7 +710,7 @@ module Resync
       expect(url.uri).to eq(URI('http://example.com/res1'))
       expect(url.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
       md = url.metadata
-      expect(md.change).to be(Change::UPDATED)
+      expect(md.change).to be(Types::Change::UPDATED)
       links = url.links
       expect(links.size).to eq(2)
       ln0 = links[0]
@@ -749,7 +747,7 @@ module Resync
       expect(url.uri).to eq(URI('http://example.com/res1.html'))
       expect(url.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
       md = url.metadata
-      expect(md.change).to be(Change::UPDATED)
+      expect(md.change).to be(Types::Change::UPDATED)
       expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
       expect(md.length).to eq(8876)
       links = url.links
@@ -782,7 +780,7 @@ module Resync
       expect(url0.uri).to eq(URI('http://example.com/res4'))
       expect(url0.modified_time).to be_time(Time.utc(2013, 1, 3, 17))
       md0 = url0.metadata
-      expect(md0.change).to be(Change::UPDATED)
+      expect(md0.change).to be(Types::Change::UPDATED)
       expect(md0.hashes).to eq('sha-256' => 'f4OxZX_x_DFGFDgghgdfb6rtSx-iosjf6735432nklj')
       expect(md0.length).to eq(56_778)
       expect(md0.mime_type).to be_mime_type('application/json')
@@ -800,7 +798,7 @@ module Resync
       expect(url1.uri).to eq(URI('http://example.com/res5-full.tiff'))
       expect(url1.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
       md1 = url1.metadata
-      expect(md1.change).to be(Change::UPDATED)
+      expect(md1.change).to be(Types::Change::UPDATED)
       expect(md1.hashes).to eq('sha-256' => 'f4OxZX_x_FO5LcGBSKHWXfwtSx-j1ncoSt3SABJtkGk')
       expect(md1.length).to eq(9_788_456_778)
       expect(md1.mime_type).to be_mime_type('image/tiff')
@@ -837,7 +835,7 @@ module Resync
       expect(url0.uri).to eq(URI('http://example.com/res2.pdf'))
       expect(url0.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
       md0 = url0.metadata
-      expect(md0.change).to be(Change::UPDATED)
+      expect(md0.change).to be(Types::Change::UPDATED)
       expect(md0.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
       expect(md0.length).to eq(8876)
       expect(md0.mime_type).to be_mime_type('application/pdf')
@@ -853,7 +851,7 @@ module Resync
       expect(url1.uri).to eq(URI('http://example.com/res2_dublin-core_metadata.xml'))
       expect(url1.modified_time).to be_time(Time.utc(2013, 1, 3, 19))
       md1 = url1.metadata
-      expect(md1.change).to be(Change::UPDATED)
+      expect(md1.change).to be(Types::Change::UPDATED)
       expect(md1.mime_type).to be_mime_type('application/xml')
       lns1 = url1.links
       expect(lns1.size).to eq(2)
@@ -894,7 +892,7 @@ module Resync
       expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
       expect(md.length).to eq(8876)
       expect(md.mime_type).to be_mime_type('text/html')
-      expect(md.change).to be(Change::UPDATED)
+      expect(md.change).to be(Types::Change::UPDATED)
 
       links = url.links
       expect(links.size).to eq(3)
@@ -939,7 +937,7 @@ module Resync
       expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
       expect(md.length).to eq(8876)
       expect(md.mime_type).to be_mime_type('text/html')
-      expect(md.change).to be(Change::UPDATED)
+      expect(md.change).to be(Types::Change::UPDATED)
 
       links = url.links
       ln = links[0]
@@ -971,7 +969,7 @@ module Resync
       expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
       expect(md.length).to eq(8876)
       expect(md.mime_type).to be_mime_type('text/html')
-      expect(md.change).to be(Change::UPDATED)
+      expect(md.change).to be(Types::Change::UPDATED)
     end
 
     it 'parses example 32' do
@@ -998,7 +996,7 @@ module Resync
       expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
       expect(md.length).to eq(8876)
       expect(md.mime_type).to be_mime_type('text/html')
-      expect(md.change).to be(Change::UPDATED)
+      expect(md.change).to be(Types::Change::UPDATED)
 
       links = url.links
       ln = links[0]
@@ -1034,7 +1032,7 @@ module Resync
       expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
       expect(md.length).to eq(8876)
       expect(md.mime_type).to be_mime_type('text/html')
-      expect(md.change).to be(Change::UPDATED)
+      expect(md.change).to be(Types::Change::UPDATED)
 
       links = url.links
       ln = links[0]

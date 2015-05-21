@@ -35,45 +35,41 @@ module Resync
       # Defines methods that will become class methods on those
       # classes that include +Resync::XML::Mapped+
       module ClassMethods
-
-        # Fall back to +:_default_+ mapping when an unknown mapping is specified.
-        # Overrides +::XML::Mapping::ClassMethods.load_from_xml+.
-        def load_from_xml(xml, options = { mapping: :_default })
-          mapping = valid_mapping(options[:mapping])
-          obj = allocate # bypass initializers with required arguments
-          obj.initialize_xml_mapping mapping: mapping
-          obj.fill_from_xml xml, mapping: mapping
-          obj
-        end
-
-        # Fall back to +:_default_+ mapping when an unknown mapping is specified.
-        # Overrides +::XML::Mapping::ClassMethods.xml_mapping_nodes+.
-        def xml_mapping_nodes(mapping: nil, create: true)
-          nodes = super(mapping: mapping, create: create)
-          unless mapping == :_default
-            merge_nodes(super(mapping: :_default, create: create), nodes)
-          end
-          nodes
-        end
-
-        private
-
-        def merge_nodes(source, target)
-          nodes_by_name = target.map { |n| [n.attrname, n] }.to_h
-          source.each do |n|
-            name = n.attrname
-            unless nodes_by_name.key?(name)
-              nodes_by_name[name] = n
-              target << n
-            end
-          end
-        end
-
-        def valid_mapping(mapping)
-          return mapping if xml_mapping_nodes_hash.key?(mapping)
-          fail(::XML::MappingError, "undefined mapping: #{mapping.inspect} for #{self}, and no :_default mapping found") unless xml_mapping_nodes_hash.key?(:_default)
-          :_default
-        end
+        # # Fall back to +:_default_+ mapping when an unknown mapping is specified.
+        # # Overrides +::XML::Mapping::ClassMethods.load_from_xml+.
+        # def load_from_xml(xml, options = { mapping: :_default })
+        #   mapping = valid_mapping(options[:mapping])
+        #   obj = allocate # bypass initializers with required arguments
+        #   obj.initialize_xml_mapping mapping: mapping
+        #   obj.fill_from_xml xml, mapping: mapping
+        #   obj
+        # end
+        #
+        # # Fall back to +:_default_+ mapping when an unknown mapping is specified.
+        # # Overrides +::XML::Mapping::ClassMethods.xml_mapping_nodes+.
+        # def xml_mapping_nodes(mapping: nil, create: true)
+        #   nodes = super(mapping: mapping, create: create)
+        #   unless mapping == :_default
+        #     nodes = merged(super(mapping: :_default, create: create), nodes)
+        #   end
+        #   nodes
+        # end
+        #
+        # private
+        #
+        # def merged(source, target)
+        #   nodes_by_name = source.map { |n| [n.attrname, n] }.to_h
+        #   target.each do |n|
+        #     nodes_by_name[n.attrname] = n
+        #   end
+        #   nodes_by_name.values
+        # end
+        #
+        # def valid_mapping(mapping)
+        #   return mapping if xml_mapping_nodes_hash.key?(mapping)
+        #   fail(::XML::MappingError, "undefined mapping: #{mapping.inspect} for #{self}, and no :_default mapping found") unless xml_mapping_nodes_hash.key?(:_default)
+        #   :_default
+        # end
       end
 
     end

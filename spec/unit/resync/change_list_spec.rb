@@ -7,7 +7,6 @@ module Resync
     describe 'XML conversion' do
       describe '#from_xml' do
         it 'parses an XML string' do
-          Change = Types::Change
 
           xml = File.read('spec/data/examples/example-27.xml')
           list = ChangeList.load_from_xml(XML.element(xml))
@@ -29,7 +28,7 @@ module Resync
           expect(url0.uri).to eq(URI('http://example.com/res4'))
           expect(url0.modified_time).to be_time(Time.utc(2013, 1, 3, 17))
           md0 = url0.metadata
-          expect(md0.change).to be(Change::UPDATED)
+          expect(md0.change).to be(Types::Change::UPDATED)
           expect(md0.hashes).to eq('sha-256' => 'f4OxZX_x_DFGFDgghgdfb6rtSx-iosjf6735432nklj')
           expect(md0.length).to eq(56_778)
           expect(md0.mime_type).to be_mime_type('application/json')
@@ -47,7 +46,7 @@ module Resync
           expect(url1.uri).to eq(URI('http://example.com/res5-full.tiff'))
           expect(url1.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
           md1 = url1.metadata
-          expect(md1.change).to be(Change::UPDATED)
+          expect(md1.change).to be(Types::Change::UPDATED)
           expect(md1.hashes).to eq('sha-256' => 'f4OxZX_x_FO5LcGBSKHWXfwtSx-j1ncoSt3SABJtkGk')
           expect(md1.length).to eq(9_788_456_778)
           expect(md1.mime_type).to be_mime_type('image/tiff')

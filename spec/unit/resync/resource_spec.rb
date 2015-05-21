@@ -166,39 +166,6 @@ module Resync
         expect(xml).to be_xml(data)
       end
 
-      it 'can round-trip to XML with the :sitemapindex mapping' do
-        xml = ::Resync::XML.element('<url xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:rs="http://www.openarchives.org/rs/terms/">
-                    <loc>http://example.com/res1</loc>
-                    <lastmod>2013-01-03T18:00:00Z</lastmod>
-                    <changefreq>daily</changefreq>
-                    <rs:ln rel="duplicate"
-                           pri="1"
-                           href="http://mirror1.example.com/res1"
-                           modified="2013-01-03T18:00:00Z"/>
-                    <rs:ln rel="duplicate"
-                           pri="2"
-                           href="http://mirror2.example.com/res1"
-                           modified="2013-01-03T18:00:00Z"/>
-                    <rs:md change="updated"
-                           hash="md5:1584abdf8ebdc9802ac0c6a7402c03b6"
-                           length="8876"
-                           type="text/html"/>
-                    <rs:ln rel="duplicate"
-                           pri="3"
-                           href="gsiftp://gridftp.example.com/res1"
-                           modified="2013-01-03T18:00:00Z"/>
-                </url>')
-        options = { mapping: :sitemapindex }
-        resource = Resource.load_from_xml(xml, options)
-
-        # Since resource isn't a root element, these won't be hacked in as in BaseResourceList#pre_save()
-        xml = resource.save_to_xml(options)
-        xml.add_namespace('http://www.sitemaps.org/schemas/sitemap/0.9')
-        xml.add_namespace('rs', 'http://www.openarchives.org/rs/terms/')
-
-        expect(xml).to be_xml(xml)
-      end
-
       it 'doesn\'t have side effects that prevent <sitemapindex> parsing' do
         Resource.xml_mapping_nodes(mapping: :sitemapindex)
 

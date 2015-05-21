@@ -7,8 +7,6 @@ module Resync
       describe '#from_xml' do
         it 'parses an XML string' do
 
-          Change = Types::Change
-
           xml = File.read('spec/data/examples/example-23.xml')
           urlset = ChangeDumpManifest.load_from_xml(XML.element(xml))
 
@@ -34,7 +32,7 @@ module Resync
             Time.utc(2013, 1, 2, 19),
             Time.utc(2013, 1, 2, 20)
           ]
-          expected_changes = [Change::CREATED, Change::UPDATED, Change::DELETED, Change::UPDATED]
+          expected_changes = [Types::Change::CREATED, Types::Change::UPDATED, Types::Change::DELETED, Types::Change::UPDATED]
           expected_hashes = [
             { 'md5' => '1c1b0e264fa9b7e1e9aa6f9db8d6362b' },
             { 'md5' => 'f906610c3d4aa745cb2b986f25b37c5a' },
