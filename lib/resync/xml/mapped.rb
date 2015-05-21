@@ -36,17 +36,6 @@ module Resync
       # classes that include +Resync::XML::Mapped+
       module ClassMethods
 
-        # Ensures that the provided value is a +REXML::Element+, parsing it or extracting
-        # it from a document if necessary.
-        #
-        # @param xml [String, REXML::Document, REXML::Element] An XML element, in
-        #   the form of a string or a parsed document/element
-        # @return [REXML::Element] the parsed XML element, or the root element of the document
-        def from_xml(xml)
-          xml = ::Resync::XML.element(xml)
-          load_from_xml(xml)
-        end
-
         # Fall back to +:_default_+ mapping when an unknown mapping is specified.
         # Overrides +::XML::Mapping::ClassMethods.load_from_xml+.
         def load_from_xml(xml, options = { mapping: :_default })

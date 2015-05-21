@@ -10,7 +10,7 @@ module Resync
           Change = Types::Change
 
           xml = File.read('spec/data/examples/example-23.xml')
-          urlset = ChangeDumpManifest.from_xml(xml)
+          urlset = ChangeDumpManifest.load_from_xml(XML.element(xml))
 
           links = urlset.links
           expect(links.size).to eq(1)
@@ -67,7 +67,7 @@ module Resync
       describe '#save_to_xml' do
         it 'can round-trip to XML' do
           data = File.read('spec/data/examples/example-23.xml')
-          manifest = ChangeDumpManifest.from_xml(data)
+          manifest = ChangeDumpManifest.load_from_xml(XML.element(data))
           xml = manifest.save_to_xml
           expect(xml).to be_xml(data)
         end

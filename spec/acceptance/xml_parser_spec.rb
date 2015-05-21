@@ -309,6 +309,7 @@ module Resync
     it 'parses example 15' do
       data = File.read('spec/data/examples/example-15.xml')
       sitemapindex = XMLParser.parse(xml: data)
+      # expect(sitemapindex).to be_a(ResourceListIndex)
 
       links = sitemapindex.links
       expect(links.size).to eq(1)

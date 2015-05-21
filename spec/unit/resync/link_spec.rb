@@ -62,7 +62,7 @@ module Resync
                 rel="bar"
                 type="baz/qux"
             />'
-          link = Link.from_xml(xml)
+          link = Link.load_from_xml(XML.element(xml))
           expect(link).to be_a(Link)
           expect(link.rel).to eq('bar')
           expect(link.href).to eq(URI('http://example.org'))
@@ -87,7 +87,7 @@ module Resync
                 rel="bar"
                 type="baz/qux"
             />'
-        link = Link.from_xml(data)
+        link = Link.load_from_xml(XML.element(data))
         xml = link.save_to_xml
         expect(xml).to be_xml(data)
       end

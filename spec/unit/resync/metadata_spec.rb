@@ -117,7 +117,7 @@ module Resync
                 type="bar/baz"
                 until="2005-05-05T05:00:00Z"
             />'
-          metadata = Metadata.from_xml(xml)
+          metadata = Metadata.load_from_xml(XML.element(xml))
           expect(metadata).to be_a(Metadata)
           expect(metadata.at_time).to be_time(Time.utc(2001, 1, 1, 1))
           expect(metadata.capability).to eq('resourcelist')
@@ -150,7 +150,7 @@ module Resync
                 type="bar/baz"
                 until="2005-05-05T05:00:00Z"
             />'
-          md = Metadata.from_xml(data)
+          md = Metadata.load_from_xml(XML.element(data))
           xml = md.save_to_xml
           expect(xml).to be_xml(data)
         end

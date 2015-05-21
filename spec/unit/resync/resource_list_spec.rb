@@ -12,7 +12,7 @@ module Resync
       describe '#from_xml' do
         it 'parses an XML string' do
           xml = File.read('spec/data/examples/example-16.xml')
-          list = ResourceList.from_xml(xml)
+          list = ResourceList.load_from_xml(XML.element(xml))
           links = list.links
           expect(links.size).to eq(2)
           ln0 = links[0]
@@ -48,7 +48,7 @@ module Resync
         describe '#save_to_xml' do
           it 'can round-trip to XML' do
             data = File.read('spec/data/examples/example-16.xml')
-            list = ResourceList.from_xml(data)
+            list = ResourceList.load_from_xml(XML.element(data))
             xml = list.save_to_xml
             expect(xml).to be_xml(data)
           end

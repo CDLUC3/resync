@@ -109,7 +109,7 @@ module Resync
                            href="gsiftp://gridftp.example.com/res1"
                            modified="2013-01-03T18:00:00Z"/>
                 </url>'
-          resource = Resource.from_xml(xml)
+          resource = Resource.load_from_xml(XML.element(xml))
           expect(resource).to be_a(Resource)
           expect(resource.uri).to eq(URI('http://example.com/res1'))
           expect(resource.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
@@ -156,7 +156,7 @@ module Resync
                            href="gsiftp://gridftp.example.com/res1"
                            modified="2013-01-03T18:00:00Z"/>
                 </url>'
-        resource = Resource.from_xml(data)
+        resource = Resource.load_from_xml(XML.element(data))
 
         # Since resource isn't a root element, these won't be hacked in as in BaseResourceList#pre_save()
         xml = resource.save_to_xml

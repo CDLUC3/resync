@@ -10,7 +10,7 @@ module Resync
           Change = Types::Change
 
           xml = File.read('spec/data/examples/example-27.xml')
-          list = ChangeList.from_xml(xml)
+          list = ChangeList.load_from_xml(XML.element(xml))
 
           links = list.links
           expect(links.size).to eq(1)
@@ -66,7 +66,7 @@ module Resync
       describe '#save_to_xml' do
         it 'can round-trip to XML' do
           data = File.read('spec/data/examples/example-27.xml')
-          list = ChangeList.from_xml(data)
+          list = ChangeList.load_from_xml(XML.element(data))
           xml = list.save_to_xml
           expect(xml).to be_xml(data)
         end
