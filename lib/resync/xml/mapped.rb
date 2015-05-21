@@ -69,7 +69,7 @@ module Resync
 
         def valid_mapping(mapping)
           return mapping if xml_mapping_nodes_hash.key?(mapping)
-          fail(::XML::MappingError, "undefined mapping: #{options[:mapping].inspect} for #{self}, and no :_default mapping found") unless xml_mapping_nodes_hash.key?(:_default)
+          fail(::XML::MappingError, "undefined mapping: #{mapping.inspect} for #{self}, and no :_default mapping found") unless xml_mapping_nodes_hash.key?(:_default)
           :_default
         end
       end
