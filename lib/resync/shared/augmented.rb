@@ -34,10 +34,6 @@ module Resync
     array_node :links, 'ln', class: Link, default_value: [], writer: method(:prefix_rewriter)
     object_node :metadata, 'md', class: Metadata, default_value: nil, writer: method(:prefix_rewriter)
 
-    use_mapping :sitemapindex
-    array_node :links, 'ln', class: Link, default_value: [], writer: method(:prefix_rewriter)
-    object_node :metadata, 'md', class: Metadata, default_value: nil, writer: method(:prefix_rewriter)
-
     # ------------------------------------------------------------
     # Initializer
 
