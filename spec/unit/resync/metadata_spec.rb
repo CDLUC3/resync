@@ -170,7 +170,7 @@ module Resync
                 type="bar/baz"
                 until="2005-05-05T05:00:00Z"
             />')
-          options = {mapping: :sitemapindex}
+          options = { mapping: :sitemapindex }
           md = Metadata.load_from_xml(xml, options)
           xml = md.save_to_xml(options)
           expect(xml).to be_xml(xml)

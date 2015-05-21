@@ -1,6 +1,16 @@
 require 'uri'
 require 'xml/mapping'
 
+module XML
+  module Mapping
+    class SingleAttributeNode
+      def attrname
+        instance_variable_get('@attrname')
+      end
+    end
+  end
+end
+
 module Resync
   module XML
     # Mixin for XML-mapped objects, based on +::XML::Mapping+ with some
@@ -52,20 +62,23 @@ module Resync
         def xml_mapping_nodes(mapping: nil, create: true)
           nodes = super(mapping: mapping, create: create)
           unless mapping == :_default
-            nodes_by_name = nodes.map { |n| [n.instance_variable_get('@attrname'), n]}.to_h
-            default_nodes = super(mapping: :_default, create: create)
-            default_nodes.each do |n|
-              name = n.instance_variable_get('@attrname')
-              unless nodes_by_name.has_key?(name)
-                nodes_by_name[name] = n
-                nodes << n
-              end
-            end
+            merge_nodes(super(mapping: :_default, create: create), nodes)
           end
           nodes
         end
 
         private
+
+        def merge_nodes(source, target)
+          nodes_by_name = target.map { |n| [n.attrname, n] }.to_h
+          source.each do |n|
+            name = n.attrname
+            unless nodes_by_name.key?(name)
+              nodes_by_name[name] = n
+              target << n
+            end
+          end
+        end
 
         def valid_mapping(mapping)
           return mapping if xml_mapping_nodes_hash.key?(mapping)
