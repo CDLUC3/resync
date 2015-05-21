@@ -175,6 +175,15 @@ module Resync
           xml = md.save_to_xml(options)
           expect(xml).to be_xml(xml)
         end
+
+        it 'doesn\'t have side effects that prevent <sitemapindex> parsing' do
+          Metadata.xml_mapping_nodes(mapping: :sitemapindex)
+
+          data = File.read('spec/data/examples/example-8.xml')
+          root = REXML::Document.new(data).root
+          sitemapindex = XMLParser.parse(xml: root)
+          expect(sitemapindex).to be_a(ResourceList)
+        end
       end
     end
   end
