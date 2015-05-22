@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'mime-types', '~> 2.5'
   spec.add_dependency 'ruby-enum', '~> 0.4'
+  spec.add_dependency 'rubyzip', '~> 1.1.7'
   spec.add_dependency 'xml-mapping', '~> 0.10'
 
   spec.add_development_dependency 'equivalent-xml', '~> 0.6.0'

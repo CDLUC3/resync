@@ -1,4 +1,5 @@
 require_relative 'shared/base_resource_list'
+require_relative 'shared/dump'
 require_relative 'xml'
 
 module Resync

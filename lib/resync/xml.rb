@@ -34,9 +34,21 @@ module Resync
       when REXML::Element
         xml
       else
-        fail ArgumentError, "Unexpected argument type; expected XML document, was #{xml.class}"
+        if io_like?(xml)
+          REXML::Document.new(xml).root
+        else
+          fail ArgumentError, "Unexpected argument type; expected XML document, was #{xml.class}"
+        end
       end
     end
+
+    def self.io_like?(arg)
+      arg.respond_to? :read and
+          arg.respond_to? :readline and
+          arg.respond_to? :nil? and
+          arg.respond_to? :eof?
+    end
+    private_class_method :io_like?
 
     # ------------------------------------------------------------
     # Time
