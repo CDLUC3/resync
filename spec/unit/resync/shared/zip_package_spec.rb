@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'resync/shared/zip_package'
 
 module Resync
   describe ZipPackage do
