@@ -2,9 +2,20 @@
 
 A Ruby gem for working with the [ResourceSync](http://www.openarchives.org/rs/1.0/resourcesync) web synchronization framework.
 
+## See also
+
+[resync-client](https://github.com/dmolesUC3/resync-client), a Ruby client library for ResourceSync.
+
 ## Limitations
 
-### Value restrictions not enforced
+### Time attribute requirements
+
+The required/forbidden time attributes defined in Appendix A,
+"[Time Attribute Requirements](http://www.openarchives.org/rs/1.0/resourcesync#TimeAttributeReqs)",
+of the ResourceSync specification are not enforced; it's possible to
+create, e.g., a `ResourceList` with a `from_time` on its metadata, or a `ChangeList` with members whose metadata does not declare a `modified_time`, even though both scenarios are forbidden by the specification.
+
+### Other value restrictions
 
 The [ResourceSync schema](http://www.openarchives.org/rs/0.9.1/resourcesync.xsd) defines restrictions on the values of several attributes:
 
@@ -19,7 +30,7 @@ The [Sitemap](http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd) and [Site
 
 None of these restrictions are currently enforced by `resync`, although they wouldn't be too hard to implement.
 
-### Element order not preserved
+### Element order
 
 When reading a ResourceSync document from XML and writing it back out, `<rs:ln>` elements will always appear before `<rs:md>` elements, regardless of their order in the original source.
 
