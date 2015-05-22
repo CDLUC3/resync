@@ -1,8 +1,13 @@
-require_relative 'acceptance_helper'
+require 'rspec/core'
+require 'resync'
 
-# TODO: Split 'client' and library functionality
-
+# List of TODO items in spec form
 describe Resync do
+
+  describe 'this spec' do
+    it 'separates library and client functionality'
+  end
+
   describe 'discovery' do
     it 'retrieves a Source Description from a URI'
     it 'gets the "describedby" link URI for the Source Description, if present'

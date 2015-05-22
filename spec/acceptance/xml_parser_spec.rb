@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require 'spec_helper'
 
 module Resync
 
