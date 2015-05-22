@@ -52,6 +52,13 @@ module Resync
     end
 
     # ------------------------------------------------------------
+    # Custom getters
+
+    def capability
+      @metadata.capability
+    end
+
+    # ------------------------------------------------------------
     # Overrides
 
     # Overrides +::XML::Mapping.pre_save+ to declare the Sitemap and ResourceSync namespaces.

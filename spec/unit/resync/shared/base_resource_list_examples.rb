@@ -54,6 +54,14 @@ module Resync
           expect { new_instance(metadata: Metadata.new(capability: "not_#{described_class::CAPABILITY}")) }.to raise_error(ArgumentError)
         end
       end
+
+      describe 'capability' do
+        it 'extracts the capability' do
+          metadata = Metadata.new(capability: described_class::CAPABILITY)
+          list = new_instance(metadata: metadata)
+          expect(list.capability).to eq(described_class::CAPABILITY)
+        end
+      end
     end
   end
 end
