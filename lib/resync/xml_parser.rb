@@ -3,25 +3,24 @@ module Resync
   # Parses ResourceSync XML documents and returns appropriate objects.
   module XMLParser
 
-    # The list of parseable +<urlset>+ types.
-    URLSET_TYPES = [
-      CapabilityList,
-      ChangeDump,
-      ChangeDumpManifest,
-      ChangeList,
-      ResourceDump,
-      ResourceDumpManifest,
-      ResourceList,
-      SourceDescription
-    ]
-    private_constant :URLSET_TYPES
-
-    # The list of parseable +<sitemapindex>+ types.
-    SITEMAPINDEX_TYPES = [
-      ChangeListIndex,
-      ResourceListIndex
-    ]
-    private_constant :SITEMAPINDEX_TYPES
+    # The list of parseable types, organized by XML mapping.
+    ROOT_TYPES = {
+      _default: [
+        CapabilityList,
+        ChangeDump,
+        ChangeDumpManifest,
+        ChangeList,
+        ResourceDump,
+        ResourceDumpManifest,
+        ResourceList,
+        SourceDescription
+      ],
+      sitemapindex: [
+        ChangeListIndex,
+        ResourceListIndex
+      ]
+    }
+    private_constant :ROOT_TYPES
 
     CAPABILITY_ATTRIBUTE = "/*/[namespace-uri() = 'http://www.openarchives.org/rs/terms/' and local-name() = 'md']/@capability"
     private_constant :CAPABILITY_ATTRIBUTE
@@ -33,19 +32,19 @@ module Resync
     #   (or its root element)
     def self.parse(xml:)
       root_element = XML.element(xml)
-      mapping, types = root_element.name == 'sitemapindex' ? [:sitemapindex, SITEMAPINDEX_TYPES] : [:_default, URLSET_TYPES]
-      root_type = root_type_for(types, root_element)
+      mapping = root_element.name == 'sitemapindex' ? :sitemapindex : :_default
+      root_type = find_root_type(ROOT_TYPES[mapping], root_element)
       root_type.load_from_xml(root_element, mapping: mapping)
     end
 
-    def self.root_type_for(types, root_element)
+    def self.find_root_type(types, root_element)
       capability = capability_for(root_element)
       root_type = types.find { |t| t::CAPABILITY == capability }
       fail ArgumentError, "no mapped type for capability '#{capability}'" unless root_type
       root_type
     end
 
-    private_class_method :root_type_for
+    private_class_method :find_root_type
 
     def self.capability_for(root_element)
       capability = capability_attribute_for(root_element).value
