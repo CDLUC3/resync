@@ -192,6 +192,7 @@ module Resync
     it 'parses example 8' do
       data = File.read('spec/data/examples/example-8.xml')
       sitemapindex = XMLParser.parse(xml: data)
+      expect(sitemapindex).to be_a(ResourceListIndex)
 
       md = sitemapindex.metadata
       expect(md.capability).to eq('resourcelist')
@@ -307,7 +308,7 @@ module Resync
     it 'parses example 15' do
       data = File.read('spec/data/examples/example-15.xml')
       sitemapindex = XMLParser.parse(xml: data)
-      # expect(sitemapindex).to be_a(ResourceListIndex)
+      expect(sitemapindex).to be_a(ResourceListIndex)
 
       links = sitemapindex.links
       expect(links.size).to eq(1)
@@ -480,6 +481,7 @@ module Resync
     it 'parses example 20' do
       data = File.read('spec/data/examples/example-20.xml')
       sitemapindex = XMLParser.parse(xml: data)
+      expect(sitemapindex).to be_a(ChangeListIndex)
 
       links = sitemapindex.links
       expect(links.size).to eq(1)

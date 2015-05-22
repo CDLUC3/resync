@@ -19,10 +19,6 @@ module Resync
     root_element_name 'urlset'
     array_node :resources, 'url', class: Resource, default_value: []
 
-    use_mapping :sitemapindex
-    root_element_name 'sitemapindex'
-    array_node :resources, 'sitemap', class: Resource, default_value: [], sub_mapping: :_default
-
     # ------------------------------------------------------------
     # Initializer
 

@@ -3,8 +3,8 @@ module Resync
   # Parses ResourceSync XML documents and returns appropriate objects.
   module XMLParser
 
-    # The list of parseable types.
-    ROOT_TYPES = [
+    # The list of parseable +<urlset>+ types.
+    URLSET_TYPES = [
       CapabilityList,
       ChangeDump,
       ChangeDumpManifest,
@@ -14,7 +14,14 @@ module Resync
       ResourceList,
       SourceDescription
     ]
-    private_constant :ROOT_TYPES
+    private_constant :URLSET_TYPES
+
+    # The list of parseable +<sitemapindex>+ types.
+    SITEMAPINDEX_TYPES = [
+      ChangeListIndex,
+      ResourceListIndex
+    ]
+    private_constant :SITEMAPINDEX_TYPES
 
     CAPABILITY_ATTRIBUTE = "/*/[namespace-uri() = 'http://www.openarchives.org/rs/terms/' and local-name() = 'md']/@capability"
     private_constant :CAPABILITY_ATTRIBUTE
@@ -26,14 +33,14 @@ module Resync
     #   (or its root element)
     def self.parse(xml:)
       root_element = XML.element(xml)
-      root_type = root_type_for(root_element)
-      mapping = root_element.name == 'sitemapindex' ? :sitemapindex : :_default
+      mapping, types = root_element.name == 'sitemapindex' ? [:sitemapindex, SITEMAPINDEX_TYPES] : [:_default, URLSET_TYPES]
+      root_type = root_type_for(types, root_element)
       root_type.load_from_xml(root_element, mapping: mapping)
     end
 
-    def self.root_type_for(root_element)
+    def self.root_type_for(types, root_element)
       capability = capability_for(root_element)
-      root_type = ROOT_TYPES.find { |t| t::CAPABILITY == capability }
+      root_type = types.find { |t| t::CAPABILITY == capability }
       fail ArgumentError, "no mapped type for capability '#{capability}'" unless root_type
       root_type
     end
