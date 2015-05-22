@@ -20,35 +20,38 @@ module Resync
 
     # Extracts a +REXML::Element+ from the specified object.
     #
-    # @param xml [String, REXML::Document, REXML::Element] A string containing
-    #   an XML document (with or without XML declaration), or an XML document,
-    #   or an XML element.
-    # @return [REXML::Element] The root element of the document, or the element
+    # @param xml [String, IO, REXML::Document, REXML::Element] A string or IO-like
+    #   object containing an XML document (with or without XML declaration), or an
+    #   XML document, or an XML element.
+    # @return [REXML::Element] the root element of the document, or the element
     #   itself if +xml+ is already an element.
     def self.element(xml)
       case xml
-      when String
-        REXML::Document.new(xml).root
       when REXML::Document
         xml.root
       when REXML::Element
         xml
       else
-        if io_like?(xml)
-          REXML::Document.new(xml).root
-        else
-          fail ArgumentError, "Unexpected argument type; expected XML document, was #{xml.class}"
-        end
+        fail ArgumentError, "Unexpected argument type; expected XML document, String, or IO source, was #{xml.class}" unless can_parse(xml)
+        REXML::Document.new(xml).root
       end
     end
 
-    def self.io_like?(arg)
-      arg.respond_to? :read and
-          arg.respond_to? :readline and
-          arg.respond_to? :nil? and
-          arg.respond_to? :eof?
+    # ------------------------------------------------------------
+    # Private class methods
+
+    # Whether the argument can be parsed as an +REXML::Document+
+    #
+    # @return [Boolean] true if +REXML::Document.new()+ should be able to parse
+    #   the argument, false otherwise
+    def self.can_parse(arg)
+      arg.is_a?(String) ||
+        (arg.respond_to?(:read) &&
+            arg.respond_to?(:readline) &&
+            arg.respond_to?(:nil?) &&
+            arg.respond_to?(:eof?))
     end
-    private_class_method :io_like?
+    private_class_method :can_parse
 
     # ------------------------------------------------------------
     # Time
