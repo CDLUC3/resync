@@ -14,6 +14,7 @@ namespace :spec do
 
   desc 'Run all acceptance tests'
   RSpec::Core::RakeTask.new(:acceptance) do |task|
+    ENV['COVERAGE'] = nil
     task.rspec_opts = %w(--color --format documentation --order default)
     task.pattern = 'acceptance/**/*_spec.rb'
   end
@@ -47,7 +48,6 @@ RSpec::Core::RakeTask.new(:todo) do |task|
   task.rspec_opts = %w(--color --format documentation --order default)
   task.pattern = 'todo.rb'
 end
-
 
 # ------------------------------------------------------------
 # Defaults
