@@ -13,6 +13,21 @@ module Resync
     # modification times will be sorted to the end.
     def resources=(value)
       @resources = sorted(value)
+      @resources_by_uri = by_uri(@resources)
+    end
+
+    # ------------------------------------------------------------
+    # Custom accessors
+
+    attr_reader :resources_by_uri
+
+    def latest_for(uri:)
+      uri = XML.to_uri(uri)
+      @resources_by_uri[uri].last
+    end
+
+    def all_uris
+      @resources_by_uri.keys
     end
 
     # ------------------------------------------------------------
@@ -23,9 +38,9 @@ module Resync
     # ------------------------------
     # Conversions
 
-    def sorted(resources)
-      return [] unless resources
-      resources.sort do |left, right|
+    def sorted(value)
+      return [] unless value
+      value.sort do |left, right|
         if left.modified_time && right.modified_time
           left.modified_time <=> right.modified_time
         else
@@ -34,5 +49,12 @@ module Resync
       end
     end
 
+    def by_uri(resources)
+      by_uri = {}
+      resources.each do |r|
+        (by_uri[r.uri] ||= []) << r
+      end
+      by_uri
+    end
   end
 end
