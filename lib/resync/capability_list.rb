@@ -11,8 +11,6 @@ module Resync
     # The capability provided by this type.
     CAPABILITY = 'capabilitylist'
 
-    attr_reader :source_description
-
     # ------------------------------------------------------------
     # Initializer
 
