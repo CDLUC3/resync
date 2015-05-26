@@ -106,17 +106,22 @@ module Resync
           md = list.metadata
           expect(md.capability).to eq('capabilitylist')
 
-          urls = list.resources
-          expect(urls.size).to eq(4)
+          resources = list.resources
+          expect(resources.size).to eq(4)
 
           expected_capabilities = %w(resourcelist resourcedump changelist changedump)
           (0..3).each do |i|
-            url = urls[i]
+            resource = resources[i]
             capability = expected_capabilities[i]
-            expect(url.uri).to eq(URI("http://example.com/dataset1/#{capability}.xml"))
-            md = url.metadata
+            expect(resource.uri).to eq(URI("http://example.com/dataset1/#{capability}.xml"))
+            md = resource.metadata
             expect(md.capability).to eq(capability)
+
+            expect(list.resource_for(capability: capability)).to eq(resource)
           end
+
+          source_desc = list.source_description
+          expect(source_desc).to eq(URI('http://example.com/resourcesync_description.xml'))
         end
       end
 

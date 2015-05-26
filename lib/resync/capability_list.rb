@@ -5,12 +5,6 @@ module Resync
   # A capability list. See section 9,
   # "{http://www.openarchives.org/rs/1.0/resourcesync#CapabilityList Advertising Capabilities}",
   # in the ResourceSync specification.
-  #
-  # @!attribute [rw] source_description
-  #   @return [Link] a link to the description of the source whose capabilities are identified
-  #     by this list. See section 8,
-  #     "{http://www.openarchives.org/rs/1.0/resourcesync#SourceDesc Describing the Source}",
-  #     in the ResourceSync specification.
   class CapabilityList < BaseResourceList
     include ::XML::Mapping
 
@@ -34,13 +28,21 @@ module Resync
     # @raise [ArgumentError] if more than one provided resource has the same +capability+ attribute.
     # @raise [ArgumentError] if the specified metadata does not have the correct +capability+ attribute.
     def initialize(resources: [], links: [], metadata: nil)
-      @source_description = source_description_from(links)
-      @capabilities = to_capability_map(resources)
-      super(resources: @capabilities.values, links: links, metadata: metadata)
+      @source_descripton = source_description_from(links)
+      super(resources: resources, links: links, metadata: metadata)
     end
 
     # ------------------------------------------------------------
-    # Public methods
+    # Custom accessors
+
+    # Sets the +resources+ list. +nil+ is treated as an empty list.
+    # @raise [ArgumentError] if a provided resource does not have a +capability+ attribute.
+    # @raise [ArgumentError] if more than one provided resource has the same +capability+ attribute.
+    def resources=(value)
+      resources = value || []
+      @capabilities = to_capability_map(resources)
+      @resources = @capabilities.values
+    end
 
     # Gets the resource for the specified capability.
     #
@@ -51,10 +53,15 @@ module Resync
       @capabilities[capability]
     end
 
-    # ------------------------------------------------------------
-    # Private methods
-
-    private
+    # Gets the URI of the description of the source whose capabilities are identified by this list.
+    #
+    # @return [URI] the URI of the description of the source whose capabilities are identified
+    #   by this list. See section 8,
+    #   "{http://www.openarchives.org/rs/1.0/resourcesync#SourceDesc Describing the Source}",
+    #   in the ResourceSync specification.
+    def source_description
+      @source_description ||= source_description_from(links)
+    end
 
     # ------------------------------
     # Conversions
