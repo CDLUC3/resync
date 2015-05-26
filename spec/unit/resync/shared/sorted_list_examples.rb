@@ -85,6 +85,24 @@ module Resync
         expect(list.latest_for(uri: URI('http://example.org'))).to eq(resource1)
         expect(list.latest_for(uri: 'http://example.com')).to eq(resource4)
       end
+
+      it 'works when loading from XML' do
+        resource0 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1997, 7, 16, 19, 20, 30))
+        resource1 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1998, 7, 16, 19, 20, 30))
+        resource2 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1994, 7, 16, 19, 20, 30))
+        resource3 = Resource.new(uri: 'http://example.com', modified_time: Time.utc(1995, 7, 16, 19, 20, 30))
+        resource4 = Resource.new(uri: 'http://example.com', modified_time: Time.utc(2003, 7, 16, 19, 20, 30))
+        list = new_instance(resources: [resource0, resource1, resource2, resource3, resource4])
+        xml = list.save_to_xml
+        list = described_class.load_from_xml(xml)
+
+        latest_org = list.latest_for(uri: URI('http://example.org'))
+        expect(latest_org.uri).to eq(resource1.uri)
+        expect(latest_org.modified_time).to be_time(resource1.modified_time)
+        latest_com = list.latest_for(uri: 'http://example.com')
+        expect(latest_com.uri).to eq(resource4.uri)
+        expect(latest_com.modified_time).to be_time(resource4.modified_time)
+      end
     end
 
     describe '#all_uris' do
@@ -95,6 +113,19 @@ module Resync
         resource3 = Resource.new(uri: 'http://example.com', modified_time: Time.utc(1995, 7, 16, 19, 20, 30.45))
         resource4 = Resource.new(uri: 'http://example.com', modified_time: Time.utc(2003, 7, 16, 19, 20, 30.45))
         list = new_instance(resources: [resource0, resource1, resource2, resource3, resource4])
+        expect(list.all_uris).to eq([URI('http://example.org'), URI('http://example.com')])
+      end
+
+      it 'works when loading from XML' do
+        resource0 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1997, 7, 16, 19, 20, 30.45))
+        resource1 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1998, 7, 16, 19, 20, 30.45))
+        resource2 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1994, 7, 16, 19, 20, 30.45))
+        resource3 = Resource.new(uri: 'http://example.com', modified_time: Time.utc(1995, 7, 16, 19, 20, 30.45))
+        resource4 = Resource.new(uri: 'http://example.com', modified_time: Time.utc(2003, 7, 16, 19, 20, 30.45))
+        list = new_instance(resources: [resource0, resource1, resource2, resource3, resource4])
+        xml = list.save_to_xml
+        list = described_class.load_from_xml(xml)
+
         expect(list.all_uris).to eq([URI('http://example.org'), URI('http://example.com')])
       end
     end
