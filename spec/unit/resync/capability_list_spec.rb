@@ -77,6 +77,17 @@ module Resync
       end
     end
 
+    describe 'resources_for' do
+      it 'maps resources by capability' do
+        resources = valid_resources
+        capability_list = CapabilityList.new(resources: resources, links: [Link.new(rel: 'up', href: 'http://example.org/')])
+        expect(capability_list.resources_for(capability: 'resourcelist')).to eq([resources[0]])
+        expect(capability_list.resources_for(capability: 'resourcedump')).to eq([resources[1]])
+        expect(capability_list.resources_for(capability: 'changelist')).to eq([resources[2]])
+        expect(capability_list.resources_for(capability: 'changedump')).to eq([resources[3]])
+      end
+    end
+
     describe 'XML conversion' do
       describe '#from_xml' do
         it 'parses an XML string' do

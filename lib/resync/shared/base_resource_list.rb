@@ -58,6 +58,21 @@ module Resync
       @metadata.capability
     end
 
+    # Finds resources with the specified capability.
+    # @param capability [String] the capability.
+    # @return [Array<Resource>] those resources having that capability, or an empty array if none exist.
+    def resources_for(capability:)
+      resources.select { |l| l.capability == capability }
+    end
+
+    # Shortcut to find the first resource with the specified capability (in ResourceSync there often
+    # should be only one resource with a particular capability)
+    # @param capability [String] the capability.
+    # @return [Resource] the first resource having that capability, or nil if none exists.
+    def resource_for(capability:)
+      resources.find { |l| l.capability == capability }
+    end
+
     # ------------------------------------------------------------
     # Overrides
 

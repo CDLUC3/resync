@@ -51,12 +51,26 @@ module Resync
     end
 
     # ------------------------------------------------------------
-    # Custom setters
+    # Custom accessors
 
     # Sets the +links+ list. +nil+ is treated as an empty list.
     def links=(value)
       @links = value || []
     end
 
+    # Finds links with the specified relation.
+    # @param rel [String] the relation.
+    # @return [Array<Link>] those links having that relation, or an empty array if none exist.
+    def links_for(rel:)
+      links.select { |l| l.rel == rel }
+    end
+
+    # Shortcut to find the first link with the specified relation (in ResourceSync there often
+    # should be only one link with a particular relation)
+    # @param rel [String] the relation.
+    # @return [Link] the first link having that relation, or nil if none exists.
+    def link_for(rel:)
+      links.find { |l| l.rel == rel }
+    end
   end
 end

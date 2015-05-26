@@ -6,7 +6,6 @@ module Resync
   # A resource (i.e., +<url>+ or +<sitemap>+). See section 7,
   # {http://www.openarchives.org/rs/1.0/resourcesync#DocumentFormats Sitemap Document Formats},
   # in the ResourceSync specification.
-  #
   class Resource < Augmented
     include ::XML::Mapping
 

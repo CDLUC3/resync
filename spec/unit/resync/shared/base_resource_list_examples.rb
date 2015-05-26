@@ -25,6 +25,7 @@ module Resync
     describe '#new' do
       describe 'resources' do
         it 'accepts a list of resources' do
+          puts defined? valid_resources
           resources = resource_list
           list = new_instance(resources: resources)
           expect(list.resources).to eq(resources)
@@ -54,14 +55,49 @@ module Resync
           expect { new_instance(metadata: Metadata.new(capability: "not_#{described_class::CAPABILITY}")) }.to raise_error(ArgumentError)
         end
       end
+    end
 
-      describe 'capability' do
-        it 'extracts the capability' do
-          metadata = Metadata.new(capability: described_class::CAPABILITY)
-          list = new_instance(metadata: metadata)
-          expect(list.capability).to eq(described_class::CAPABILITY)
+    describe '#resources_for' do
+      it 'can retrieve a list of resources by capability' do
+        unless defined? valid_resources
+          resources = [
+            Resource.new(uri: 'http://example.com/dataset1/resourcedump1.xml', metadata: Metadata.new(capability: 'resourcedump')),
+            Resource.new(uri: 'http://example.com/dataset1/changelist1.xml', metadata: Metadata.new(capability: 'changelist')),
+            Resource.new(uri: 'http://example.com/dataset1/resourcedump2.xml', metadata: Metadata.new(capability: 'resourcedump')),
+            Resource.new(uri: 'http://example.com/dataset1/changelist2.xml', metadata: Metadata.new(capability: 'changelist'))
+          ]
+          list = new_instance(resources: resources)
+          expect(list.resources_for(capability: 'resourcedump')).to eq([resources[0], resources[2]])
+          expect(list.resources_for(capability: 'changelist')).to eq([resources[1], resources[3]])
+          expect(list.resources_for(capability: 'changedump')).to eq([])
         end
       end
     end
+
+    describe '#resource_for' do
+      it 'can retrieve the first resource for a capability' do
+        unless defined? valid_resources
+          resources = [
+            Resource.new(uri: 'http://example.com/dataset1/resourcedump1.xml', metadata: Metadata.new(capability: 'resourcedump')),
+            Resource.new(uri: 'http://example.com/dataset1/changelist1.xml', metadata: Metadata.new(capability: 'changelist')),
+            Resource.new(uri: 'http://example.com/dataset1/resourcedump2.xml', metadata: Metadata.new(capability: 'resourcedump')),
+            Resource.new(uri: 'http://example.com/dataset1/changelist2.xml', metadata: Metadata.new(capability: 'changelist'))
+          ]
+          list = new_instance(resources: resources)
+          expect(list.resource_for(capability: 'resourcedump')).to eq(resources[0])
+          expect(list.resource_for(capability: 'changelist')).to eq(resources[1])
+          expect(list.resource_for(capability: 'changedump')).to eq(nil)
+        end
+      end
+    end
+
+    describe 'capability' do
+      it 'extracts the capability' do
+        metadata = Metadata.new(capability: described_class::CAPABILITY)
+        list = new_instance(metadata: metadata)
+        expect(list.capability).to eq(described_class::CAPABILITY)
+      end
+    end
+
   end
 end
