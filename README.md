@@ -16,22 +16,32 @@ This is a work in progress. We welcome bug reports and feature requests (particu
 
 ### Parsing a ResourceSync document
 
-    require 'resync'
+```ruby
+require 'resync'
 
-    data = File.read('my-capability-list.xml')
-    capability_list = Resync::XMLParser.parse(data)
+data = File.read('my-capability-list.xml')
+capability_list = Resync::XMLParser.parse(data)
+```
 
 ### Writing a ResourceSync document
 
-    require 'resync'
+```ruby
+require 'resync'
 
-    change_list = Resync::ChangeList.new(
-      links: [ Resync::Link.new(rel='up', href='http://example.com/my-dataset/my-capability-list.xml') ],
-      metadata: Resync::Metadata.new(
-        capability = 'changelist',
-        from_time = Time.UTC(2013, 1, 3)
-      )
-    )
+change_list = Resync::ChangeList.new(
+  links: [ Resync::Link.new(rel='up', href='http://example.com/my-dataset/my-capability-list.xml') ],
+  metadata: Resync::Metadata.new(
+    capability = 'changelist',
+    from_time = Time.utc(2013, 1, 3)
+  )
+  resources: [
+    # ... generate list of changes here ...
+  ]
+)
+xml = change_list.save_to_xml
+formatter = REXML::Formatters::Pretty.new
+formatter.write(xml, $stdout)
+```
 
 ## See also
 

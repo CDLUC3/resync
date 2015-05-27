@@ -96,6 +96,5 @@ change_list = Resync::ChangeList.new(
 
 xml = change_list.save_to_xml
 formatter = REXML::Formatters::Pretty.new
-# formatter.compact = true
 formatter.write(xml, $stdout)
 puts
