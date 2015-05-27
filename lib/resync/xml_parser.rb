@@ -30,7 +30,7 @@ module Resync
     #
     # @param xml [String, REXML::Document, REXML::Element] a ResourceSync XML document
     #   (or its root element)
-    def self.parse(xml:)
+    def self.parse(xml)
       root_element = XML.element(xml)
       mapping = root_element.name == 'sitemapindex' ? :sitemapindex : :_default
       root_type = find_root_type(ROOT_TYPES[mapping], root_element)
