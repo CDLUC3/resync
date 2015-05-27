@@ -31,7 +31,13 @@ This is a work in progress. We welcome bug reports and feature requests (particu
         capability = 'changelist',
         from_time = Time.UTC(2013, 1, 3)
       )
+      resources: [
+        # ... generate list of changes here ...
+      ]
     )
+    xml = change_list.save_to_xml
+    formatter = REXML::Formatters::Pretty.new
+    formatter.write(xml, $stdout)
 
 ## See also
 
