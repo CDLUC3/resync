@@ -16,13 +16,16 @@ This is a work in progress. We welcome bug reports and feature requests (particu
 
 ### Parsing a ResourceSync document
 
+```ruby
     require 'resync'
 
     data = File.read('my-capability-list.xml')
     capability_list = Resync::XMLParser.parse(data)
+```
 
 ### Writing a ResourceSync document
 
+```ruby
     require 'resync'
 
     change_list = Resync::ChangeList.new(
@@ -38,6 +41,7 @@ This is a work in progress. We welcome bug reports and feature requests (particu
     xml = change_list.save_to_xml
     formatter = REXML::Formatters::Pretty.new
     formatter.write(xml, $stdout)
+```
 
 ## See also
 
