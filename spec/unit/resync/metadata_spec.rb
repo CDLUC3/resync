@@ -160,7 +160,7 @@ module Resync
 
           data = File.read('spec/data/examples/example-8.xml')
           root = REXML::Document.new(data).root
-          sitemapindex = XMLParser.parse(xml: root)
+          sitemapindex = XMLParser.parse(root)
           expect(sitemapindex).to be_a(ResourceListIndex)
         end
       end
