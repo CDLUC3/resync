@@ -15,7 +15,7 @@ module Resync
           expect(links.size).to eq(1)
           ln0 = links[0]
           expect(ln0.rel).to eq('up')
-          expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
+          expect(ln0.uri).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
           md = list.metadata
           expect(md.capability).to eq('changelist')
@@ -36,7 +36,7 @@ module Resync
           expect(lns0.size).to eq(1)
           ln0 = lns0[0]
           expect(ln0.rel).to(eq('http://www.openarchives.org/rs/terms/patch'))
-          expect(ln0.href).to(eq(URI('http://example.com/res4-json-patch')))
+          expect(ln0.uri).to(eq(URI('http://example.com/res4-json-patch')))
           expect(ln0.modified_time).to(eq(Time.utc(2013, 1, 3, 17)))
           expect(ln0.hashes).to(eq('sha-256' => 'y66dER_t_HWEIKpesdkeb7rtSc-ippjf9823742opld'))
           expect(ln0.length).to(eq(73))
@@ -54,7 +54,7 @@ module Resync
           expect(lns1.size).to eq(1)
           ln1 = lns1[0]
           expect(ln1.rel).to(eq('http://www.openarchives.org/rs/terms/patch'))
-          expect(ln1.href).to(eq(URI('http://example.com/res5-diff')))
+          expect(ln1.uri).to(eq(URI('http://example.com/res5-diff')))
           expect(ln1.modified_time).to(eq(Time.utc(2013, 1, 3, 18)))
           expect(ln1.hashes).to(eq('sha-256' => 'h986gT_t_87HTkjHYE76G558hY-jdfgy76t55sadJUYT'))
           expect(ln1.length).to(eq(4533))

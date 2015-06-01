@@ -6,7 +6,7 @@ module Resync
   describe Link do
 
     def required_arguments
-      { rel: 'describedby', href: 'http://example.org' }
+      { rel: 'describedby', uri: 'http://example.org' }
     end
 
     it_behaves_like Descriptor
@@ -16,32 +16,28 @@ module Resync
       describe 'rel' do
         it 'accepts a relation' do
           rel = 'describedby'
-          link = Link.new(rel: rel, href: 'http://example.org')
+          link = Link.new(rel: rel, uri: 'http://example.org')
           expect(link.rel).to eq(rel)
         end
 
         it 'requires a relation' do
-          expect { Link.new(href: 'http://example.org') }.to raise_error(ArgumentError)
+          expect { Link.new(uri: 'http://example.org') }.to raise_error(ArgumentError)
         end
       end
 
-      describe 'href' do
-        def uri_field
-          :href
-        end
-
+      describe 'uri' do
         it_behaves_like 'a URI field'
       end
 
       describe 'priority' do
         it 'accepts a priority' do
           priority = 1.234
-          link = Link.new(rel: 'describedby', href: 'http://example.org', priority: priority)
+          link = Link.new(rel: 'describedby', uri: 'http://example.org', priority: priority)
           expect(link.priority).to eq(priority)
         end
 
         it 'defaults to nil if no priority specified' do
-          link = Link.new(rel: 'describedby', href: 'http://example.org')
+          link = Link.new(rel: 'describedby', uri: 'http://example.org')
           expect(link.priority).to be_nil
         end
       end
@@ -65,7 +61,7 @@ module Resync
           link = Link.load_from_xml(XML.element(xml))
           expect(link).to be_a(Link)
           expect(link.rel).to eq('bar')
-          expect(link.href).to eq(URI('http://example.org'))
+          expect(link.uri).to eq(URI('http://example.org'))
           expect(link.priority).to eq(3.14159)
           expect(link.modified_time).to be_time(Time.utc(2013, 1, 3, 9))
           expect(link.length).to eq(12_345)

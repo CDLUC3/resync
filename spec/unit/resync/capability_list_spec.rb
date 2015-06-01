@@ -1,5 +1,4 @@
 require_relative 'shared/base_resource_list_examples'
-require_relative 'shared/uri_field_examples'
 
 module Resync
   describe CapabilityList do
@@ -11,7 +10,7 @@ module Resync
 
     def required_arguments
       # TODO: Figure out if 'up' is mandatory for all resource lists, or just CapabilityList
-      { links: [Link.new(rel: 'up', href: 'http://example.org/')] }
+      { links: [Link.new(rel: 'up', uri: 'http://example.org/')] }
     end
 
     def valid_resources
@@ -33,7 +32,7 @@ module Resync
       describe 'links' do
         it 'accepts a list of links' do
           # TODO: Figure out if 'up' is mandatory for all resource lists, or just CapabilityList
-          links = [Link.new(rel: 'up', href: 'http://example.org/'), Link.new(rel: 'duplicates', href: 'http://example.com/')]
+          links = [Link.new(rel: 'up', uri: 'http://example.org/'), Link.new(rel: 'duplicates', uri: 'http://example.com/')]
           list = CapabilityList.new(links: links)
           expect(list.links).to eq(links)
         end
@@ -42,13 +41,13 @@ module Resync
       describe 'source description' do
         it 'extracts the "up" link' do
           expected = 'http://example.org/desc.xml'
-          links = [Link.new(rel: 'up', href: expected), Link.new(rel: 'duplicates', href: 'http://example.com/')]
+          links = [Link.new(rel: 'up', uri: expected), Link.new(rel: 'duplicates', uri: 'http://example.com/')]
           list = CapabilityList.new(links: links)
           expect(list.source_description).to eq(URI(expected))
         end
 
         it 'fails if no source description specified' do
-          links = [Link.new(rel: 'describedby', href: 'http://example.org/'), Link.new(rel: 'duplicates', href: 'http://example.com/')]
+          links = [Link.new(rel: 'describedby', uri: 'http://example.org/'), Link.new(rel: 'duplicates', uri: 'http://example.com/')]
           expect { CapabilityList.new(links: links) }.to raise_error(ArgumentError)
         end
       end
@@ -56,12 +55,12 @@ module Resync
       describe 'resources' do
         it 'fails if a resource does not have a capability' do
           resources = [Resource.new(uri: 'http://example.com/dataset1/resourcelist.xml')]
-          expect { CapabilityList.new(resources: resources, links: [Link.new(rel: 'up', href: 'http://example.org/')]) }.to raise_error(ArgumentError)
+          expect { CapabilityList.new(resources: resources, links: [Link.new(rel: 'up', uri: 'http://example.org/')]) }.to raise_error(ArgumentError)
         end
 
         it 'fails if more than one resource is defined for the same capability' do
           resources = [1, 2].map { |n| Resource.new(uri: "http://example.com/list-#{n}.xml", metadata: Metadata.new(capability: 'resourcelist')) }
-          expect { CapabilityList.new(resources: resources, links: [Link.new(rel: 'up', href: 'http://example.org/')]) }.to raise_error(ArgumentError)
+          expect { CapabilityList.new(resources: resources, links: [Link.new(rel: 'up', uri: 'http://example.org/')]) }.to raise_error(ArgumentError)
         end
       end
     end
@@ -69,7 +68,7 @@ module Resync
     describe 'resource_for' do
       it 'maps resources by capability' do
         resources = valid_resources
-        capability_list = CapabilityList.new(resources: resources, links: [Link.new(rel: 'up', href: 'http://example.org/')])
+        capability_list = CapabilityList.new(resources: resources, links: [Link.new(rel: 'up', uri: 'http://example.org/')])
         expect(capability_list.resource_for(capability: 'resourcelist')).to eq(resources[0])
         expect(capability_list.resource_for(capability: 'resourcedump')).to eq(resources[1])
         expect(capability_list.resource_for(capability: 'changelist')).to eq(resources[2])
@@ -80,7 +79,7 @@ module Resync
     describe 'resources_for' do
       it 'maps resources by capability' do
         resources = valid_resources
-        capability_list = CapabilityList.new(resources: resources, links: [Link.new(rel: 'up', href: 'http://example.org/')])
+        capability_list = CapabilityList.new(resources: resources, links: [Link.new(rel: 'up', uri: 'http://example.org/')])
         expect(capability_list.resources_for(capability: 'resourcelist')).to eq([resources[0]])
         expect(capability_list.resources_for(capability: 'resourcedump')).to eq([resources[1]])
         expect(capability_list.resources_for(capability: 'changelist')).to eq([resources[2]])
@@ -98,10 +97,10 @@ module Resync
           expect(links.size).to eq(2)
           ln0 = links[0]
           expect(ln0.rel).to eq('describedby')
-          expect(ln0.href).to eq(URI('http://example.com/info_about_set1_of_resources.xml'))
+          expect(ln0.uri).to eq(URI('http://example.com/info_about_set1_of_resources.xml'))
           ln1 = links[1]
           expect(ln1.rel).to eq('up')
-          expect(ln1.href).to eq(URI('http://example.com/resourcesync_description.xml'))
+          expect(ln1.uri).to eq(URI('http://example.com/resourcesync_description.xml'))
 
           md = list.metadata
           expect(md.capability).to eq('capabilitylist')

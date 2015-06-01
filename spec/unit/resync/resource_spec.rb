@@ -7,9 +7,6 @@ module Resync
     describe '#new' do
 
       describe 'uri' do
-        def uri_field
-          :uri
-        end
         it_behaves_like 'a URI field'
       end
 
@@ -128,7 +125,7 @@ module Resync
             ln = links[i]
             expect(ln.rel).to eq('duplicate')
             expect(ln.priority).to eq(i + 1)
-            expect(ln.href).to eq(expected_uris[i])
+            expect(ln.uri).to eq(expected_uris[i])
             expect(ln.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
           end
         end

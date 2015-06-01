@@ -12,7 +12,7 @@ module Resync
   #   @return [String] the relationship of the linked resource to the original
   #     resource. See {http://tools.ietf.org/html/rfc5988 RFC 5988}, "Web Linking".
   #     for information on link relation types.
-  # @!attribute [rw] href
+  # @!attribute [rw] uri
   #   @return [URI] the URI of the linked resource.
   # @!attribute [rw] priority
   #   @return [Integer] the priority of the linked resource among links with the
@@ -27,7 +27,7 @@ module Resync
     root_element_name 'ln'
 
     text_node :rel, '@rel', default_value: nil
-    uri_node :href, '@href', default_value: nil
+    uri_node :uri, '@href', default_value: nil
     numeric_node :priority, '@pri', default_value: nil
 
     # ------------------------------------------------------------
@@ -36,7 +36,7 @@ module Resync
     # @param rel [String] the relationship of the linked resource to the
     #   original resource. See {http://tools.ietf.org/html/rfc5988 RFC 5988},
     #   "Web Linking". for information on link relation types.
-    # @param href [URI] the URI of the linked resource.
+    # @param uri [URI] the URI of the linked resource.
     # @param priority [Integer] the priority of the linked resource among links
     #   with the same relation type. Values should be in the range
     #   1-999,999 (inclusive). Lower values indicate higher priorities.
@@ -50,10 +50,10 @@ module Resync
     #   to hex-encoded digest values.
     # @param path [String] For +ResourceDumpManifests+ and +ChangeDumpManifests+,
     #   the path to the referenced resource within the dump ZIP file.
-    # @raise [URI::InvalidURIError] if +href+ cannot be converted to a URI.
+    # @raise [URI::InvalidURIError] if +uri+ cannot be converted to a URI.
     def initialize( # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
         rel:,
-        href:,
+        uri:,
 
         priority: nil,
 
@@ -69,7 +69,7 @@ module Resync
       super(modified_time: modified_time, length: length, mime_type: mime_type, encoding: encoding, hashes: hashes, path: path)
 
       self.rel = rel
-      self.href = href
+      self.uri = uri
       self.priority = priority
     end
 
@@ -79,8 +79,8 @@ module Resync
     # Sets the URI of the linked resource. Strings will be converted to +URI+ objects.
     # @param value [URI, String] the URI.
     # @raise [URI::InvalidURIError] if +value+ cannot be converted to a URI.
-    def href=(value)
-      @href = XML.to_uri(value)
+    def uri=(value)
+      @uri = XML.to_uri(value)
     end
 
   end

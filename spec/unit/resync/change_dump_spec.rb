@@ -13,7 +13,7 @@ module Resync
           expect(links.size).to eq(1)
           ln0 = links[0]
           expect(ln0.rel).to eq('up')
-          expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
+          expect(ln0.uri).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
 
           md = urlset.metadata
           expect(md.capability).to eq('changedump')
@@ -42,7 +42,7 @@ module Resync
             expect(links.size).to eq(1)
             ln = links[0]
             expect(ln.rel).to eq('contents')
-            expect(ln.href).to eq(URI("http://example.com/2013010#{i + 1}-changedump-manifest.xml"))
+            expect(ln.uri).to eq(URI("http://example.com/2013010#{i + 1}-changedump-manifest.xml"))
             expect(ln.mime_type).to be_mime_type('application/xml')
           end
         end

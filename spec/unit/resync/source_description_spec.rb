@@ -20,7 +20,7 @@ module Resync
           expect(links.size).to eq(1)
           link = links[0]
           expect(link.rel).to eq('describedby')
-          expect(link.href).to eq(URI('http://example.com/info_about_source.xml'))
+          expect(link.uri).to eq(URI('http://example.com/info_about_source.xml'))
 
           md = list.metadata
           expect(md.capability).to eq('description')
@@ -37,7 +37,7 @@ module Resync
             expect(links.size).to eq(1)
             link = links[0]
             expect(link.rel).to eq('describedby')
-            expect(link.href).to eq(URI("http://example.com/info_about_set#{i + 1}_of_resources.xml"))
+            expect(link.uri).to eq(URI("http://example.com/info_about_set#{i + 1}_of_resources.xml"))
           end
         end
       end
