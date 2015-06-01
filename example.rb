@@ -39,7 +39,7 @@ capabilitylist_xml = '<?xml version="1.0" encoding="UTF-8"?>
 capability_list = Resync::XMLParser.parse(capabilitylist_xml)
 puts '  Links:'
 capability_list.links.each do |l|
-  puts "    #{l.rel}: #{l.href}"
+  puts "    #{l.rel}: #{l.uri}"
 end
 puts '  Resources:'
 capability_list.resources.each do |r|
