@@ -12,7 +12,7 @@ module Resync
 
     describe 'links' do
       it 'accepts a list of links' do
-        links = [Link.new(rel: 'describedby', href: 'http://example.org/'), Link.new(rel: 'duplicate', href: 'http://example.com/')]
+        links = [Link.new(rel: 'describedby', uri: 'http://example.org/'), Link.new(rel: 'duplicate', uri: 'http://example.com/')]
         list = new_instance(links: links)
         expect(list.links).to eq(links)
       end
@@ -27,10 +27,10 @@ module Resync
     describe '#links_for' do
       it 'can retrieve a list of links by rel' do
         links = [
-          Link.new(rel: 'describedby', href: 'http://example.org/desc1'),
-          Link.new(rel: 'duplicate', href: 'http://example.com/dup1'),
-          Link.new(rel: 'describedby', href: 'http://example.org/desc2'),
-          Link.new(rel: 'duplicate', href: 'http://example.com/dup2')
+          Link.new(rel: 'describedby', uri: 'http://example.org/desc1'),
+          Link.new(rel: 'duplicate', uri: 'http://example.com/dup1'),
+          Link.new(rel: 'describedby', uri: 'http://example.org/desc2'),
+          Link.new(rel: 'duplicate', uri: 'http://example.com/dup2')
         ]
         list = new_instance(links: links)
         expect(list.links_for(rel: 'describedby')).to eq([links[0], links[2]])
@@ -42,10 +42,10 @@ module Resync
     describe '#link_for' do
       it 'can retrieve the first link for a rel' do
         links = [
-          Link.new(rel: 'describedby', href: 'http://example.org/desc1'),
-          Link.new(rel: 'duplicate', href: 'http://example.com/dup1'),
-          Link.new(rel: 'describedby', href: 'http://example.org/desc2'),
-          Link.new(rel: 'duplicate', href: 'http://example.com/dup2')
+          Link.new(rel: 'describedby', uri: 'http://example.org/desc1'),
+          Link.new(rel: 'duplicate', uri: 'http://example.com/dup1'),
+          Link.new(rel: 'describedby', uri: 'http://example.org/desc2'),
+          Link.new(rel: 'duplicate', uri: 'http://example.com/dup2')
         ]
         list = new_instance(links: links)
         expect(list.link_for(rel: 'describedby')).to eq(links[0])

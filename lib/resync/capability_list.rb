@@ -77,7 +77,7 @@ module Resync
 
     def source_description_from(links)
       return nil unless links
-      desc = links.map { |link| link.href if link.rel == 'up' }.compact.first
+      desc = links.map { |link| link.uri if link.rel == 'up' }.compact.first
       fail ArgumentError, "No source descrption (<link rel='up'/>) provided" unless desc
       desc
     end

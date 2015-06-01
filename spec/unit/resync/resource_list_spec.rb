@@ -17,10 +17,10 @@ module Resync
           expect(links.size).to eq(2)
           ln0 = links[0]
           expect(ln0.rel).to eq('up')
-          expect(ln0.href).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
+          expect(ln0.uri).to eq(URI('http://example.com/dataset1/capabilitylist.xml'))
           ln1 = links[1]
           expect(ln1.rel).to eq('index')
-          expect(ln1.href).to eq(URI('http://example.com/dataset1/resourcelist-index.xml'))
+          expect(ln1.uri).to eq(URI('http://example.com/dataset1/resourcelist-index.xml'))
 
           md = list.metadata
           expect(md.capability).to eq('resourcelist')

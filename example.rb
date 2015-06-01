@@ -56,7 +56,7 @@ change_list = Resync::ChangeList.new(
   links: [
     Resync::Link.new(
       rel: 'up',
-      href: 'http://example.com/dataset1/capabilitylist.xml'
+      uri: 'http://example.com/dataset1/capabilitylist.xml'
     )
   ],
   metadata: Resync::Metadata.new(
@@ -76,7 +76,7 @@ change_list = Resync::ChangeList.new(
       links: [
         Resync::Link.new(
           rel: 'http://www.openarchives.org/rs/terms/patch',
-          href: 'http://example.com/res4-json-patch',
+          uri: 'http://example.com/res4-json-patch',
           modified_time: Time.utc(2013, 1, 3, 17),
           hashes: { 'sha-256' => 'f4OxZX_x_DFGFDgghgdfb6rtSx-iosjf6735432nklj' },
           length: 73,
