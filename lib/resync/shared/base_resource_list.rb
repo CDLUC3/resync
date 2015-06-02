@@ -54,6 +54,7 @@ module Resync
     # ------------------------------------------------------------
     # Custom getters
 
+    # @return [String] the capability provided by this document
     def capability
       @metadata.capability
     end

@@ -19,13 +19,20 @@ module Resync
     # ------------------------------------------------------------
     # Custom accessors
 
+    # @return [Hash<URI, Array<Resource>>] resources grouped by URI.
+    #   Order is not guaranteed.
     attr_reader :resources_by_uri
 
+    # @param uri [URI] the URI of the resource
+    # @return [Resource] the resource with the most recent modified time
+    #   for the specified URI.
     def latest_for(uri:)
       uri = XML.to_uri(uri)
       @resources_by_uri[uri].last
     end
 
+    # @return [Array<URI>] the set of all URIs for which this list has
+    #   resources. Order is not guaranteed.
     def all_uris
       @resources_by_uri.keys
     end

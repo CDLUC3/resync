@@ -64,6 +64,8 @@ module Resync
     # ------------------------------
     # Conversions
 
+    private
+
     def to_capability_map(resources)
       capabilities = {}
       (resources || []).each do |resource|
