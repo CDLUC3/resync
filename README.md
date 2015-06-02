@@ -25,10 +25,10 @@ capability_list = Resync::XMLParser.parse(data)
 require 'resync'
 
 change_list = Resync::ChangeList.new(
-  links: [ Resync::Link.new(rel='up', href='http://example.com/my-dataset/my-capability-list.xml') ],
+  links: [ Resync::Link.new(rel: 'up', href: 'http://example.com/my-dataset/my-capability-list.xml') ],
   metadata: Resync::Metadata.new(
-    capability = 'changelist',
-    from_time = Time.utc(2013, 1, 3)
+    capability: 'changelist',
+    from_time: Time.utc(2013, 1, 3)
   )
   resources: [
     # ... generate list of changes here ...
