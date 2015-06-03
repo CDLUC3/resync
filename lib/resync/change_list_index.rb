@@ -11,16 +11,5 @@ module Resync
 
     # The capability provided by this type.
     CAPABILITY = 'changelist'
-
-    # use_mapping :sitemapindex
-    # root_element_name 'sitemapindex'
-    # array_node :resources, 'sitemap', class: Resource, default_value: [], sub_mapping: :_default
-    #
-    # # Ensures that an index is always written as a +<sitemapindex>+.
-    # # Overrides +::XML::Mapping.save_to_xml+.
-    # def save_to_xml(options = { mapping: :_default })
-    #   options = options.merge(mapping: :sitemapindex)
-    #   super(options)
-    # end
   end
 end
