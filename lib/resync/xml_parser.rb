@@ -18,7 +18,8 @@ module Resync
       sitemapindex: [
         ChangeListIndex,
         ResourceListIndex,
-        ChangeDumpIndex
+        ChangeDumpIndex,
+        ResourceDumpIndex
       ]
     }
     private_constant :ROOT_TYPES
