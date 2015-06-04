@@ -12,7 +12,7 @@ module Resync
     # time. (+nil+ is treated as an empty list.) Resources without
     # modification times will be sorted to the end.
     def resources=(value)
-      @resources = sorted(value)
+      super(sorted(value))
       @resources_by_uri = by_uri(@resources)
     end
 
