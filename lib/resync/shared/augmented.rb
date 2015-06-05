@@ -72,5 +72,22 @@ module Resync
     def link_for(rel:)
       links.find { |l| l.rel == rel }
     end
+
+    def at_time
+      metadata.at_time
+    end
+
+    def from_time
+      metadata.from_time
+    end
+
+    def until_time
+      metadata.until_time
+    end
+
+    def completed_time
+      metadata.completed_time
+    end
+
   end
 end
