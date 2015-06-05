@@ -13,7 +13,7 @@ module Resync
     # modification times will be sorted to the end.
     def resources=(value)
       super(sorted(value))
-      @resources_by_uri = by_uri(@resources)
+      @resources_by_uri = by_uri(resources)
     end
 
     # ------------------------------------------------------------

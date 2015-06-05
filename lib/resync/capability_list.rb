@@ -26,8 +26,8 @@ module Resync
     # @raise [ArgumentError] if more than one provided resource has the same +capability+ attribute.
     # @raise [ArgumentError] if the specified metadata does not have the correct +capability+ attribute.
     def initialize(resources: [], links: [], metadata: nil)
-      @source_descripton = source_description_from(links)
       super(resources: resources, links: links, metadata: metadata)
+      @source_description = source_description_from(self.links)
     end
 
     # ------------------------------------------------------------
@@ -37,9 +37,8 @@ module Resync
     # @raise [ArgumentError] if a provided resource does not have a +capability+ attribute.
     # @raise [ArgumentError] if more than one provided resource has the same +capability+ attribute.
     def resources=(value)
-      resources = value || []
-      @capabilities = to_capability_map(resources)
-      @resources = @capabilities.values
+      @capabilities = to_capability_map(value || [])
+      super(@capabilities.values)
     end
 
     # Gets the resource for the specified capability.

@@ -1,3 +1,7 @@
+## 0.1.3
+
+- Fix issue making it difficult to extend CapabilityList
+
 ## 0.1.2
 
 - Fix issue making it difficult to extend SortedResourceList
