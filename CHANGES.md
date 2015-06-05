@@ -1,3 +1,7 @@
+## 0.2.0
+
+- Use Enumerator::Lazy for resources instead of plain array
+
 ## 0.1.3
 
 - Fix issue making it difficult to extend CapabilityList
