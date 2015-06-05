@@ -25,15 +25,34 @@ module Resync
     describe '#new' do
       describe 'resources' do
         it 'accepts a list of resources' do
-          puts defined? valid_resources
           resources = resource_list
           list = new_instance(resources: resources)
-          expect(list.resources).to eq(resources)
+          expect(list.resources.to_a).to eq(resources)
+        end
+
+        it 'is lazy' do
+          resources = resource_list
+          list = new_instance(resources: resources)
+
+          half = resources.size / 2
+          (0...resources.size).each do |i|
+            if i < half
+              expect(resources[i]).to receive(:priority).and_return(i)
+            else
+              expect(resources[i]).not_to receive(:priority)
+            end
+          end
+
+          count = 0
+          list.resources.take(half).each do |r|
+            expect(r.priority).to eq(count)
+            count += 1
+          end
         end
 
         it 'defaults to an empty list if no resources are specified' do
           list = new_instance
-          expect(list.resources).to eq([])
+          expect(list.resources.to_a).to eq([])
         end
       end
 
@@ -67,9 +86,9 @@ module Resync
             Resource.new(uri: 'http://example.com/dataset1/changelist2.xml', metadata: Metadata.new(capability: 'changelist'))
           ]
           list = new_instance(resources: resources)
-          expect(list.resources_for(capability: 'resourcedump')).to eq([resources[0], resources[2]])
-          expect(list.resources_for(capability: 'changelist')).to eq([resources[1], resources[3]])
-          expect(list.resources_for(capability: 'changedump')).to eq([])
+          expect(list.resources_for(capability: 'resourcedump').to_a).to eq([resources[0], resources[2]])
+          expect(list.resources_for(capability: 'changelist').to_a).to eq([resources[1], resources[3]])
+          expect(list.resources_for(capability: 'changedump').to_a).to eq([])
         end
       end
     end

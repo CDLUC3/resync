@@ -8,8 +8,8 @@ module Resync
   # must define a +CAPABILITY+ constant identifying the capability
   # they represent (e.g. +resourcelist+, +changelist+).
   #
-  # @!attribute [rw] resources
-  #   @return [Array<Resource>] the +<url>+ or +<sitemap>+ elements contained in this list.
+  # @!attribute [r] resources
+  #   @return [Util::IndexableLazy<Resource>] the +<url>+ or +<sitemap>+ elements contained in this list.
   class BaseResourceList < Augmented
     include ::XML::Mapping
 
@@ -40,7 +40,7 @@ module Resync
 
     # Sets the +resources+ list. +nil+ is treated as an empty list.
     def resources=(value)
-      @resources = value || []
+      @resources = Util::IndexableLazy.new(value || [])
     end
 
     # Sets the metadata.
