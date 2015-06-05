@@ -10,6 +10,5 @@ module Resync
 
     # The capability provided by this type.
     CAPABILITY = 'resourcelist'
-
   end
 end
