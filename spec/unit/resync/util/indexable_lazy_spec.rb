@@ -118,6 +118,16 @@ module Resync
           expect(@lazy.take(2).map(&:to_s).to_a).to eq(%w(0 1))
         end
       end
+
+      describe '#select' do
+        it 'is lazy' do
+          expect(@array[0]).not_to receive(:to_s)
+          expect(@array[1]).not_to receive(:to_s)
+          expect(@array[2]).not_to receive(:to_s)
+
+          @lazy.select(&:to_s)
+        end
+      end
     end
   end
 end

@@ -9,7 +9,12 @@ module Resync
 
     # TODO: Find a better way to express this
     def resource_list
-      (defined? valid_resources) ? valid_resources : [Resource.new(uri: 'http://example.org/'), Resource.new(uri: 'http://example.com/')]
+      (defined? valid_resources) ? valid_resources : [
+        Resource.new(uri: 'http://example.com/res1'),
+        Resource.new(uri: 'http://example.com/res2'),
+        Resource.new(uri: 'http://example.com/res3'),
+        Resource.new(uri: 'http://example.com/res4')
+      ]
     end
 
     # TODO: Find a better way to express this
@@ -110,11 +115,54 @@ module Resync
       end
     end
 
-    describe 'capability' do
+    describe '#capability' do
       it 'extracts the capability' do
         metadata = Metadata.new(capability: described_class::CAPABILITY)
         list = new_instance(metadata: metadata)
         expect(list.capability).to eq(described_class::CAPABILITY)
+      end
+    end
+
+    describe '#resources_in' do
+      [:at_time, :completed_time, :from_time, :until_time, :modified_time].each do |reader|
+        it "allows filtering by #{reader}" do
+          before_time = Time.utc(1969, 1, 1)
+          start_time = Time.utc(1970, 1, 1)
+          end_time = Time.utc(1980, 1, 1)
+          after_time = Time.utc(1981, 1, 1)
+          times = [before_time, start_time, end_time, after_time]
+
+          writer = "#{reader}=".to_sym
+          resources = resource_list
+          resources.each_with_index do |r, i|
+            if writer == :modified_time=
+              r.send(writer, times[i])
+            else
+              md = r.metadata || (r.metadata = Metadata.new)
+              md.send(writer, times[i])
+            end
+            expect(r.send(reader)).to be_time(times[i]) # just to be sure
+          end
+
+          list = new_instance(resources: resources, metadata: Metadata.new(capability: described_class::CAPABILITY))
+
+          range_inclusive = start_time..end_time
+
+          filtered = list.resources_in(time_range: range_inclusive, time_attr: reader).to_a
+          expect(filtered.size).to eq(2)
+          expect(filtered).not_to include(resources[0])
+          expect(filtered).to include(resources[1])
+          expect(filtered).to include(resources[2])
+          expect(filtered).not_to include(resources[3])
+
+          range_exclusive = start_time...end_time
+          filtered = list.resources_in(time_range: range_exclusive, time_attr: reader).to_a
+          expect(filtered.size).to eq(1)
+          expect(filtered).not_to include(resources[0])
+          expect(filtered).to include(resources[1])
+          expect(filtered).not_to include(resources[2])
+          expect(filtered).not_to include(resources[3])
+        end
       end
     end
 

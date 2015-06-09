@@ -74,6 +74,13 @@ module Resync
       resources.find { |l| l.capability == capability }
     end
 
+    # @param time_range [Range[Time]] the range of acceptable times (inclusive or exclusive)
+    # @param time_attr [Symbol] the time type to filter on: +:modified_time+, +:at_time+,
+    #   +:completed_time+, +:from_time+ or +:until_time+
+    def resources_in(time_range:, time_attr:)
+      resources.select { |r| time_range.cover?(r.send(time_attr)) }
+    end
+
     # ------------------------------------------------------------
     # Overrides
 
@@ -109,7 +116,7 @@ module Resync
       capability = self.class::CAPABILITY
       fail ArgumentError, "Missing constant #{self.class}::CAPABILITY" unless capability
       return Metadata.new(capability: capability) unless metadata
-      fail ArgumentError, "#{metadata} does not appear to be metadata" unless metadata.respond_to?('capability')
+      fail ArgumentError, ":metadata argument <#{metadata}> does not appear to be metadata" unless metadata.respond_to?(:capability)
       fail ArgumentError, "Wrong capability for #{self.class.name} metadata; expected '#{capability}', was '#{metadata.capability}'" unless metadata.capability == capability
       metadata
     end

@@ -4,10 +4,6 @@ module Resync
   describe ChangeList do
     it_behaves_like SortedResourceList
 
-    it 'allows filtering by time range' do
-      fail 'test not implemented'
-    end
-
     describe 'XML conversion' do
       describe '#from_xml' do
         it 'parses an XML string' do
