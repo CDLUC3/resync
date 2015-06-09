@@ -5,10 +5,7 @@ require_relative 'shared/augmented_examples'
 module Resync
   describe SourceDescription do
     it_behaves_like BaseResourceList
-
-    describe 'links' do
-      it_behaves_like Augmented
-    end
+    it_behaves_like Augmented
 
     describe 'XML conversion' do
       describe '#from_xml' do

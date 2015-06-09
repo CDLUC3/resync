@@ -13,15 +13,14 @@ module Resync
     describe 'links' do
       it 'accepts a list of links' do
         links = [Link.new(rel: 'describedby', uri: 'http://example.org/'), Link.new(rel: 'duplicate', uri: 'http://example.com/')]
-        list = new_instance(links: links)
-        expect(list.links).to eq(links)
+        augmented = new_instance(links: links)
+        expect(augmented.links).to eq(links)
       end
 
-      it 'defaults to an empty list if no links are specified' do
-        list = new_instance
-        expect(list.links).to eq([])
+      it 'defaults to an empty augmented if no links are specified' do
+        augmented = new_instance
+        expect(augmented.links).to eq([])
       end
-
     end
 
     describe '#links_for' do
@@ -32,10 +31,10 @@ module Resync
           Link.new(rel: 'describedby', uri: 'http://example.org/desc2'),
           Link.new(rel: 'duplicate', uri: 'http://example.com/dup2')
         ]
-        list = new_instance(links: links)
-        expect(list.links_for(rel: 'describedby')).to eq([links[0], links[2]])
-        expect(list.links_for(rel: 'duplicate')).to eq([links[1], links[3]])
-        expect(list.links_for(rel: 'elvis')).to eq([])
+        augmented = new_instance(links: links)
+        expect(augmented.links_for(rel: 'describedby')).to eq([links[0], links[2]])
+        expect(augmented.links_for(rel: 'duplicate')).to eq([links[1], links[3]])
+        expect(augmented.links_for(rel: 'elvis')).to eq([])
       end
     end
 
@@ -47,10 +46,26 @@ module Resync
           Link.new(rel: 'describedby', uri: 'http://example.org/desc2'),
           Link.new(rel: 'duplicate', uri: 'http://example.com/dup2')
         ]
-        list = new_instance(links: links)
-        expect(list.link_for(rel: 'describedby')).to eq(links[0])
-        expect(list.link_for(rel: 'duplicate')).to eq(links[1])
-        expect(list.link_for(rel: 'elvis')).to eq(nil)
+        augmented = new_instance(links: links)
+        expect(augmented.link_for(rel: 'describedby')).to eq(links[0])
+        expect(augmented.link_for(rel: 'duplicate')).to eq(links[1])
+        expect(augmented.link_for(rel: 'elvis')).to eq(nil)
+      end
+    end
+
+    describe 'additional time attributes' do
+      it 'extracts the at_time, from_time, until_time, and completed_time from the metadata' do
+        md = Metadata.new(
+            at_time: Time.utc(1972, 5, 18),
+            from_time: Time.utc(1976, 7, 24),
+            until_time: Time.utc(1983, 1, 21),
+            completed_time: Time.utc(1981, 10, 4)
+        )
+        augmented = new_instance(metadata: md)
+        [:at_time, :from_time, :until_time, :completed_time].each do |t|
+          puts augmented.send(t)
+          expect(augmented.send(t)).to be_time(md.send(t))
+        end
       end
     end
 

@@ -4,10 +4,6 @@ module Resync
   describe ChangeDumpIndex do
     it_behaves_like SortedResourceList
 
-    it 'sorts by from/until instead of date modified' do
-      fail 'test not implemented'
-    end
-
     it 'allows filtering by time range' do
       fail 'test not implemented'
     end

@@ -34,6 +34,13 @@ module Resync
           list = new_instance(resources: [resource1, resource2, resource0])
           expect(list.resources.to_a).to eq([resource0, resource1, resource2])
         end
+
+        it 'sorts resources by from_time' do
+          resource0 = Resource.new(uri: 'http://example.org', metadata: Metadata.new(from_time: Time.utc(1997, 7, 16, 19, 20, 30.45)))
+          resource1 = Resource.new(uri: 'http://example.org', metadata: Metadata.new(from_time: Time.utc(1998, 7, 16, 19, 20, 30.45)))
+          list = new_instance(resources: [resource1, resource0])
+          expect(list.resources.to_a).to eq([resource0, resource1])
+        end
       end
     end
 

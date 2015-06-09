@@ -4,6 +4,13 @@ require_relative 'shared/augmented_examples'
 
 module Resync
   describe Resource do
+
+    def required_arguments
+      { uri: 'http://example.org' }
+    end
+
+    it_behaves_like Augmented
+
     describe '#new' do
 
       describe 'uri' do
@@ -21,13 +28,6 @@ module Resync
           resource = Resource.new(uri: 'http://example.org')
           expect(resource.modified_time).to be_nil
         end
-      end
-
-      describe 'links' do
-        def required_arguments
-          { uri: 'http://example.org' }
-        end
-        it_behaves_like Augmented
       end
 
       describe 'metadata' do

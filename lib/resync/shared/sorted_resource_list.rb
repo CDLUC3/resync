@@ -50,8 +50,12 @@ module Resync
       value.sort do |left, right|
         if left.modified_time && right.modified_time
           left.modified_time <=> right.modified_time
+        elsif right.modified_time
+          1
+        elsif left.from_time && right.from_time
+          left.from_time <=> right.from_time
         else
-          right.modified_time ? 1 : -1
+          right.from_time ? 1 : -1
         end
       end
     end

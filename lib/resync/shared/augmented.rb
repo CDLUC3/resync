@@ -74,19 +74,19 @@ module Resync
     end
 
     def at_time
-      metadata.at_time
+      metadata.at_time if metadata
     end
 
     def from_time
-      metadata.from_time
+      metadata.from_time if metadata
     end
 
     def until_time
-      metadata.until_time
+      metadata.until_time if metadata
     end
 
     def completed_time
-      metadata.completed_time
+      metadata.completed_time if metadata
     end
 
   end

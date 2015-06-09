@@ -3,10 +3,7 @@ require_relative 'shared/base_resource_list_examples'
 module Resync
   describe ResourceListIndex do
     it_behaves_like BaseResourceList
-
-    describe 'links' do
-      it_behaves_like Augmented
-    end
+    it_behaves_like Augmented
 
     describe 'XML conversion' do
       describe '#from_xml' do
