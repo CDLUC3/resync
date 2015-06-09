@@ -15,7 +15,9 @@ module Resync
     # @raise [URI::InvalidURIError] if +url+ cannot be converted to a URI.
     def self.to_uri(url)
       return nil unless url
-      (url.is_a? URI) ? url : URI.parse(url)
+      return url if url.is_a? URI
+      stripped = url.respond_to?(:strip) ? url.strip : url.to_s.strip
+      URI.parse(stripped)
     end
 
     # Extracts a +REXML::Element+ from the specified object.
@@ -91,7 +93,8 @@ module Resync
 
       # Implements +::XML::Mapping::SingleAttributeNode#extract_attr_value+.
       def extract_attr_value(xml)
-        URI(default_when_xpath_err { @path.first(xml).text })
+        val = default_when_xpath_err { @path.first(xml).text }
+        URI(val.strip)
       end
 
       # Implements +::XML::Mapping::SingleAttributeNode#set_attr_value+.

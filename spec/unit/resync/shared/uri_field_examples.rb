@@ -23,6 +23,14 @@ module Resync
       expect(instance.uri).to eq(URI(uri))
     end
 
+    it 'accepts a string URI with extra whitespace' do
+      uri_val = '
+                  http://example.org/
+                '
+      instance = new_instance(uri: uri_val)
+      expect(instance.uri).to eq(URI('http://example.org/'))
+    end
+
     it 'rejects an invalid URI' do
       invalid_url = 'I am not a valid URI'
       expect { new_instance(uri: invalid_url) }.to raise_error(URI::InvalidURIError)

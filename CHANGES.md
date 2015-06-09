@@ -1,3 +1,7 @@
+## 0.2.1
+
+- Fixed issue where extra whitespace in `<loc/>` tags could prevent URI parsing.
+
 ## 0.2.0
 
 - `BaseResourceList#resources` now returns an `IndexableLazy` instead of a plain array.

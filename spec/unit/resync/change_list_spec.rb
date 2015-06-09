@@ -69,6 +69,36 @@ module Resync
           xml = list.save_to_xml
           expect(xml).to be_xml(data)
         end
+
+        it 'can round-trip with pretty-printing' do
+          data = "
+            <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9' xmlns:rs='http://www.openarchives.org/rs/terms/'>
+              <rs:ln rel='up' href='http://example.com/dataset1/capabilitylist.xml'/>
+              <rs:md from='2013-01-03T00:00:00Z' capability='changelist'/>
+              <url>
+                <loc>
+                  http://example.com/res4
+                </loc>
+                <lastmod>
+                  2013-01-03T17:00:00Z
+                </lastmod>
+                <rs:ln modified='2013-01-03T17:00:00Z' length='73' type='application/json-patch' hash='sha-256:f4OxZX_x_DFGFDgghgdfb6rtSx-iosjf6735432nklj' rel='http://www.openarchives.org/rs/terms/patch' href='http://example.com/res4-json-patch'/>
+                <rs:md length='56778' type='application/json' hash='sha-256:f4OxZX_x_DFGFDgghgdfb6rtSx-iosjf6735432nklj' change='updated'/>
+              </url>
+              <url>
+                <loc>
+                  http://example.com/res5-full.tiff
+                </loc>
+                <lastmod>
+                  2013-01-03T18:00:00Z
+                </lastmod>
+                <rs:md change='deleted'/>
+              </url>
+            </urlset>"
+          list = ChangeList.load_from_xml(XML.element(data))
+          xml = list.save_to_xml
+          expect(xml).to be_xml(data)
+        end
       end
     end
   end
