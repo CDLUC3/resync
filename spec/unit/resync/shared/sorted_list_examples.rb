@@ -27,6 +27,19 @@ module Resync
           expect(list.resources.to_a).to eq([resource0, resource1])
         end
 
+        it 'is non-destructive when sorting resources with identical times' do
+          resource0 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1997, 7, 16, 19, 20, 30.45))
+          resource1 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1998, 7, 16, 19, 20, 30.45))
+          resource2 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1998, 7, 16, 19, 20, 30.45))
+          resource4 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1998, 1, 16, 19, 20, 30.45))
+          list = new_instance(resources: [resource1, resource4, resource2, resource0])
+          resources = list.resources.to_a
+          expect(resources[0]).to be(resource0)
+          expect(resources[1]).to be(resource4)
+          expect(resources).to include(resource1)
+          expect(resources).to include(resource2)
+        end
+
         it 'sorts resources with modified_time before resources without' do
           resource0 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1997, 7, 16, 19, 20, 30.45))
           resource1 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1998, 7, 16, 19, 20, 30.45))
@@ -40,6 +53,36 @@ module Resync
           resource1 = Resource.new(uri: 'http://example.org', metadata: Metadata.new(from_time: Time.utc(1998, 7, 16, 19, 20, 30.45)))
           list = new_instance(resources: [resource1, resource0])
           expect(list.resources.to_a).to eq([resource0, resource1])
+        end
+
+        it 'sorts resources by at_time' do
+          resource0 = Resource.new(uri: 'http://example.org', metadata: Metadata.new(at_time: Time.utc(1997, 7, 16, 19, 20, 30.45)))
+          resource1 = Resource.new(uri: 'http://example.org', metadata: Metadata.new(at_time: Time.utc(1998, 7, 16, 19, 20, 30.45)))
+          list = new_instance(resources: [resource1, resource0])
+          expect(list.resources.to_a).to eq([resource0, resource1])
+        end
+
+        it 'sorts resources by until_time' do
+          resource0 = Resource.new(uri: 'http://example.org', metadata: Metadata.new(until_time: Time.utc(1997, 7, 16, 19, 20, 30.45)))
+          resource1 = Resource.new(uri: 'http://example.org', metadata: Metadata.new(until_time: Time.utc(1998, 7, 16, 19, 20, 30.45)))
+          list = new_instance(resources: [resource1, resource0])
+          expect(list.resources.to_a).to eq([resource0, resource1])
+        end
+
+        it 'sorts resources by completed_time' do
+          resource0 = Resource.new(uri: 'http://example.org', metadata: Metadata.new(completed_time: Time.utc(1997, 7, 16, 19, 20, 30.45)))
+          resource1 = Resource.new(uri: 'http://example.org', metadata: Metadata.new(completed_time: Time.utc(1998, 7, 16, 19, 20, 30.45)))
+          list = new_instance(resources: [resource1, resource0])
+          expect(list.resources.to_a).to eq([resource0, resource1])
+        end
+
+        it 'preferentially sorts by modified_time' do
+          resource0 = Resource.new(uri: 'http://example.org', metadata: Metadata.new(at_time: Time.utc(1998, 7, 16, 19, 20, 30.45)))
+          resource1 = Resource.new(uri: 'http://example.org', metadata: Metadata.new(at_time: Time.utc(1997, 7, 16, 19, 20, 30.45)))
+          resource2 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(2001, 7, 16, 19, 20, 30.45), metadata: Metadata.new(at_time: Time.utc(2003, 7, 16, 19, 20, 30.45)))
+          resource3 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(2000, 1, 16, 19, 20, 30.45), metadata: Metadata.new(at_time: Time.utc(2005, 7, 16, 19, 20, 30.45)))
+          list = new_instance(resources: [resource0, resource1, resource2, resource3])
+          expect(list.resources.to_a).to eq([resource3, resource2, resource1, resource0])
         end
       end
     end

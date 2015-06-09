@@ -48,16 +48,21 @@ module Resync
     def sorted(value)
       return [] unless value
       value.sort do |left, right|
-        if left.modified_time && right.modified_time
-          left.modified_time <=> right.modified_time
-        elsif right.modified_time
-          1
-        elsif left.from_time && right.from_time
-          left.from_time <=> right.from_time
-        else
-          right.from_time ? 1 : -1
+        compare(left, right)
+      end
+    end
+
+    def compare(left, right)
+      [:modified_time, :from_time, :at_time, :until_time, :completed_time].each do |time_reader|
+        left_time = left.send(time_reader)
+        right_time = right.send(time_reader)
+        if left_time && right_time
+          return left_time <=> right_time
+        elsif right_time || left_time
+          return right_time ? 1 : -1
         end
       end
+      0
     end
 
     def by_uri(resources)
