@@ -58,8 +58,8 @@ module Resync
         right_time = right.send(time_reader)
         if left_time && right_time
           return left_time <=> right_time
-        elsif right_time || left_time
-          return right_time ? 1 : -1
+        elsif left_time || right_time
+          return left_time ? -1 : 1
         end
       end
       0
