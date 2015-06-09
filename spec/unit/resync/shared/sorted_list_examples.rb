@@ -31,11 +31,11 @@ module Resync
           resource0 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1997, 7, 16, 19, 20, 30.45))
           resource1 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1998, 7, 16, 19, 20, 30.45))
           resource2 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1998, 7, 16, 19, 20, 30.45))
-          resource4 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1998, 1, 16, 19, 20, 30.45))
-          list = new_instance(resources: [resource1, resource4, resource2, resource0])
+          resource3 = Resource.new(uri: 'http://example.org', modified_time: Time.utc(1998, 1, 16, 19, 20, 30.45))
+          list = new_instance(resources: [resource1, resource3, resource2, resource0])
           resources = list.resources.to_a
           expect(resources[0]).to be(resource0)
-          expect(resources[1]).to be(resource4)
+          expect(resources[1]).to be(resource3)
           expect(resources).to include(resource1)
           expect(resources).to include(resource2)
         end

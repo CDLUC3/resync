@@ -48,7 +48,7 @@ module Resync
     #   a change list (including change list indices, change dumps, etc.)
     # @param until_time [Time] the end of the time range represented by
     #   a change list (including change list indices, change dumps, etc.)
-    # @param completed_time the datetime at which assembling a resource list
+    # @param completed_time [Time] the datetime at which assembling a resource list
     #   ended (including resource list indices, resource dumps, etc.)
     # @param modified_time [Time] The date and time when the referenced resource was last modified.
     # @param length [Integer] The content length of the referenced resource.

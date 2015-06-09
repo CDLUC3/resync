@@ -73,21 +73,44 @@ module Resync
       links.find { |l| l.rel == rel }
     end
 
+    # Convenience accessor for the +at_time+ metadata attribute
+    # @return [Time] the datetime at which assembling a resource list
+    #   began (including resource list indices, resource dumps, etc.)
+    # @see Metadata#at_time
     def at_time
       metadata.at_time if metadata
     end
 
+    # Convenience accessor for the +from_time+ metadata attribute
+    # @return [Time] the beginning of the time range represented by
+    #   a change list (including change list indices, change dumps, etc.)
+    # @see Metadata#from_time
     def from_time
       metadata.from_time if metadata
     end
 
+    # Convenience accessor for the +until_time+ metadata attribute
+    # @return [Time] the end of the time range represented by
+    #   a change list (including change list indices, change dumps, etc.)
+    # @see Metadata#until_time
     def until_time
       metadata.until_time if metadata
     end
 
+    # Convenience accessor for the +completed_time+ metadata attribute
+    # @return [Time] the datetime at which assembling a resource list
+    #   ended (including resource list indices, resource dumps, etc.)
+    # @see Metadata#completed_time
     def completed_time
       metadata.completed_time if metadata
     end
 
+    # Convenience accessor for the +change+ metadata attribute
+    # @return [Change] the type of change to a resource reported in
+    #   a change list (including change list indices, change dumps, etc.)
+    # @see Metadata#change
+    def change
+      metadata.change if metadata
+    end
   end
 end

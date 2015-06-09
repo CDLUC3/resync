@@ -1,8 +1,8 @@
-require_relative 'shared/sorted_list_examples'
+require_relative 'shared/base_change_list_examples'
 
 module Resync
   describe ChangeList do
-    it_behaves_like SortedResourceList
+    it_behaves_like BaseChangeList
 
     describe 'XML conversion' do
       describe '#from_xml' do
