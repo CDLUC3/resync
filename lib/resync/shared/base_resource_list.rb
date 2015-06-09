@@ -61,9 +61,9 @@ module Resync
 
     # Finds resources with the specified capability.
     # @param capability [String] the capability.
-    # @return [Array<Resource>] those resources having that capability, or an empty array if none exist.
+    # @return [Enumerator::Lazy<Resource>] those resources having that capability, or an empty array if none exist.
     def resources_for(capability:)
-      resources.select { |l| l.capability == capability }
+      resources.select { |r| r.capability == capability }
     end
 
     # Shortcut to find the first resource with the specified capability (in ResourceSync there often
@@ -71,12 +71,16 @@ module Resync
     # @param capability [String] the capability.
     # @return [Resource] the first resource having that capability, or nil if none exists.
     def resource_for(capability:)
-      resources.find { |l| l.capability == capability }
+      resources.find { |r| r.capability == capability }
     end
 
+    # Finds only those resources falling within the specified time range. Any of the time
+    # attributes (+:modified_time+, +:at_time+, +:completed_time+, +:from_time+, +:until_time+)
+    # can be used for filtering.
     # @param time_range [Range[Time]] the range of acceptable times (inclusive or exclusive)
     # @param time_attr [Symbol] the time type to filter on: +:modified_time+, +:at_time+,
     #   +:completed_time+, +:from_time+ or +:until_time+
+    # @return [Enumerator::Lazy<Resource>] a lazy enumeration of the resources within the specified range.
     def resources_in(time_range:, time_attr:)
       resources.select { |r| time_range.cover?(r.send(time_attr)) }
     end
