@@ -1,5 +1,6 @@
 require_relative 'sorted_resource_list'
 
+# TODO: Make this a mixin
 module Resync
   # Adds useful methods to {ChangeList} and {ChangeDumpManifest}.
   class BaseChangeList < SortedResourceList
