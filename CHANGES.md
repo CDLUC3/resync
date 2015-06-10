@@ -1,3 +1,8 @@
+## 0.2.2
+
+- Added `#changes` method to `ChangeList` and `ChangeDumpManifest`, allowing filtering by change type and modified time
+- Added `#change_lists` method to `ChangeListIndex`, `ChangeDumpIndex`, and `ChangeDump`, allowing filtering by from and until times
+
 ## 0.2.1
 
 - Fixed issue where extra whitespace in `<loc/>` tags could prevent URI parsing.

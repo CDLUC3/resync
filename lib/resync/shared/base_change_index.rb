@@ -1,7 +1,7 @@
 require_relative 'sorted_resource_list'
 
 module Resync
-  # Adds useful methods to {ChangeListIndex} and {ChangeDumpIndex}.
+  # Adds useful methods to {ChangeListIndex}, {ChangeDumpIndex}, and {ChangeDump}.
   class BaseChangeIndex < SortedResourceList
     # Filters the list of change lists by from/until time. The filter can be *strict*, in which
     # case only those change lists provably in the range are included, or *non-strict*, in which
