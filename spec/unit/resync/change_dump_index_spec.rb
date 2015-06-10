@@ -1,8 +1,8 @@
-require_relative 'shared/sorted_list_examples'
+require_relative 'shared/base_change_index_examples'
 
 module Resync
   describe ChangeDumpIndex do
-    it_behaves_like SortedResourceList
+    it_behaves_like BaseChangeIndex
 
     describe 'XML conversion' do
       describe '#from_xml' do
