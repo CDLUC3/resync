@@ -15,16 +15,21 @@ module Resync
     # @return [Enumerator::Lazy<Resource>] those change lists whose +from_time+ *or* +until_time+
     #   falls within +in_range+
     def change_lists(in_range:, strict: true)
-      resources.select { |r| resource_in_range(resource: r, range: in_range, strict: strict) }
+      resources.select do |r|
+        strict ? strictly(in_range, r) : loosely(in_range, r)
+      end
     end
 
     private
 
-    def resource_in_range(resource:, range:, strict:)
-      return true unless strict || resource.from_time || resource.until_time
-      from_in_range = resource.from_time ? range.cover?(resource.from_time) : false
-      until_in_range = resource.until_time ? range.cover?(resource.until_time) : false
+    def strictly(in_range, resource)
+      from_in_range = resource.from_time ? in_range.cover?(resource.from_time) : false
+      until_in_range = resource.until_time ? in_range.cover?(resource.until_time) : false
       from_in_range || until_in_range
+    end
+
+    def loosely(in_range, resource)
+      (resource.from_time || resource.until_time) ? strictly(in_range, resource) : true
     end
   end
 end
