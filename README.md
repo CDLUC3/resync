@@ -1,4 +1,5 @@
-# resync
+# resync [![Build Status](https://travis-ci.org/dmolesUC3/resync.png?branch=master)](https://travis-ci.org/dmolesUC3/resync) [![Code Climate](https://codeclimate.com/github/dmolesUC3/resync.png)](https://codeclimate.com/github/dmolesUC3/resync) [![Inline docs](http://inch-ci.org/github/dmolesUC3/resync.png)](http://inch-ci.org/github/dmolesUC3/resync)
+
 
 A Ruby gem for working with the [ResourceSync](http://www.openarchives.org/rs/1.0/resourcesync) web synchronization framework.
 
@@ -90,3 +91,4 @@ When reading a ResourceSync document from XML and writing it back out, `<rs:ln>`
 #### Namespace weirdness
 
 The [XML::Mapping](https://github.com/multi-io/xml-mapping) library `resync` uses doesn't support namespaces, so namespace handling in `resync` is a bit hacky. In particular, you may see strange behavior when using `<rs:ln>`, `<rs:md>`, `<url>`, or `<sitemap>` tags outside the context of a `<urlset>`/`<sitemapindex>`.
+
