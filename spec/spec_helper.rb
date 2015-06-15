@@ -6,7 +6,7 @@ if ENV['COVERAGE']
     require 'codeclimate-test-reporter'
     CodeClimate::TestReporter.start
   end
-  
+
   require 'simplecov'
   require 'simplecov-console'
 
