@@ -1,6 +1,7 @@
 require 'uri'
 require 'time'
 require 'xml/mapping'
+require_relative 'types'
 
 module Resync
   # Helper methods and modules related to reading and writing XML.
@@ -106,10 +107,9 @@ module Resync
     ::XML::Mapping.add_node_class UriNode
 
     # ------------------------------------------------------------
-    # Resync::Types::Change
+    # Resync::Types
 
-    # Maps +Resync::Types::Change+ values.
-    class ChangeNode < ::XML::Mapping::SingleAttributeNode
+    class EnumNode < ::XML::Mapping::SingleAttributeNode
       def initialize(*args)
         path, *args = super(*args)
         @path = ::XML::XXPath.new(path)
@@ -118,7 +118,8 @@ module Resync
 
       # Implements +::XML::Mapping::SingleAttributeNode#extract_attr_value+.
       def extract_attr_value(xml)
-        Resync::Types::Change.parse(default_when_xpath_err { @path.first(xml).text })
+        enumClass = self.class::ENUM_CLASS
+        enumClass.parse(default_when_xpath_err { @path.first(xml).text })
       end
 
       # Implements +::XML::Mapping::SingleAttributeNode#set_attr_value+.
@@ -127,28 +128,22 @@ module Resync
       end
     end
 
+    # ------------------------------------------------------------
+    # Resync::Types::Change
+
+    # Maps +Resync::Types::Change+ values.
+    class ChangeNode < EnumNode
+      ENUM_CLASS = Resync::Types::Change
+    end
+
     ::XML::Mapping.add_node_class ChangeNode
 
     # ------------------------------------------------------------
     # Resync::Types::Changefreq
 
-    # Maps +Resync::Types::Changefreq+ values.
-    class ChangefreqNode < ::XML::Mapping::SingleAttributeNode
-      def initialize(*args)
-        path, *args = super(*args)
-        @path = ::XML::XXPath.new(path)
-        args
-      end
-
-      # Implements +::XML::Mapping::SingleAttributeNode#extract_attr_value+.
-      def extract_attr_value(xml)
-        Resync::Types::ChangeFrequency.parse(default_when_xpath_err { @path.first(xml).text })
-      end
-
-      # Implements +::XML::Mapping::SingleAttributeNode#set_attr_value+.
-      def set_attr_value(xml, value)
-        @path.first(xml, ensure_created: true).text = value.to_s
-      end
+    # Maps +Resync::Types::ChangeFrequency+ values.
+    class ChangefreqNode < EnumNode
+      ENUM_CLASS = Resync::Types::ChangeFrequency
     end
 
     ::XML::Mapping.add_node_class ChangefreqNode
