@@ -118,8 +118,8 @@ module Resync
 
       # Implements +::XML::Mapping::SingleAttributeNode#extract_attr_value+.
       def extract_attr_value(xml)
-        enumClass = self.class::ENUM_CLASS
-        enumClass.parse(default_when_xpath_err { @path.first(xml).text })
+        enum_class = self.class::ENUM_CLASS
+        enum_class.parse(default_when_xpath_err { @path.first(xml).text })
       end
 
       # Implements +::XML::Mapping::SingleAttributeNode#set_attr_value+.
