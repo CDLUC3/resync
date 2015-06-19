@@ -107,6 +107,15 @@ module Resync
           mapped = @lazy.map(&:to_s)
           expect(mapped.take(2).to_a).to eq(%w(0 1))
         end
+
+        it 'supports indexing' do
+          expect(@array[0]).not_to receive(:to_s)
+          expect(@array[1]).to receive(:to_s).and_return('1')
+          expect(@array[2]).not_to receive(:to_s)
+
+          mapped = @lazy.map(&:to_s)
+          expect(mapped[1]).to eq('1')
+        end
       end
 
       describe '#take' do
