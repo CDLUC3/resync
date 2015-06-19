@@ -1,3 +1,7 @@
+## 0.3.0
+
+- Return simple arrays for resources, instead of fancy lazy enumerables
+
 ## 0.2.2
 
 - Added `#changes` method to `ChangeList` and `ChangeDumpManifest`, allowing filtering by change type and modified time
