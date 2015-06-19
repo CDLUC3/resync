@@ -12,7 +12,7 @@ module Resync
     # @param in_range [Range<Time>] the range of times to filter by
     # @param strict [Boolean] +true+ if resources without +from_time+ or +until_time+ should be
     #   excluded, +false+ if they should be included.
-    # @return [Enumerator::Lazy<Resource>] those change lists whose +from_time+ *or* +until_time+
+    # @return [Array<Resource>] those change lists whose +from_time+ *or* +until_time+
     #   falls within +in_range+
     def change_lists(in_range:, strict: true)
       resources.select do |r|

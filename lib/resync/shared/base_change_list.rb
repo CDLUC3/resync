@@ -6,7 +6,7 @@ module Resync
     # Filters the list of changes by change type, modification time, or both.
     # @param of_type [Types::Change] the change type
     # @param in_range [Range<Time>] the range of modification times
-    # @return [Enumerator::Lazy<Resource>] the matching changes, or all changes
+    # @return [Array<Resource>] the matching changes, or all changes
     #   if neither +of_type+ nor +in_range+ is specified.
     def changes(of_type: nil, in_range: nil)
       resources.select do |r|

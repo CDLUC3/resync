@@ -9,7 +9,7 @@ module Resync
   # they represent (e.g. +resourcelist+, +changelist+).
   #
   # @!attribute [r] resources
-  #   @return [Util::IndexableLazy<Resource>] the +<url>+ or +<sitemap>+ elements contained in this list.
+  #   @return [Array<Resource>] the +<url>+ or +<sitemap>+ elements contained in this list.
   class BaseResourceList < Augmented
     include ::XML::Mapping
 
@@ -40,7 +40,7 @@ module Resync
 
     # Sets the +resources+ list. +nil+ is treated as an empty list.
     def resources=(value)
-      @resources = Util::IndexableLazy.new(value || [])
+      @resources = value || []
     end
 
     # Sets the metadata.
@@ -61,7 +61,7 @@ module Resync
 
     # Finds resources with the specified capability.
     # @param capability [String] the capability.
-    # @return [Enumerator::Lazy<Resource>] those resources having that capability, or an empty array if none exist.
+    # @return [Array<Resource>] those resources having that capability, or an empty array if none exist.
     def resources_for(capability:)
       resources.select { |r| r.capability == capability }
     end
@@ -80,7 +80,7 @@ module Resync
     # @param time_range [Range[Time]] the range of acceptable times (inclusive or exclusive)
     # @param time_attr [Symbol] the time type to filter on: +:modified_time+, +:at_time+,
     #   +:completed_time+, +:from_time+ or +:until_time+
-    # @return [Enumerator::Lazy<Resource>] a lazy enumeration of the resources within the specified range.
+    # @return [Array<Resource>] a lazy enumeration of the resources within the specified range.
     def resources_in(time_range:, time_attr:)
       resources.select { |r| time_range.cover?(r.send(time_attr)) }
     end
