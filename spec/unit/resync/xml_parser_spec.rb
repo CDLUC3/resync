@@ -31,6 +31,12 @@ module Resync
         expect(urlset).to be_a(ResourceList)
       end
 
+      it 'parses a file' do
+        file = File.new('spec/data/examples/example-1.xml')
+        urlset = XMLParser.parse(file)
+        expect(urlset).to be_a(ResourceList)
+      end
+
       it 'parses an XML fragment' do
         data = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:rs="http://www.openarchives.org/rs/terms/">
                   <rs:md capability="resourcelist" at="2013-01-03T09:00:00Z"/>

@@ -30,6 +30,13 @@ module Resync
         expect(elem).to be_xml(xml_str)
       end
 
+      it 'parses a file as an XML document' do
+        file = File.new('spec/data/examples/example-1.xml')
+        elem = XML.element(file)
+        expect(elem).to be_a(REXML::Element)
+        expect(elem.name).to eq('urlset')
+      end
+
       it 'fails when it gets something other than XML' do
         data = 12_345
         expect { XML.element(data) }.to raise_exception
