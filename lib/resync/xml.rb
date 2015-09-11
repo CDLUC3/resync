@@ -59,31 +59,6 @@ module Resync
     private_class_method :can_parse
 
     # ------------------------------------------------------------
-    # URI
-
-    # Maps +URI+ objects.
-    class UriNode < ::XML::Mapping::SingleAttributeNode
-      def initialize(*args)
-        path, *args = super(*args)
-        @path = ::XML::XXPath.new(path)
-        args
-      end
-
-      # Implements +::XML::Mapping::SingleAttributeNode#extract_attr_value+.
-      def extract_attr_value(xml)
-        val = default_when_xpath_err { @path.first(xml).text }
-        URI(val.strip)
-      end
-
-      # Implements +::XML::Mapping::SingleAttributeNode#set_attr_value+.
-      def set_attr_value(xml, value)
-        @path.first(xml, ensure_created: true).text = value.to_s
-      end
-    end
-
-    ::XML::Mapping.add_node_class UriNode
-
-    # ------------------------------------------------------------
     # Resync::Types::Change
 
     # Maps +Resync::Types::Change+ values.
@@ -104,62 +79,21 @@ module Resync
     ::XML::Mapping.add_node_class ChangefreqNode
 
     # ------------------------------------------------------------
-    # MIME::Type
-
-    # Maps +MIME::Type+ values.
-    class MimeTypeNode < ::XML::Mapping::SingleAttributeNode
-      def initialize(*args)
-        path, *args = super(*args)
-        @path = ::XML::XXPath.new(path)
-        args
-      end
-
-      # Implements +::XML::Mapping::SingleAttributeNode#extract_attr_value+.
-      def extract_attr_value(xml)
-        mime_type = default_when_xpath_err { @path.first(xml).text }
-        return nil unless mime_type
-        return mime_type if mime_type.is_a?(MIME::Type)
-
-        mt = MIME::Types[mime_type].first
-        return mt if mt
-
-        MIME::Type.new(mime_type)
-      end
-
-      # Implements +::XML::Mapping::SingleAttributeNode#set_attr_value+.
-      def set_attr_value(xml, value)
-        @path.first(xml, ensure_created: true).text = value.to_s
-      end
-    end
-
-    ::XML::Mapping.add_node_class MimeTypeNode
-
-    # ------------------------------------------------------------
     # Whitespace-separated hashcode list
 
     # Maps the whitespace-separated list of hash codes in a +<rs:ln>+
     # or +<rs:md>+ tag to a hash of digest values keyed by hash algorithm.
     # (See {Resync::Descriptor#hashes}.)
-    class HashCodesNode < ::XML::Mapping::SingleAttributeNode
-      def initialize(*args)
-        path, *args = super(*args)
-        @path = ::XML::XXPath.new(path)
-        args
+    class HashCodesNode < ::XML::MappingExtensions::NodeBase
+
+      def to_value(xml_text)
+        return {} unless xml_text
+        return xml_text if xml_text.is_a?(Hash)
+        xml_text.split(/[[:space:]]+/).map { |hash| hash.split(':') }.to_h
       end
 
-      # Implements +::XML::Mapping::SingleAttributeNode#extract_attr_value+.
-      def extract_attr_value(xml)
-        hashes = default_when_xpath_err { @path.first(xml).text }
-        return {} unless hashes
-        return hashes if hashes.is_a?(Hash)
-        hashes.split(/[[:space:]]+/).map { |hash| hash.split(':') }.to_h
-      end
-
-      # Implements +::XML::Mapping::SingleAttributeNode#set_attr_value+.
-      def set_attr_value(xml, value)
-        return if value.empty?
-        hash_str = value.map { |k, v| "#{k}:#{v}" }.join(' ')
-        @path.first(xml, ensure_created: true).text = hash_str
+      def to_xml_text(value)
+        value.map { |k, v| "#{k}:#{v}" }.join(' ') if value && !value.empty?
       end
     end
 
