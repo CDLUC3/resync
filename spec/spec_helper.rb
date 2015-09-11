@@ -31,6 +31,6 @@ end
 require 'rspec_custom_matchers'
 
 # ------------------------------------------------------------
-# Stash::Harvester
+# Resync
 
 require 'resync'
