@@ -1,6 +1,8 @@
 require 'uri'
 require 'time'
 require 'xml/mapping'
+require 'xml/mapping_extensions'
+
 require_relative 'types'
 
 module Resync
@@ -57,31 +59,6 @@ module Resync
     private_class_method :can_parse
 
     # ------------------------------------------------------------
-    # Time
-
-    # Maps +Time+ objects.
-    class TimeNode < ::XML::Mapping::SingleAttributeNode
-      def initialize(*args)
-        path, *args = super(*args)
-        @path = ::XML::XXPath.new(path)
-        args
-      end
-
-      # Implements +::XML::Mapping::SingleAttributeNode#extract_attr_value+.
-      def extract_attr_value(xml)
-        value = default_when_xpath_err { @path.first(xml).text }
-        value ? Time.iso8601(value).utc : nil
-      end
-
-      # Implements +::XML::Mapping::SingleAttributeNode#set_attr_value+.
-      def set_attr_value(xml, value)
-        @path.first(xml, ensure_created: true).text = value.iso8601
-      end
-    end
-
-    ::XML::Mapping.add_node_class TimeNode
-
-    # ------------------------------------------------------------
     # URI
 
     # Maps +URI+ objects.
@@ -107,32 +84,10 @@ module Resync
     ::XML::Mapping.add_node_class UriNode
 
     # ------------------------------------------------------------
-    # Resync::Types
-
-    class EnumNode < ::XML::Mapping::SingleAttributeNode
-      def initialize(*args)
-        path, *args = super(*args)
-        @path = ::XML::XXPath.new(path)
-        args
-      end
-
-      # Implements +::XML::Mapping::SingleAttributeNode#extract_attr_value+.
-      def extract_attr_value(xml)
-        enum_class = self.class::ENUM_CLASS
-        enum_class.parse(default_when_xpath_err { @path.first(xml).text })
-      end
-
-      # Implements +::XML::Mapping::SingleAttributeNode#set_attr_value+.
-      def set_attr_value(xml, value)
-        @path.first(xml, ensure_created: true).text = value.to_s
-      end
-    end
-
-    # ------------------------------------------------------------
     # Resync::Types::Change
 
     # Maps +Resync::Types::Change+ values.
-    class ChangeNode < EnumNode
+    class ChangeNode < ::XML::MappingExtensions::EnumNodeBase
       ENUM_CLASS = Resync::Types::Change
     end
 
@@ -142,7 +97,7 @@ module Resync
     # Resync::Types::Changefreq
 
     # Maps +Resync::Types::ChangeFrequency+ values.
-    class ChangefreqNode < EnumNode
+    class ChangefreqNode < ::XML::MappingExtensions::EnumNodeBase
       ENUM_CLASS = Resync::Types::ChangeFrequency
     end
 
