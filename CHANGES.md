@@ -1,3 +1,7 @@
+## 0.3.1
+
+- Use [XML::MappingExtensions](https://github.com/dmolesUC3/xml-mapping_extensions) for some XML mapping infrastructure
+
 ## 0.3.0
 
 - Return simple arrays for resources, instead of fancy lazy enumerables
