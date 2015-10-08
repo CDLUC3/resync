@@ -1,3 +1,7 @@
+## 0.3.2
+
+- Move GitHub project to [CDLUC3](https://github.com/CDLUC3/)
+
 ## 0.3.1
 
 - Use [XML::MappingExtensions](https://github.com/dmolesUC3/xml-mapping_extensions) for some XML mapping infrastructure
