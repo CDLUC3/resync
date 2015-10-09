@@ -1,4 +1,4 @@
-# resync [![Build Status](https://travis-ci.org/dmolesUC3/resync.png?branch=master)](https://travis-ci.org/dmolesUC3/resync) [![Code Climate](https://codeclimate.com/github/dmolesUC3/resync.png)](https://codeclimate.com/github/dmolesUC3/resync) [![Inline docs](http://inch-ci.org/github/dmolesUC3/resync.png)](http://inch-ci.org/github/dmolesUC3/resync)
+# resync [![Build Status](https://travis-ci.org/CDLUC3/resync.png?branch=master)](https://travis-ci.org/CDLUC3/resync) [![Code Climate](https://codeclimate.com/github/CDLUC3/resync.png)](https://codeclimate.com/github/CDLUC3/resync) [![Inline docs](http://inch-ci.org/github/CDLUC3/resync.png)](http://inch-ci.org/github/CDLUC3/resync)
 
 
 A Ruby gem for working with the [ResourceSync](http://www.openarchives.org/rs/1.0/resourcesync) web synchronization framework.
@@ -42,7 +42,7 @@ formatter.write(xml, $stdout)
 
 ## See also
 
-[resync-client](https://github.com/dmolesUC3/resync-client), a Ruby client library for ResourceSync.
+[resync-client](https://github.com/CDLUC3/resync-client), a Ruby client library for ResourceSync.
 
 ## Status
 
