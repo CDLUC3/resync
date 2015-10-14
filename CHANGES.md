@@ -1,3 +1,7 @@
+## 0.3.4
+
+- Fix issue where `Dir.glob` could cause files to be required in an unpredictable order (h/t [nabeta](https://github.com/CDLUC3/resync/pull/1))
+
 ## 0.3.3
 
 - Fix links in README
