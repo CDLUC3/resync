@@ -59,26 +59,6 @@ module Resync
     private_class_method :can_parse
 
     # ------------------------------------------------------------
-    # Resync::Types::Change
-
-    # Maps +Resync::Types::Change+ values.
-    class ChangeNode < ::XML::MappingExtensions::EnumNodeBase
-      ENUM_CLASS = Resync::Types::Change
-    end
-
-    ::XML::Mapping.add_node_class ChangeNode
-
-    # ------------------------------------------------------------
-    # Resync::Types::Changefreq
-
-    # Maps +Resync::Types::ChangeFrequency+ values.
-    class ChangefreqNode < ::XML::MappingExtensions::EnumNodeBase
-      ENUM_CLASS = Resync::Types::ChangeFrequency
-    end
-
-    ::XML::Mapping.add_node_class ChangefreqNode
-
-    # ------------------------------------------------------------
     # Whitespace-separated hashcode list
 
     # Maps the whitespace-separated list of hash codes in a +<rs:ln>+

@@ -1,4 +1,4 @@
 module Resync
   # The version of this gem.
-  VERSION = '0.3.4'
+  VERSION = '0.4.0'
 end

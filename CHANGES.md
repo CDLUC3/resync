@@ -1,3 +1,8 @@
+## 0.4.0
+
+- Convert `Change` and `ChangeFrequency` from [ruby-enum](https://github.com/dblock/ruby-enum/) to
+  [typesafe_enum](https://github.com/dmolesUC3/typesafe_enum)
+
 ## 0.3.4
 
 - Fix issue where `Dir.glob` could cause files to be required in an unpredictable order (h/t [nabeta](https://github.com/CDLUC3/resync/pull/1))

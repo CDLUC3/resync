@@ -36,7 +36,7 @@ module Resync
     time_node :from_time, '@from', default_value: nil
     time_node :until_time, '@until', default_value: nil
     time_node :completed_time, '@completed', default_value: nil
-    change_node :change, '@change', default_value: nil
+    typesafe_enum_node :change, '@change', class: Types::Change, default_value: nil
     text_node :capability, '@capability', default_value: nil
 
     # ------------------------------------------------------------

@@ -16,7 +16,7 @@ module Resync
 
     uri_node :uri, 'loc', default_value: nil
     time_node :modified_time, 'lastmod', default_value: nil
-    changefreq_node :changefreq, 'changefreq', default_value: nil
+    typesafe_enum_node :changefreq, 'changefreq', class: Types::ChangeFrequency, default_value: nil
     numeric_node :priority, 'priority', default_value: nil
 
     # ------------------------------------------------------------
