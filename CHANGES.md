@@ -1,3 +1,7 @@
+## 0.4.1
+
+- Update to [typesafe_enum](https://github.com/dmolesUC3/typesafe_enum) 0.1.2
+
 ## 0.4.0
 
 - Convert `Change` and `ChangeFrequency` from [ruby-enum](https://github.com/dblock/ruby-enum/) to
