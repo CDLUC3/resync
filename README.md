@@ -1,5 +1,9 @@
-# resync [![Build Status](https://travis-ci.org/CDLUC3/resync.png?branch=master)](https://travis-ci.org/CDLUC3/resync) [![Code Climate](https://codeclimate.com/github/CDLUC3/resync.png)](https://codeclimate.com/github/CDLUC3/resync) [![Inline docs](http://inch-ci.org/github/CDLUC3/resync.png)](http://inch-ci.org/github/CDLUC3/resync) [![Gem Version](https://img.shields.io/gem/v/resync.svg)](https://github.com/CDLUC3/resync/releases)
+# resync 
 
+[![Build Status](https://travis-ci.org/CDLUC3/resync.svg?branch=master)](https://travis-ci.org/CDLUC3/resync)
+[![Code Climate](https://codeclimate.com/github/CDLUC3/resync.svg)](https://codeclimate.com/github/CDLUC3/resync)
+[![Inline docs](http://inch-ci.org/github/CDLUC3/resync.svg)](http://inch-ci.org/github/CDLUC3/resync)
+[![Gem Version](https://img.shields.io/gem/v/resync.svg)](https://github.com/CDLUC3/resync/releases)
 
 A Ruby gem for working with the [ResourceSync](http://www.openarchives.org/rs/1.0/resourcesync) web synchronization framework.
 
