@@ -2,6 +2,8 @@ require 'xml/mapping'
 require_relative '../resource'
 
 module Resync
+  # Base module of +<sitemapindex>+ elements, such as {ChangeDumpIndex},
+  # {ChangeListIndex}, {ResourceDumpIndex}, and {ResourceListIndex}.
   module SitemapIndex
     include ::XML::Mapping
 
