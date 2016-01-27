@@ -10,6 +10,6 @@ module Resync
     include SitemapIndex
 
     # The capability provided by this type.
-    CAPABILITY = 'changelist'
+    CAPABILITY = 'changelist'.freeze
   end
 end

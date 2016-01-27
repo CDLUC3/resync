@@ -8,7 +8,7 @@ module Resync
     include ::XML::Mapping
 
     # The capability provided by this type.
-    CAPABILITY = 'description'
+    CAPABILITY = 'description'.freeze
 
   end
 end

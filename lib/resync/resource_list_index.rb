@@ -10,6 +10,6 @@ module Resync
     include SitemapIndex
 
     # The capability provided by this type.
-    CAPABILITY = 'resourcelist'
+    CAPABILITY = 'resourcelist'.freeze
   end
 end

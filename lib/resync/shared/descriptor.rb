@@ -95,6 +95,15 @@ module Resync
       hashes[algorithm]
     end
 
+    # ------------------------------
+    # Conversions
+
+    def self.hash_of_hashcodes(hashes)
+      return {} unless hashes
+      return hashes if hashes.is_a?(Hash)
+      hashes.split(/[[:space:]]+/).map { |hash| hash.split(':') }.to_h
+    end
+
     # ------------------------------------------------------------
     # Private methods
 
@@ -123,13 +132,5 @@ module Resync
       MIME::Type.new(mime_type)
     end
 
-    # ------------------------------
-    # Conversions
-
-    def self.hash_of_hashcodes(hashes)
-      return {} unless hashes
-      return hashes if hashes.is_a?(Hash)
-      hashes.split(/[[:space:]]+/).map { |hash| hash.split(':') }.to_h
-    end
   end
 end

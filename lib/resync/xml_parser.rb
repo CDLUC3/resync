@@ -21,10 +21,10 @@ module Resync
         ChangeDumpIndex,
         ResourceDumpIndex
       ]
-    }
+    }.freeze
     private_constant :ROOT_TYPES
 
-    CAPABILITY_ATTRIBUTE = "/*/[namespace-uri() = 'http://www.openarchives.org/rs/terms/' and local-name() = 'md']/@capability"
+    CAPABILITY_ATTRIBUTE = "/*/[namespace-uri() = 'http://www.openarchives.org/rs/terms/' and local-name() = 'md']/@capability".freeze
     private_constant :CAPABILITY_ATTRIBUTE
 
     # Parses the specified ResourceSync document and returns the appropriate object

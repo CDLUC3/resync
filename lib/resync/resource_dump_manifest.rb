@@ -9,7 +9,7 @@ module Resync
     include ::XML::Mapping
 
     # The capability provided by this type.
-    CAPABILITY = 'resourcedump-manifest'
+    CAPABILITY = 'resourcedump-manifest'.freeze
 
   end
 end

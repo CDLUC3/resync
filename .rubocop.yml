@@ -18,3 +18,6 @@ Style/EmptyLinesAroundModuleBody:
 Style/EmptyLinesAroundBlockBody:
   Enabled: false
 
+# Suppress complaints about post-2.0 syntax
+AllCops:
+  TargetRubyVersion: 2.2

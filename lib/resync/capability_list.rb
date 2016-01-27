@@ -9,7 +9,7 @@ module Resync
     include ::XML::Mapping
 
     # The capability provided by this type.
-    CAPABILITY = 'capabilitylist'
+    CAPABILITY = 'capabilitylist'.freeze
 
     # ------------------------------------------------------------
     # Initializer
