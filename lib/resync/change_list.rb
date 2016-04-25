@@ -1,5 +1,5 @@
-require_relative 'shared/base_change_list'
-require_relative 'xml'
+require 'resync/shared/base_change_list'
+require 'resync/xml'
 
 module Resync
   # A change list. See section 12.1,

@@ -1,3 +1,7 @@
+## 0.4.3 (25 April 2016)
+
+- Replace all `require_relative` with absolute `require` to avoid symlink issues
+
 ## 0.4.2 (27 Jan 2016)
 
 - Make gemspec smart enough to handle SSH checkouts

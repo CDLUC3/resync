@@ -1,5 +1,5 @@
-require_relative 'shared/base_resource_list'
-require_relative 'xml'
+require 'resync/shared/base_resource_list'
+require 'resync/xml'
 
 module Resync
   # A capability list. See section 9,

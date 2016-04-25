@@ -1,5 +1,5 @@
 require 'mime/types'
-require_relative '../xml'
+require 'resync/xml'
 
 module Resync
   # Base class for ResourceSync-specific elements describing a

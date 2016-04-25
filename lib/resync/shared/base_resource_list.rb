@@ -1,6 +1,6 @@
-require_relative 'augmented'
-require_relative '../resource'
-require_relative '../metadata'
+require 'resync/shared/augmented'
+require 'resync/resource'
+require 'resync/metadata'
 
 module Resync
   # Base class for root elements containing a list of resources

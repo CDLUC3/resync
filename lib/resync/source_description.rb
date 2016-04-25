@@ -1,4 +1,4 @@
-require_relative 'shared/base_resource_list'
+require 'resync/shared/base_resource_list'
 
 module Resync
   # A change list. See section 8,

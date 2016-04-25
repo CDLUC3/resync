@@ -1,5 +1,5 @@
-require_relative 'shared/base_resource_list'
-require_relative 'shared/sitemap_index'
+require 'resync/shared/base_resource_list'
+require 'resync/shared/sitemap_index'
 
 module Resync
   # A resource dump index. See under section 11.1,

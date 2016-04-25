@@ -1,4 +1,4 @@
-require_relative 'base_resource_list'
+require 'resync/shared/base_resource_list'
 
 module Resync
   # An extension to +BaseResourceList+ for resource lists that

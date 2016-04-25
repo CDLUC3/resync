@@ -1,5 +1,5 @@
 require 'xml/mapping'
-require_relative '../resource'
+require 'resync/resource'
 
 module Resync
   # Base module of +<sitemapindex>+ elements, such as {ChangeDumpIndex},

@@ -1,5 +1,5 @@
-require_relative '../link'
-require_relative '../metadata'
+require 'resync/link'
+require 'resync/metadata'
 
 module Resync
 

@@ -1,4 +1,4 @@
-require_relative 'sorted_resource_list'
+require 'resync/shared/sorted_resource_list'
 
 module Resync
   # Adds useful methods to {ChangeList} and {ChangeDumpManifest}.

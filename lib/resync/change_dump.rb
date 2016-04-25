@@ -1,5 +1,5 @@
-require_relative 'shared/base_change_index'
-require_relative 'xml'
+require 'resync/shared/base_change_index'
+require 'resync/xml'
 
 module Resync
   # A change dump. See section 13.1,

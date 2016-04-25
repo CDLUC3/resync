@@ -1,6 +1,6 @@
-require_relative 'shared/augmented'
-require_relative 'xml'
-require_relative 'metadata'
+require 'resync/shared/augmented'
+require 'resync/xml'
+require 'resync/metadata'
 
 module Resync
   # A resource (i.e., +<url>+ or +<sitemap>+). See section 7,

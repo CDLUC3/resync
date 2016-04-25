@@ -1,5 +1,5 @@
-require_relative 'shared/descriptor'
-require_relative 'xml'
+require 'resync/shared/descriptor'
+require 'resync/xml'
 
 module Resync
 

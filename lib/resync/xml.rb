@@ -3,7 +3,7 @@ require 'time'
 require 'xml/mapping'
 require 'xml/mapping_extensions'
 
-require_relative 'types'
+require 'resync/types'
 
 module Resync
   # Helper methods and modules related to reading and writing XML.

@@ -1,5 +1,5 @@
-require_relative 'shared/base_change_index'
-require_relative 'shared/sitemap_index'
+require 'resync/shared/base_change_index'
+require 'resync/shared/sitemap_index'
 
 module Resync
   # A change list index. See section 12.2,
