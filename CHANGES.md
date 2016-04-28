@@ -1,3 +1,7 @@
+## 0.4.4 (28 April 2016)
+
+- Update to XML::MappingExtensions 0.3.5
+
 ## 0.4.3 (25 April 2016)
 
 - Replace all `require_relative` with absolute `require` to avoid symlink issues
