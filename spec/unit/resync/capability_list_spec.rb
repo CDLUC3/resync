@@ -108,7 +108,7 @@ module Resync
           resources = list.resources
           expect(resources.size).to eq(4)
 
-          expected_capabilities = %w(resourcelist resourcedump changelist changedump)
+          expected_capabilities = %w[resourcelist resourcedump changelist changedump]
           (0..3).each do |i|
             resource = resources[i]
             capability = expected_capabilities[i]

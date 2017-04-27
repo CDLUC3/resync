@@ -118,10 +118,10 @@ module Resync
     # @raise [ArgumentError] if the specified metadata does not have the correct +capability+ attribute for this list type.
     def metadata_with_correct_capability(metadata)
       capability = self.class::CAPABILITY
-      fail ArgumentError, "Missing constant #{self.class}::CAPABILITY" unless capability
+      raise ArgumentError, "Missing constant #{self.class}::CAPABILITY" unless capability
       return Metadata.new(capability: capability) unless metadata
-      fail ArgumentError, ":metadata argument <#{metadata}> does not appear to be metadata" unless metadata.respond_to?(:capability)
-      fail ArgumentError, "Wrong capability for #{self.class.name} metadata; expected '#{capability}', was '#{metadata.capability}'" unless metadata.capability == capability
+      raise ArgumentError, ":metadata argument <#{metadata}> does not appear to be metadata" unless metadata.respond_to?(:capability)
+      raise ArgumentError, "Wrong capability for #{self.class.name} metadata; expected '#{capability}', was '#{metadata.capability}'" unless metadata.capability == capability
       metadata
     end
 

@@ -30,7 +30,7 @@ module Resync
     #   and 1.0 is the highest.
     # @param links [Array<Link>] related links (i.e. +<rs:ln>+).
     # @param metadata [Metadata] metadata about this resource.
-    def initialize( # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
+    def initialize( # rubocop:disable Metrics/ParameterLists
         uri:,
         modified_time: nil,
         changefreq: nil,

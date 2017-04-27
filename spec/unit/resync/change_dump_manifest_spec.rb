@@ -24,8 +24,8 @@ module Resync
           urls = urlset.resources
           expect(urls.size).to eq(4)
 
-          expected_filenames = %w(res7 res9 res5 res7)
-          expected_extensions = %w(html pdf tiff html)
+          expected_filenames = %w[res7 res9 res5 res7]
+          expected_extensions = %w[html pdf tiff html]
           expected_lastmods = [
             Time.utc(2013, 1, 2, 12),
             Time.utc(2013, 1, 2, 13),

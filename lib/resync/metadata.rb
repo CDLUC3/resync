@@ -63,7 +63,7 @@ module Resync
     # @param capability [String] identifies the type of a ResourceSync document.
     # @param path [String] For +ResourceDumpManifests+ and +ChangeDumpManifests+,
     #   the path to the referenced resource within the dump ZIP file.
-    def initialize( # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
+    def initialize( # rubocop:disable Metrics/ParameterLists
         at_time: nil,
         from_time: nil,
         until_time: nil,

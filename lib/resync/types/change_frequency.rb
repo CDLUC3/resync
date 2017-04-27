@@ -5,7 +5,7 @@ module Resync
     # The frequency of changes to a resource.
     # Values: +ALWAYS+, +HOURLY+, +DAILY+, +WEEKLY+, +MONTHLY+, +YEARLY+, +NEVER+
     class ChangeFrequency < TypesafeEnum::Base
-      [:ALWAYS, :HOURLY, :DAILY, :WEEKLY, :MONTHLY, :YEARLY, :NEVER].each { |cf| new cf }
+      %i[ALWAYS HOURLY DAILY WEEKLY MONTHLY YEARLY NEVER].each { |cf| new cf }
     end
   end
 end

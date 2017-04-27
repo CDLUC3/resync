@@ -29,7 +29,7 @@ module Resync
     end
 
     def loosely(in_range, resource)
-      (resource.from_time || resource.until_time) ? strictly(in_range, resource) : true
+      resource.from_time || resource.until_time ? strictly(in_range, resource) : true
     end
   end
 end

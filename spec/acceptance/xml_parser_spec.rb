@@ -260,7 +260,7 @@ module Resync
       urls = urlset.resources
       expect(urls.size).to eq(4)
 
-      expected_capabilities = %w(resourcelist resourcedump changelist changedump)
+      expected_capabilities = %w[resourcelist resourcedump changelist changedump]
       (0..3).each do |i|
         url = urls[i]
         capability = expected_capabilities[i]
@@ -464,8 +464,8 @@ module Resync
       urls = urlset.resources
       expect(urls.size).to eq(4)
 
-      expected_filenames = %w(res1 res2 res3 res2)
-      expected_extensions = %w(html pdf tiff pdf)
+      expected_filenames = %w[res1 res2 res3 res2]
+      expected_extensions = %w[html pdf tiff pdf]
       expected_lastmods = [Time.utc(2013, 1, 3, 11), Time.utc(2013, 1, 3, 13), Time.utc(2013, 1, 3, 18), Time.utc(2013, 1, 3, 21)]
 
       expected_changes = [Types::Change::CREATED, Types::Change::UPDATED, Types::Change::DELETED, Types::Change::UPDATED]
@@ -529,8 +529,8 @@ module Resync
       urls = urlset.resources
       expect(urls.size).to eq(4)
 
-      expected_filenames = %w(res7 res9 res5 res7)
-      expected_extensions = %w(html pdf tiff html)
+      expected_filenames = %w[res7 res9 res5 res7]
+      expected_extensions = %w[html pdf tiff html]
       expected_lastmods = [
         Time.utc(2013, 1, 2, 12),
         Time.utc(2013, 1, 2, 13),
@@ -611,8 +611,8 @@ module Resync
       urls = urlset.resources
       expect(urls.size).to eq(4)
 
-      expected_filenames = %w(res7 res9 res5 res7)
-      expected_extensions = %w(html pdf tiff html)
+      expected_filenames = %w[res7 res9 res5 res7]
+      expected_extensions = %w[html pdf tiff html]
       expected_lastmods = [
         Time.utc(2013, 1, 2, 12),
         Time.utc(2013, 1, 2, 13),

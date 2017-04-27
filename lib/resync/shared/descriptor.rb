@@ -49,7 +49,7 @@ module Resync
     #   to hex-encoded digest values.
     # @param path [String] For +ResourceDumpManifests+ and +ChangeDumpManifests+,
     #   the path to the referenced resource within the dump ZIP file.
-    def initialize( # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
+    def initialize( # rubocop:disable Metrics/ParameterLists
         modified_time: nil,
         length: nil,
         mime_type: nil,
@@ -113,12 +113,12 @@ module Resync
     # Parameter validators
 
     def time_or_nil(time)
-      fail ArgumentError, "time #{time} is not a Time" if time && !time.is_a?(Time)
+      raise ArgumentError, "time #{time} is not a Time" if time && !time.is_a?(Time)
       time
     end
 
     def natural_number_or_nil(value)
-      fail ArgumentError, "value #{value} must be a non-negative integer" if value && (!value.is_a?(Integer) || value < 0)
+      raise ArgumentError, "value #{value} must be a non-negative integer" if value && (!value.is_a?(Integer) || value < 0)
       value
     end
 

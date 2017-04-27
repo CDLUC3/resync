@@ -42,7 +42,7 @@ module Resync
     def self.find_root_type(types, root_element)
       capability = capability_for(root_element)
       root_type = types.find { |t| t::CAPABILITY == capability }
-      fail ArgumentError, "no mapped type for capability '#{capability}'" unless root_type
+      raise ArgumentError, "no mapped type for capability '#{capability}'" unless root_type
       root_type
     end
 
@@ -50,7 +50,7 @@ module Resync
 
     def self.capability_for(root_element)
       capability = capability_attribute_for(root_element).value
-      fail ArgumentError, "unable to identify capability of root element in #{root_element}" unless capability
+      raise ArgumentError, "unable to identify capability of root element in #{root_element}" unless capability
       capability
     end
 
@@ -58,7 +58,7 @@ module Resync
 
     def self.capability_attribute_for(root_element)
       capability_attr = REXML::XPath.first(root_element, CAPABILITY_ATTRIBUTE)
-      fail ArgumentError, "unable to identify capability of root element in #{root_element}" unless capability_attr
+      raise ArgumentError, "unable to identify capability of root element in #{root_element}" unless capability_attr
       capability_attr
     end
 

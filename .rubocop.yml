@@ -21,3 +21,8 @@ Style/EmptyLinesAroundBlockBody:
 # Suppress complaints about post-2.0 syntax
 AllCops:
   TargetRubyVersion: 2.2
+
+# Make our own decisions about readability
+Style/TernaryParentheses:
+  Enabled: false
+

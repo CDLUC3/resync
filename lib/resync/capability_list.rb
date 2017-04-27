@@ -69,8 +69,8 @@ module Resync
       capabilities = {}
       (resources || []).each do |resource|
         capability = resource.capability
-        fail ArgumentError, "No capability found for resource with URI #{resource.uri}" unless capability
-        fail ArgumentError, "Duplicate resource for capability #{capability}" if capabilities.key?(capability)
+        raise ArgumentError, "No capability found for resource with URI #{resource.uri}" unless capability
+        raise ArgumentError, "Duplicate resource for capability #{capability}" if capabilities.key?(capability)
         capabilities[capability] = resource
       end
       capabilities
@@ -79,7 +79,7 @@ module Resync
     def source_description_from(links)
       return nil unless links
       desc = links.map { |link| link.uri if link.rel == 'up' }.compact.first
-      fail ArgumentError, "No source descrption (<link rel='up'/>) provided" unless desc
+      raise ArgumentError, "No source descrption (<link rel='up'/>) provided" unless desc
       desc
     end
   end

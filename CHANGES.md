@@ -1,6 +1,12 @@
-## 0.4.5 (next)
+## 0.4.6 (next)
+
+## 0.4.5 (27 April 2017)
 
 - Update to Ruby 2.2.5
+- Update to XML::MappingExtensions 0.4.8
+- Update to MIME::Types 3.x
+- Update to RuboCop 0.47
+- Allow Rake versions > 10.x
 
 ## 0.4.4 (28 April 2016)
 

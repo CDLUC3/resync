@@ -51,7 +51,7 @@ module Resync
     # @param path [String] For +ResourceDumpManifests+ and +ChangeDumpManifests+,
     #   the path to the referenced resource within the dump ZIP file.
     # @raise [URI::InvalidURIError] if +uri+ cannot be converted to a URI.
-    def initialize( # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
+    def initialize( # rubocop:disable Metrics/ParameterLists
         rel:,
         uri:,
 

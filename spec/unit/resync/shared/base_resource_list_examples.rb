@@ -124,7 +124,7 @@ module Resync
     end
 
     describe '#resources_in' do
-      [:at_time, :completed_time, :from_time, :until_time, :modified_time].each do |reader|
+      %i[at_time completed_time from_time until_time modified_time].each do |reader|
         it "allows filtering by #{reader}" do
           before_time = Time.utc(1969, 1, 1)
           start_time = Time.utc(1970, 1, 1)

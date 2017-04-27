@@ -64,7 +64,7 @@ module Resync
           capability: capability
         )
         augmented = new_instance(metadata: md)
-        [:at_time, :from_time, :until_time, :completed_time].each do |t|
+        %i[at_time from_time until_time completed_time].each do |t|
           expect(augmented.send(t)).to be_time(md.send(t))
         end
       end

@@ -53,14 +53,11 @@ module Resync
     end
 
     def compare(left, right)
-      [:modified_time, :from_time, :at_time, :until_time, :completed_time].each do |time_reader|
+      %i[modified_time from_time at_time until_time completed_time].each do |time_reader|
         left_time = left.send(time_reader)
         right_time = right.send(time_reader)
-        if left_time && right_time
-          return left_time <=> right_time
-        elsif left_time || right_time
-          return left_time ? -1 : 1
-        end
+        return left_time <=> right_time if left_time && right_time
+        return left_time ? -1 : 1 if left_time || right_time
       end
       0
     end

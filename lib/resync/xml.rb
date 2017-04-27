@@ -37,7 +37,7 @@ module Resync
       when REXML::Element
         xml
       else
-        fail ArgumentError, "Unexpected argument type; expected XML document, String, or IO source, was #{xml.class}" unless can_parse(xml)
+        raise ArgumentError, "Unexpected argument type; expected XML document, String, or IO source, was #{xml.class}" unless can_parse(xml)
         REXML::Document.new(xml).root
       end
     end
