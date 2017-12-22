@@ -1,4 +1,8 @@
-## 0.4.6 (next)
+## 0.4.6 (22 December 2017)
+
+- Update to Ruby 2.4.1
+- Update to Yard 0.9.12
+- Update to RuboCop 0.52
 
 ## 0.4.5 (27 April 2017)
 
