@@ -71,6 +71,20 @@ module Resync
           expect { Metadata.new(completed_time: '12:45 pm') }.to raise_error(ArgumentError)
         end
 
+        it 'accepts a datetime timestamp' do
+          datetime = Time.utc(1997, 7, 16, 19, 20, 30.45)
+          metadata = Metadata.new(datetime: datetime)
+          expect(metadata.datetime).to be_time(datetime)
+        end
+
+        it 'defaults to nil if no datetime timestamp is specified' do
+          metadata = Metadata.new
+          expect(metadata.datetime).to be_nil
+        end
+
+        it 'fails if the datetime timestamp is not a time' do
+          expect { Metadata.new(datetime: '12:45 pm') }.to raise_error(ArgumentError)
+        end
       end
 
       describe 'capability' do
