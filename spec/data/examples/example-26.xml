@@ -7,8 +7,8 @@
          from="2013-01-03T00:00:00Z"/>
   <url>
     <loc>http://example.com/res1.html</loc>
-    <lastmod>2013-01-03T18:00:00Z</lastmod>
     <rs:md change="updated"
+           datetime="2013-01-03T18:00:00Z"
            hash="md5:1584abdf8ebdc9802ac0c6a7402c03b6"
            length="8876"/>
     <rs:ln rel="canonical"

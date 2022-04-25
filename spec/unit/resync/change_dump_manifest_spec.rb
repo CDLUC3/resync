@@ -24,29 +24,35 @@ module Resync
           urls = urlset.resources
           expect(urls.size).to eq(4)
 
-          expected_filenames = %w[res7 res9 res5 res7]
-          expected_extensions = %w[html pdf tiff html]
+          expected_filenames = %w[res7 res9 res7 res5]
+          expected_extensions = %w[html pdf html tiff]
           expected_lastmods = [
             Time.utc(2013, 1, 2, 12),
             Time.utc(2013, 1, 2, 13),
-            Time.utc(2013, 1, 2, 19),
-            Time.utc(2013, 1, 2, 20)
+            Time.utc(2013, 1, 2, 20),
+            nil
           ]
-          expected_changes = [Types::Change::CREATED, Types::Change::UPDATED, Types::Change::DELETED, Types::Change::UPDATED]
+          expected_datetimes = [
+            Time.utc(2013, 1, 2, 12),
+            Time.utc(2013, 1, 2, 13),
+            Time.utc(2013, 1, 2, 20),
+            Time.utc(2013, 1, 2, 19)
+          ]
+          expected_changes = [Types::Change::CREATED, Types::Change::UPDATED, Types::Change::UPDATED, Types::Change::DELETED]
           expected_hashes = [
             { 'md5' => '1c1b0e264fa9b7e1e9aa6f9db8d6362b' },
             { 'md5' => 'f906610c3d4aa745cb2b986f25b37c5a' },
-            {},
-            { 'md5' => '0988647082c8bc51778894a48ec3b576' }
+            { 'md5' => '0988647082c8bc51778894a48ec3b576' },
+            {}
           ]
-          expected_lengths = [4339, 38_297, nil, 5426]
+          expected_lengths = [4339, 38_297, 5426, nil]
           expected_types = [
             'text/html',
             'application/pdf',
-            nil,
-            'text/html'
+            'text/html',
+            nil
           ]
-          expected_paths = ['/changes/res7.html', '/changes/res9.pdf', nil, '/changes/res7-v2.html']
+          expected_paths = ['/changes/res7.html', '/changes/res9.pdf', '/changes/res7-v2.html', nil]
 
           (0..3).each do |i|
             url = urls[i]
@@ -58,6 +64,7 @@ module Resync
             expect(md.length).to eq(expected_lengths[i])
             expect(md.mime_type).to be_mime_type(expected_types[i])
             expect(md.path).to eq(expected_paths[i])
+            expect(md.datetime).to eq(expected_datetimes[i])
           end
         end
       end
