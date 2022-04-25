@@ -65,20 +65,30 @@ module Resync
       expect(urlset).to be_a(ChangeList)
 
       urls = urlset.resources
-      expect(urls.size).to eq(2)
+      expect(urls.size).to eq(3)
       url0 = urls[0]
-      expect(url0.uri).to eq(URI('http://example.com/res2.pdf'))
-      expect(url0.modified_time).to be_time(Time.utc(2013, 1, 2, 13))
+      expect(url0.uri).to eq(URI('http://example.com/res3.tiff'))
+      expect(url0.modified_time).to be_time(Time.utc(2011, 1, 1, 0))
       md0 = url0.metadata
       expect(md0).not_to be_nil
-      expect(md0.change).to be(Resync::Types::Change::UPDATED)
+      expect(md0.change).to be(Resync::Types::Change::CREATED)
+      expect(md0.datetime).to be_time(Time.utc(2013, 1, 2, 15))
 
       url1 = urls[1]
-      expect(url1.uri).to eq(URI('http://example.com/res3.tiff'))
-      expect(url1.modified_time).to be_time(Time.utc(2013, 1, 2, 18))
+      expect(url1.uri).to eq(URI('http://example.com/res1.pdf'))
+      expect(url1.modified_time).to be_time(Time.utc(2013, 1, 2, 13))
       md1 = url1.metadata
       expect(md1).not_to be_nil
-      expect(md1.change).to be(Resync::Types::Change::DELETED)
+      expect(md1.change).to be(Resync::Types::Change::UPDATED)
+      expect(md1.datetime).to be_time(Time.utc(2013, 1, 2, 13))
+
+      url2 = urls[2]
+      expect(url2.uri).to eq(URI('http://example.com/res2.pdf'))
+      expect(url2.modified_time).to be_nil
+      md2 = url2.metadata
+      expect(md2).not_to be_nil
+      expect(md2.change).to be(Resync::Types::Change::DELETED)
+      expect(md2.datetime).to be_time(Time.utc(2013, 1, 2, 14))
     end
 
     it 'parses example 4' do
