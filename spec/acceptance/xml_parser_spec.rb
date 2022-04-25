@@ -65,20 +65,30 @@ module Resync
       expect(urlset).to be_a(ChangeList)
 
       urls = urlset.resources
-      expect(urls.size).to eq(2)
+      expect(urls.size).to eq(3)
       url0 = urls[0]
-      expect(url0.uri).to eq(URI('http://example.com/res2.pdf'))
-      expect(url0.modified_time).to be_time(Time.utc(2013, 1, 2, 13))
+      expect(url0.uri).to eq(URI('http://example.com/res3.tiff'))
+      expect(url0.modified_time).to be_time(Time.utc(2011, 1, 1, 0))
       md0 = url0.metadata
       expect(md0).not_to be_nil
-      expect(md0.change).to be(Resync::Types::Change::UPDATED)
+      expect(md0.change).to be(Resync::Types::Change::CREATED)
+      expect(md0.datetime).to be_time(Time.utc(2013, 1, 2, 15))
 
       url1 = urls[1]
-      expect(url1.uri).to eq(URI('http://example.com/res3.tiff'))
-      expect(url1.modified_time).to be_time(Time.utc(2013, 1, 2, 18))
+      expect(url1.uri).to eq(URI('http://example.com/res1.pdf'))
+      expect(url1.modified_time).to be_time(Time.utc(2013, 1, 2, 13))
       md1 = url1.metadata
       expect(md1).not_to be_nil
-      expect(md1.change).to be(Resync::Types::Change::DELETED)
+      expect(md1.change).to be(Resync::Types::Change::UPDATED)
+      expect(md1.datetime).to be_time(Time.utc(2013, 1, 2, 13))
+
+      url2 = urls[2]
+      expect(url2.uri).to eq(URI('http://example.com/res2.pdf'))
+      expect(url2.modified_time).to be_nil
+      md2 = url2.metadata
+      expect(md2).not_to be_nil
+      expect(md2.change).to be(Resync::Types::Change::DELETED)
+      expect(md2.datetime).to be_time(Time.utc(2013, 1, 2, 14))
     end
 
     it 'parses example 4' do
@@ -466,7 +476,8 @@ module Resync
 
       expected_filenames = %w[res1 res2 res3 res2]
       expected_extensions = %w[html pdf tiff pdf]
-      expected_lastmods = [Time.utc(2013, 1, 3, 11), Time.utc(2013, 1, 3, 13), Time.utc(2013, 1, 3, 18), Time.utc(2013, 1, 3, 21)]
+      expected_lastmods = [Time.utc(2000, 1, 1, 1, 1), Time.utc(2013, 1, 3, 13), nil, nil]
+      expected_datetimes = [Time.utc(2013, 1, 3, 11), Time.utc(2013, 1, 3, 13), Time.utc(2013, 1, 3, 18), nil]
 
       expected_changes = [Types::Change::CREATED, Types::Change::UPDATED, Types::Change::DELETED, Types::Change::UPDATED]
 
@@ -475,6 +486,7 @@ module Resync
         expect(url.uri).to eq(URI("http://example.com/#{expected_filenames[i]}.#{expected_extensions[i]}"))
         expect(url.modified_time).to be_time(expected_lastmods[i])
         expect(url.metadata.change).to eq(expected_changes[i])
+        expect(url.metadata.datetime).to eq(expected_datetimes[i])
       end
     end
 
@@ -531,7 +543,8 @@ module Resync
 
       expected_filenames = %w[res7 res9 res5 res7]
       expected_extensions = %w[html pdf tiff html]
-      expected_lastmods = [
+      expected_lastmods = [nil, nil, nil, nil]
+      expected_datetimes = [
         Time.utc(2013, 1, 2, 12),
         Time.utc(2013, 1, 2, 13),
         Time.utc(2013, 1, 2, 19),
@@ -611,29 +624,35 @@ module Resync
       urls = urlset.resources
       expect(urls.size).to eq(4)
 
-      expected_filenames = %w[res7 res9 res5 res7]
-      expected_extensions = %w[html pdf tiff html]
+      expected_filenames = %w[res7 res9 res7 res5]
+      expected_extensions = %w[html pdf html tiff]
       expected_lastmods = [
         Time.utc(2013, 1, 2, 12),
         Time.utc(2013, 1, 2, 13),
-        Time.utc(2013, 1, 2, 19),
-        Time.utc(2013, 1, 2, 20)
+        Time.utc(2013, 1, 2, 20),
+        nil
       ]
-      expected_changes = [Types::Change::CREATED, Types::Change::UPDATED, Types::Change::DELETED, Types::Change::UPDATED]
+      expected_datetimes = [
+        Time.utc(2013, 1, 2, 12),
+        Time.utc(2013, 1, 2, 13),
+        Time.utc(2013, 1, 2, 20),
+        Time.utc(2013, 1, 2, 19)
+      ]
+      expected_changes = [Types::Change::CREATED, Types::Change::UPDATED, Types::Change::UPDATED, Types::Change::DELETED]
       expected_hashes = [
         { 'md5' => '1c1b0e264fa9b7e1e9aa6f9db8d6362b' },
         { 'md5' => 'f906610c3d4aa745cb2b986f25b37c5a' },
-        {},
-        { 'md5' => '0988647082c8bc51778894a48ec3b576' }
+        { 'md5' => '0988647082c8bc51778894a48ec3b576' },
+        {}
       ]
-      expected_lengths = [4339, 38_297, nil, 5426]
+      expected_lengths = [4339, 38_297, 5426, nil]
       expected_types = [
         'text/html',
         'application/pdf',
-        nil,
-        'text/html'
+        'text/html',
+        nil
       ]
-      expected_paths = ['/changes/res7.html', '/changes/res9.pdf', nil, '/changes/res7-v2.html']
+      expected_paths = ['/changes/res7.html', '/changes/res9.pdf', '/changes/res7-v2.html', nil]
 
       (0..3).each do |i|
         url = urls[i]
@@ -710,20 +729,21 @@ module Resync
 
       url = urls[0]
       expect(url.uri).to eq(URI('http://example.com/res1'))
-      expect(url.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
+      expect(url.modified_time).to be_nil
       md = url.metadata
       expect(md.change).to be(Types::Change::UPDATED)
+      expect(md.datetime).to be_time(Time.utc(2013, 1, 3, 18))
       links = url.links
       expect(links.size).to eq(2)
       ln0 = links[0]
       expect(ln0.rel).to eq('alternate')
       expect(ln0.uri).to eq(URI('http://example.com/res1.html'))
-      expect(ln0.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
+      expect(ln0.modified_time).to be_nil
       expect(ln0.mime_type).to be_mime_type('text/html')
       ln1 = links[1]
       expect(ln1.rel).to eq('alternate')
       expect(ln1.uri).to eq(URI('http://example.com/res1.pdf'))
-      expect(ln1.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
+      expect(ln1.modified_time).to be_nil
       expect(ln1.mime_type).to be_mime_type('application/pdf')
     end
 
@@ -747,11 +767,12 @@ module Resync
 
       url = urls[0]
       expect(url.uri).to eq(URI('http://example.com/res1.html'))
-      expect(url.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
+      expect(url.modified_time).to be_nil
       md = url.metadata
       expect(md.change).to be(Types::Change::UPDATED)
       expect(md.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
       expect(md.length).to eq(8876)
+      expect(md.datetime).to be_time(Time.utc(2013, 1, 3, 18))
       links = url.links
       expect(links.size).to eq(1)
       ln = links[0]
@@ -835,32 +856,34 @@ module Resync
 
       url0 = urls[0]
       expect(url0.uri).to eq(URI('http://example.com/res2.pdf'))
-      expect(url0.modified_time).to be_time(Time.utc(2013, 1, 3, 18))
+      expect(url0.modified_time).to be_nil
       md0 = url0.metadata
       expect(md0.change).to be(Types::Change::UPDATED)
       expect(md0.hashes).to eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6')
       expect(md0.length).to eq(8876)
       expect(md0.mime_type).to be_mime_type('application/pdf')
+      expect(md0.datetime).to be_time(Time.utc(2013, 1, 3, 18))
       lns0 = url0.links
       expect(lns0.size).to eq(1)
       ln0 = lns0[0]
       expect(ln0.rel).to(eq('describedby'))
       expect(ln0.uri).to(eq(URI('http://example.com/res2_dublin-core_metadata.xml')))
-      expect(ln0.modified_time).to(eq(Time.utc(2013, 1, 1, 12)))
+      expect(ln0.modified_time).to be_nil
       expect(ln0.mime_type).to(be_mime_type('application/xml'))
 
       url1 = urls[1]
       expect(url1.uri).to eq(URI('http://example.com/res2_dublin-core_metadata.xml'))
-      expect(url1.modified_time).to be_time(Time.utc(2013, 1, 3, 19))
+      expect(url1.modified_time).to be_nil
       md1 = url1.metadata
       expect(md1.change).to be(Types::Change::UPDATED)
       expect(md1.mime_type).to be_mime_type('application/xml')
+      expect(md1.datetime).to be_time(Time.utc(2013, 1, 3, 19))
       lns1 = url1.links
       expect(lns1.size).to eq(2)
       ln1 = lns1[0]
       expect(ln1.rel).to(eq('describes'))
       expect(ln1.uri).to(eq(URI('http://example.com/res2.pdf')))
-      expect(ln1.modified_time).to(eq(Time.utc(2013, 1, 3, 18)))
+      expect(ln1.modified_time).to be_nil
       expect(ln1.hashes).to(eq('md5' => '1584abdf8ebdc9802ac0c6a7402c03b6'))
       expect(ln1.length).to(eq(8876))
       expect(ln1.mime_type).to(be_mime_type('application/pdf'))

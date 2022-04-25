@@ -36,6 +36,7 @@ module Resync
     time_node :from_time, '@from', default_value: nil
     time_node :until_time, '@until', default_value: nil
     time_node :completed_time, '@completed', default_value: nil
+    time_node :datetime, '@datetime', default_value: nil
     typesafe_enum_node :change, '@change', class: Types::Change, default_value: nil
     text_node :capability, '@capability', default_value: nil
 
@@ -69,6 +70,7 @@ module Resync
         until_time: nil,
         completed_time: nil,
         modified_time: nil,
+        datetime: nil,
 
         length: nil,
         mime_type: nil,
@@ -85,6 +87,7 @@ module Resync
       self.from_time = from_time
       self.until_time = until_time
       self.completed_time = completed_time
+      self.datetime = datetime
 
       self.change = change
       self.capability = capability
@@ -107,6 +110,10 @@ module Resync
 
     def completed_time=(value)
       @completed_time = time_or_nil(value)
+    end
+
+    def datetime=(value)
+      @datetime = time_or_nil(value)
     end
   end
 end

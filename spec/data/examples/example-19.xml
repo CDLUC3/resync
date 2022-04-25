@@ -7,22 +7,20 @@
          from="2013-01-03T00:00:00Z"/>
   <url>
     <loc>http://example.com/res1.html</loc>
-    <lastmod>2013-01-03T11:00:00Z</lastmod>
-    <rs:md change="created"/>
+    <lastmod>2000-01-01T01:01:00Z</lastmod>
+    <rs:md change="created" datetime="2013-01-03T11:00:00Z"/>
   </url>
   <url>
     <loc>http://example.com/res2.pdf</loc>
     <lastmod>2013-01-03T13:00:00Z</lastmod>
-    <rs:md change="updated"/>
+    <rs:md change="updated" datetime="2013-01-03T13:00:00Z"/>
   </url>
   <url>
     <loc>http://example.com/res3.tiff</loc>
-    <lastmod>2013-01-03T18:00:00Z</lastmod>
-    <rs:md change="deleted"/>
+    <rs:md change="deleted" datetime="2013-01-03T18:00:00Z"/>
   </url>
   <url>
     <loc>http://example.com/res2.pdf</loc>
-    <lastmod>2013-01-03T21:00:00Z</lastmod>
     <rs:md change="updated"/>
   </url>
 </urlset>
